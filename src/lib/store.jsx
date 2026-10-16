@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import projects from '../data/projects.json'
 import needs from '../data/needs.json'
 import demoContributions from '../data/contributions.json'
@@ -6,8 +6,10 @@ import members from '../data/members.json'
 import events from '../data/events.json'
 import site from '../data/site.json'
 
-// Bêta : les promesses, adhésions et propositions sont gardées dans le navigateur.
-// Plus tard, ces fonctions écriront dans Supabase.
+import { chargerPaves, enregistrer, enregistrerPave, supabase } from './supabase.js'
+
+// Avec Supabase configuré, les promesses, adhésions et propositions y sont enregistrées
+// et la Trace affiche les pavés de tout le monde. Sinon, tout reste dans le navigateur.
 const CLE = 'ansanm-beta-v1'
 
 function lire() {
@@ -29,17 +31,28 @@ function ecrire(data) {
 const DataContext = createContext(null)
 
 export function DataProvider({ children }) {
-  const [local, setLocal] = useState(() => ({ contributions: [], adhesions: [], propositions: [], ...lire() }))
+  const [local, setLocal] = useState(() =>
+    supabase ? { contributions: [], adhesions: [], propositions: [] } : { contributions: [], adhesions: [], propositions: [], ...lire() },
+  )
+  const [distants, setDistants] = useState([])
+
+  useEffect(() => {
+    if (!supabase) return
+    chargerPaves()
+      .then(setDistants)
+      .catch((e) => console.warn('Supabase : lecture de la Trace impossible', e))
+  }, [])
 
   const maj = (champ, item) =>
     setLocal((prev) => {
       const next = { ...prev, [champ]: [...prev[champ], item] }
-      ecrire(next)
+      if (!supabase) ecrire(next)
       return next
     })
 
   const value = useMemo(() => {
-    const contributions = [...demoContributions, ...local.contributions]
+    const vus = new Set(distants.map((c) => c.id))
+    const contributions = [...demoContributions, ...distants, ...local.contributions.filter((c) => !vus.has(c.id))]
     return {
       projects,
       needs,
@@ -48,12 +61,20 @@ export function DataProvider({ children }) {
       contributions,
       adhesions: local.adhesions,
       ajouterContribution: (c) => {
-        const id = 'n' + Date.now()
-        maj('contributions', { ...c, id, date: new Date().toISOString().slice(0, 10), nouveau: true })
+        const id = crypto.randomUUID()
+        const pave = { ...c, id, date: new Date().toISOString().slice(0, 10) }
+        maj('contributions', pave)
+        if (supabase) enregistrerPave(pave).catch((e) => console.warn('Supabase : pavé non enregistré', e))
         return id
       },
-      ajouterAdhesion: (a) => maj('adhesions', { ...a, date: new Date().toISOString() }),
-      ajouterProposition: (p) => maj('propositions', { ...p, date: new Date().toISOString() }),
+      ajouterAdhesion: (a) => {
+        maj('adhesions', a)
+        if (supabase) enregistrer('adhesions', a).catch((e) => console.warn('Supabase : adhésion non enregistrée', e))
+      },
+      ajouterProposition: (p) => {
+        maj('propositions', p)
+        if (supabase) enregistrer('propositions', p).catch((e) => console.warn('Supabase : proposition non enregistrée', e))
+      },
       stats: {
         totalPromis: contributions.filter((c) => c.type === 'argent').reduce((s, c) => s + c.montant, 0),
         paves: contributions.length,
@@ -61,7 +82,7 @@ export function DataProvider({ children }) {
         membres: site.membres_particuliers + members.length + local.adhesions.length,
       },
     }
-  }, [local])
+  }, [local, distants])
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

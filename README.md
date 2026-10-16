@@ -13,7 +13,9 @@ npm run dev
 
 - `src/data/` — données de démonstration (projets, besoins, pavés, annuaire, rendez-vous). Tout est fictif.
 - `src/components/Trace.jsx` — la Trace : sentier, pavés, fiche d'un pavé, légende.
-- `src/lib/store.jsx` — données + promesses enregistrées dans le navigateur (à remplacer par Supabase).
+- `src/lib/store.jsx` + `src/lib/supabase.js` — données de démo + pavés, adhésions et propositions enregistrés dans Supabase.
+- `supabase/schema.sql` — tables et règles de sécurité, à exécuter dans le SQL Editor de Supabase.
+- `.env` — URL et clé **publishable** Supabase (publiques par conception). Ne jamais y mettre la clé secret / service_role.
 - `src/pages/` — une page par écran.
 
 ## Déploiement Cloudflare
