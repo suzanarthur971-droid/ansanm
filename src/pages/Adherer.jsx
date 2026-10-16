@@ -27,7 +27,7 @@ export default function Adherer() {
 
   return (
     <div className="max-w-2xl mx-auto px-5 pt-14">
-      <EnTete titre="Faire vivre la maison">
+      <EnTete titre="Faire vivre la maison" kreyol={['Yonn pou lòt', 'L’un pour l’autre']}>
         <p>Tes dons vont entièrement aux projets. Alors qui fait tourner l'association ? Les adhérents.</p>
         <p className="mt-4">
           L'adhésion paie le strict nécessaire : le site, l'assurance, le compte en banque. Et elle te donne une voix :

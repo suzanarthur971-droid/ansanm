@@ -30,7 +30,7 @@ export async function enregistrer(table, ligne) {
 }
 
 export async function chargerSlogans() {
-  const { data, error } = await supabase.from('slogans_classement').select('id, texte, votes, created_at')
+  const { data, error } = await supabase.from('slogans_classement').select('id, texte, traduction, votes, created_at')
   if (error) throw error
   return data
 }

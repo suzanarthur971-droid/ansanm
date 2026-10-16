@@ -14,7 +14,7 @@ export default function LaTrace() {
 
   return (
     <div className="max-w-5xl mx-auto px-5 pt-14">
-      <EnTete titre="La Trace">
+      <EnTete titre="La Trace" kreyol={['Sé ansanm nou ka vansé', 'C’est ensemble que nous avançons']}>
         <p>
           En Guadeloupe, une trace, c'est un chemin ouvert à la main à travers la forêt. Personne ne la construit seul,
           et personne ne la construit en un jour.

@@ -14,7 +14,7 @@ const REGLES = [
 export default function Regles() {
   return (
     <div className="max-w-3xl mx-auto px-5 pt-14">
-      <EnTete titre="Ce qui ne bougera jamais">
+      <EnTete titre="Ce qui ne bougera jamais" kreyol={['On sèl dwèt pa ka manjé kalalou', 'Un seul doigt ne peut pas manger le calalou']}>
         Une route solide repose sur des fondations solides. Voici les nôtres.
       </EnTete>
 

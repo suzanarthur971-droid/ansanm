@@ -61,7 +61,7 @@ export default function Contribuer() {
 
   return (
     <div className="max-w-2xl mx-auto px-5 pt-14">
-      <EnTete titre="Poser mon pavé">
+      <EnTete titre="Poser mon pavé" kreyol={['Chak moun ni on bagay a pòté', 'Chaque personne a quelque chose à apporter']}>
         Peu importe la taille de ta pierre. Ce qui compte, c'est qu'elle soit posée.
       </EnTete>
 

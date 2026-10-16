@@ -40,9 +40,20 @@ export function Bouton({ to, children, variante = 'plein', className = '', ...re
   return <button className={cls} {...rest}>{children}</button>
 }
 
-export function EnTete({ titre, children }) {
+// Exergue en créole, avec sa traduction
+export function Kreyol({ texte, traduction, className = '' }) {
+  return (
+    <p className={className} lang="gcf">
+      <span className="font-display italic text-xl text-terre-fonce">{texte}</span>
+      <span className="block text-sm text-gris mt-0.5" lang="fr">{traduction}</span>
+    </p>
+  )
+}
+
+export function EnTete({ titre, children, kreyol }) {
   return (
     <div className="max-w-2xl">
+      {kreyol && <Kreyol texte={kreyol[0]} traduction={kreyol[1]} className="mb-6" />}
       <h1 className="text-4xl sm:text-5xl leading-[1.1]">{titre}</h1>
       {children && <div className="mt-5 text-lg text-gris leading-relaxed">{children}</div>}
     </div>

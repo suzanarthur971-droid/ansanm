@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useData } from '../lib/store.jsx'
 import { euros, nombre } from '../lib/paves.js'
-import { Bouton, LigneProjet, Section } from '../components/Elements.jsx'
+import { Bouton, Kreyol, LigneProjet, Section } from '../components/Elements.jsx'
 
 const GESTES = [
   ['Choisis un projet qui te parle.', 'Alimentation, terre, artisanat : tu décides où va ton soutien.'],
@@ -53,6 +53,7 @@ export default function Accueil() {
             Et pavé après pavé, on trace la route.
           </p>
         </div>
+        <Kreyol texte="Ansanm nou pli fò" traduction="Ensemble, nous sommes plus forts" className="mt-8" />
       </Section>
 
       <Section titre="Trois gestes simples.">

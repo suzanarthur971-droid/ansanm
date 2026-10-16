@@ -14,7 +14,7 @@ export default function Annuaire() {
 
   return (
     <div className="max-w-5xl mx-auto px-5 pt-14">
-      <EnTete titre="Ceux qui construisent avec nous">
+      <EnTete titre="Ceux qui construisent avec nous" kreyol={['Sé on min ka lavé lòt', 'Une main lave l’autre']}>
         <p>
           Ici, tu trouves les entreprises et associations qui font vivre Ansanm. Elles ne sont pas là pour vendre : elles
           sont là parce qu'elles croient, comme toi, que la Guadeloupe peut avancer autrement.

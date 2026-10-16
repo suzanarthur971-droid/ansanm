@@ -7,13 +7,14 @@ const MAX = 60
 
 // Sans Supabase, la page affiche ces slogans de démonstration
 const DEMO = [
-  ['Pavé par pavé.', 34],
-  ['Un pavé, c’est déjà un chemin.', 27],
-  ['Je pose mon pavé.', 21],
-  ['Ici, on plante l’avenir.', 18],
-  ['Fait ici, pour ici.', 12],
-  ['Ensemble, on va plus loin.', 9],
-].map(([texte, votes], i) => ({ id: 'demo-' + i, texte, votes }))
+  ['Sé on min ka lavé lòt', 'Une main lave l’autre'],
+  ['Ansanm nou pli fò', 'Ensemble, nous sommes plus forts'],
+  ['Men nan men', 'Main dans la main'],
+  ['Yonn pou lòt', 'L’un pour l’autre'],
+  ['Chak moun ni on bagay a pòté', 'Chaque personne a quelque chose à apporter'],
+  ['Sé ansanm nou ka vansé', 'C’est ensemble que nous avançons'],
+  ['On sèl dwèt pa ka manjé kalalou', 'Un seul doigt ne peut pas manger le calalou'],
+].map(([texte, traduction], i) => ({ id: 'demo-' + i, texte, traduction, votes: 0 }))
 
 function lireVotes() {
   try {
@@ -133,7 +134,10 @@ export default function Slogans() {
               <li key={s.id} className="py-4 border-b border-ligne">
                 <div className="flex items-baseline gap-4">
                   <span className="w-6 shrink-0 text-gris tabular-nums">{i + 1}.</span>
-                  <p className="flex-1 font-display text-xl leading-snug">{s.texte}</p>
+                  <div className="flex-1">
+                    <p className="font-display text-xl leading-snug">{s.texte}</p>
+                    {s.traduction && <p className="text-sm text-gris italic mt-0.5">{s.traduction}</p>}
+                  </div>
                   <button
                     onClick={() => voter(s.id)}
                     disabled={vote}
