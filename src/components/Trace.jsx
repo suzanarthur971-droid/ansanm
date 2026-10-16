@@ -91,16 +91,16 @@ export default function Trace({ projet, paves, progression, nouveauId, onChoisir
 
   return (
     <svg viewBox={`0 0 ${t.W} ${t.H}`} className="w-full max-w-[400px] mx-auto block select-none" role="group" aria-label={`Trace du projet ${projet.titre} : ${paves.length} pavés posés`}>
-      <path d={t.cheminTotal} stroke="#EFE8DC" strokeWidth="54" strokeLinecap="round" fill="none" />
-      <path d={t.cheminRempli} stroke="#E6DCCB" strokeWidth="54" strokeLinecap="round" fill="none" />
+      <path d={t.cheminTotal} stroke="#EADFCA" strokeWidth="54" strokeLinecap="round" fill="none" />
+      <path d={t.cheminRempli} stroke="#DCCBA8" strokeWidth="54" strokeLinecap="round" fill="none" />
 
-      <text x={t.W / 2} y="24" textAnchor="middle" fontSize="12" fill="#6B6560">départ</text>
+      <text x={t.W / 2} y="24" textAnchor="middle" fontSize="12" fill="#5F6A5B">départ</text>
 
       {t.places.map(({ c, taille, x, y, rot }) => {
         const estNouveau = c.id === nouveauId
         return (
           <g key={c.id} transform={`translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(1)})`}>
-            {estNouveau && <circle className="pave-onde" r="8" fill="none" stroke="#1C1917" strokeWidth="1.5" />}
+            {estNouveau && <circle className="pave-onde" r="8" fill="none" stroke="#4E5C4B" strokeWidth="1.5" />}
             <g className={estNouveau ? 'pave-pose' : undefined}>
               <g
                 id={'pave-' + c.id}
@@ -128,14 +128,14 @@ export default function Trace({ projet, paves, progression, nouveauId, onChoisir
           onClick={poser}
           onKeyDown={(e) => e.key === 'Enter' && poser()}
         >
-          <rect x="-11" y="-10" width="22" height="20" rx="2.5" fill="none" stroke="#1C1917" strokeWidth="1.2" strokeDasharray="3 3" />
+          <rect x="-11" y="-10" width="22" height="20" rx="2.5" fill="none" stroke="#4E5C4B" strokeWidth="1.2" strokeDasharray="3 3" />
         </g>
       )}
 
       <g transform={`translate(${t.fin.x} ${t.fin.y + 26})`}>
-        <circle r="5" fill={t.atteint ? '#A8431F' : 'none'} stroke="#1C1917" strokeWidth="1.2" />
-        <text y="28" textAnchor="middle" fontSize="13" fill="#1C1917" fontFamily="Source Serif 4, Georgia, serif">Objectif {euros(projet.objectif_montant)}</text>
-        <text y="46" textAnchor="middle" fontSize="12" fill="#6B6560">{projet.emplois_crees}</text>
+        <circle r="5" fill={t.atteint ? '#C57B57' : 'none'} stroke="#4E5C4B" strokeWidth="1.2" />
+        <text y="28" textAnchor="middle" fontSize="13" fill="#4E5C4B" fontFamily="Source Serif 4, Georgia, serif">Objectif {euros(projet.objectif_montant)}</text>
+        <text y="46" textAnchor="middle" fontSize="12" fill="#5F6A5B">{projet.emplois_crees}</text>
       </g>
     </svg>
   )

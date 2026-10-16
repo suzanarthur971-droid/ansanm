@@ -16,7 +16,7 @@ export function LigneProjet({ id }) {
   return (
     <Link to={`/projets/${id}`} className="group block py-7 border-t border-ligne">
       <div className="flex items-baseline justify-between gap-4">
-        <h3 className="font-display text-2xl sm:text-3xl group-hover:text-terre transition-colors">{projet.titre}</h3>
+        <h3 className="font-display text-2xl sm:text-3xl group-hover:text-terre-fonce transition-colors">{projet.titre}</h3>
         <span className="text-sm text-gris shrink-0">{projet.domaine}</span>
       </div>
       <p className="mt-1 text-gris">{projet.accroche}</p>
@@ -30,9 +30,9 @@ export function LigneProjet({ id }) {
 
 export function Bouton({ to, children, variante = 'plein', className = '', ...rest }) {
   const styles = {
-    plein: 'bg-encre text-papier hover:bg-terre',
-    terre: 'bg-terre text-papier hover:bg-terre-fonce',
-    lien: 'underline hover:text-terre !px-0',
+    plein: 'bg-encre text-papier hover:bg-terre-fonce',
+    terre: 'bg-terre-fonce text-papier hover:bg-terre-profond',
+    lien: 'underline hover:text-terre-fonce !px-0',
   }
   const cls = `inline-flex items-center justify-center px-5 py-3 rounded-[3px] transition-colors ${styles[variante]} ${className}`
   if (to) return <Link to={to} className={cls} {...rest}>{children}</Link>

@@ -4,12 +4,17 @@
   --font-display: "Source Serif 4", Georgia, serif;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 
-  --color-papier: #FAF8F4;
-  --color-encre: #1C1917;
-  --color-gris: #6B6560;
-  --color-ligne: #E4DDD2;
-  --color-terre: #A8431F;
-  --color-terre-fonce: #7F3216;
+  /* Palette Ansanm : Warm Beige #E8DCC4, Deep Olive #4E5C4B, Terracotta Clay #C57B57, Soft Sage #A8BFA1 */
+  --color-papier: #F5F0E6;
+  --color-beige: #E8DCC4;
+  --color-encre: #4E5C4B;
+  --color-gris: #5F6A5B;
+  --color-ligne: #E2D5BB;
+  --color-sauge: #A8BFA1;
+  --color-terre: #C57B57;
+  /* nuances foncées du terracotta, lisibles en petit texte */
+  --color-terre-fonce: #A35D3D;
+  --color-terre-profond: #874A2F;
 }
 
 html {

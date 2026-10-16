@@ -44,7 +44,7 @@ export default function Layout({ children }) {
                 {l.label}
               </NavLink>
             ))}
-            <Link to="/contribuer" className="bg-encre text-papier px-4 py-2 rounded-[3px] hover:bg-terre transition-colors">
+            <Link to="/contribuer" className="bg-encre text-papier px-4 py-2 rounded-[3px] hover:bg-terre-fonce transition-colors">
               Poser mon pavé
             </Link>
           </nav>
@@ -80,7 +80,7 @@ export default function Layout({ children }) {
           <ul className="px-5">
             {tousLesLiens.map((l) => (
               <li key={l.to} className="border-b border-ligne">
-                <NavLink to={l.to} end className={({ isActive }) => `block py-4 font-display text-2xl ${isActive ? 'text-terre' : ''}`}>
+                <NavLink to={l.to} end className={({ isActive }) => `block py-4 font-display text-2xl ${isActive ? 'text-terre-fonce' : ''}`}>
                   {l.label}
                 </NavLink>
               </li>

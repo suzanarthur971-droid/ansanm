@@ -30,7 +30,7 @@ export default function Proposer() {
       <div className="max-w-2xl mx-auto px-5 pt-20 fondu" role="status">
         <h1 className="text-4xl">Merci pour « {f.titre} ».</h1>
         <p className="mt-4 text-gris">Ta proposition sera présentée à notre prochaine assemblée générale : nous étudions les projets ensemble, tous les six mois.</p>
-        <Link to="/rendez-vous" className="mt-6 inline-block underline hover:text-terre">Date de la prochaine AG</Link>
+        <Link to="/rendez-vous" className="mt-6 inline-block underline hover:text-terre-fonce">Date de la prochaine AG</Link>
       </div>
     )
   }
@@ -78,7 +78,7 @@ export default function Proposer() {
         </Groupe>
 
         <div className="pt-8 border-t border-ligne">
-          <button type="submit" disabled={!pret} className="bg-encre text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre transition-colors disabled:opacity-30 disabled:hover:bg-encre disabled:cursor-not-allowed">
+          <button type="submit" disabled={!pret} className="bg-encre text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre-fonce transition-colors disabled:opacity-30 disabled:hover:bg-encre disabled:cursor-not-allowed">
             Envoyer ma proposition
           </button>
           {!pret && <p className="mt-3 text-sm text-gris">Le titre, la description et les trois cases sont nécessaires.</p>}

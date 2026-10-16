@@ -34,7 +34,7 @@ export default function Adherer() {
         <div className="mt-12 pt-8 border-t border-ligne fondu" role="status">
           <p className="font-display text-3xl">Bienvenue dans le koudmen.</p>
           <p className="mt-3 text-gris">Ta pré-adhésion est enregistrée. Nous te recontacterons à l'ouverture des adhésions.</p>
-          <Link to="/trace" className="mt-6 inline-block underline hover:text-terre">Voir la Trace</Link>
+          <Link to="/trace" className="mt-6 inline-block underline hover:text-terre-fonce">Voir la Trace</Link>
         </div>
       ) : (
         <form onSubmit={envoyer} className="mt-10" noValidate>
@@ -65,8 +65,8 @@ export default function Adherer() {
           </Groupe>
 
           <div className="pt-8 border-t border-ligne">
-            {erreur && <p className="mb-4 text-terre" role="alert">{erreur}</p>}
-            <button type="submit" className="bg-encre text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre transition-colors">
+            {erreur && <p className="mb-4 text-terre-fonce" role="alert">{erreur}</p>}
+            <button type="submit" className="bg-encre text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre-fonce transition-colors">
               Je pré-adhère
             </button>
           </div>

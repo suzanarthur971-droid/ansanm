@@ -158,8 +158,8 @@ export default function Contribuer() {
         </Groupe>
 
         <div className="pt-8 border-t border-ligne">
-          {erreur && <p className="mb-4 text-terre" role="alert">{erreur}</p>}
-          <button type="submit" className="w-full sm:w-auto bg-terre text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre-fonce transition-colors">
+          {erreur && <p className="mb-4 text-terre-fonce" role="alert">{erreur}</p>}
+          <button type="submit" className="w-full sm:w-auto bg-terre-fonce text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre-profond transition-colors">
             Poser mon pavé{f.type === 'argent' && montant > 0 ? ` · ${euros(montant)}` : ''}
           </button>
         </div>

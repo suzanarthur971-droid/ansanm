@@ -49,8 +49,8 @@ export default function Regles() {
       </p>
 
       <p className="mt-12 flex gap-6">
-        <Link to="/adherer" className="underline hover:text-terre">Adhérer</Link>
-        <Link to="/proposer" className="underline hover:text-terre">Proposer un projet</Link>
+        <Link to="/adherer" className="underline hover:text-terre-fonce">Adhérer</Link>
+        <Link to="/proposer" className="underline hover:text-terre-fonce">Proposer un projet</Link>
       </p>
     </div>
   )

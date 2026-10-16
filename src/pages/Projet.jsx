@@ -67,7 +67,7 @@ export default function Projet() {
                     <p className={pourvu ? 'text-gris line-through decoration-1' : ''}>{b.libelle}</p>
                     <p className="text-sm text-gris">{TYPES[b.type].label} · {b.type === 'argent' ? `reste ${euros(reste)}` : b.quantite}</p>
                   </div>
-                  <span className={`text-sm shrink-0 ${pourvu ? 'text-gris' : 'text-terre'}`}>{pourvu ? 'pourvu' : 'ouvert'}</span>
+                  <span className={`text-sm shrink-0 ${pourvu ? 'text-gris' : 'text-terre-fonce'}`}>{pourvu ? 'pourvu' : 'ouvert'}</span>
                 </li>
               )
             })}

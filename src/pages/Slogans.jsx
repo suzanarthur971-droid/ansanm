@@ -99,7 +99,7 @@ export default function Slogans() {
             className={champ + ' flex-1'}
             autoComplete="off"
           />
-          <button type="submit" className="bg-encre text-papier px-6 py-2.5 rounded-[3px] hover:bg-terre transition-colors">
+          <button type="submit" className="bg-encre text-papier px-6 py-2.5 rounded-[3px] hover:bg-terre-fonce transition-colors">
             Proposer
           </button>
         </div>
@@ -125,7 +125,7 @@ export default function Slogans() {
                     onClick={() => voter(s.id)}
                     disabled={vote}
                     aria-label={vote ? `Tu as voté pour « ${s.texte} »` : `Voter pour « ${s.texte} »`}
-                    className={`shrink-0 text-sm px-3 py-1.5 rounded-[3px] border transition-colors ${vote ? 'border-terre text-terre' : 'border-ligne hover:border-encre'}`}
+                    className={`shrink-0 text-sm px-3 py-1.5 rounded-[3px] border transition-colors ${vote ? 'border-terre text-terre-fonce' : 'border-ligne hover:border-encre'}`}
                   >
                     {vote ? 'Voté' : 'Voter'}
                   </button>

@@ -44,7 +44,7 @@ export default function Annuaire() {
                   <span className="block text-sm text-gris mt-0.5">{m.activite}, {m.commune}</span>
                 </span>
                 <span className="text-sm text-gris shrink-0 text-right">
-                  {partenaire && <span className="text-terre">Partenaire Ansanm</span>}
+                  {partenaire && <span className="text-terre-fonce">Partenaire Ansanm</span>}
                   <span className="block capitalize">{m.type}</span>
                 </span>
               </button>
@@ -57,7 +57,7 @@ export default function Annuaire() {
                       {projetsSoutenus.map((p, i) => (
                         <span key={p.id}>
                           {i > 0 && ', '}
-                          <Link to={`/projets/${p.id}`} className="underline hover:text-terre">{p.titre}</Link>
+                          <Link to={`/projets/${p.id}`} className="underline hover:text-terre-fonce">{p.titre}</Link>
                         </span>
                       ))}
                     </p>
@@ -71,7 +71,7 @@ export default function Annuaire() {
 
       <p className="mt-10 text-sm text-gris max-w-xl">
         Mécénat : les membres sont mentionnés sobrement, avec les projets qu'ils soutiennent. Pas de publicité commerciale.
-        Ta structure veut nous rejoindre ? <Link to="/adherer" className="underline hover:text-terre">Adhérer</Link>.
+        Ta structure veut nous rejoindre ? <Link to="/adherer" className="underline hover:text-terre-fonce">Adhérer</Link>.
       </p>
     </div>
   )

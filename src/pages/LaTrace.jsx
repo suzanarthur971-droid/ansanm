@@ -41,7 +41,7 @@ export default function LaTrace() {
           <p className="mt-2 text-sm text-gris"><span className="text-encre">{euros(promis)}</span> promis sur {euros(projet.objectif_montant)} · {paves.length} pavés</p>
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Bouton to={`/contribuer?projet=${id}`} variante="terre">Poser mon pavé</Bouton>
-            <Link to={`/projets/${id}`} className="underline hover:text-terre">Fiche du projet</Link>
+            <Link to={`/projets/${id}`} className="underline hover:text-terre-fonce">Fiche du projet</Link>
           </div>
           <div className="mt-12 pt-6 border-t border-ligne">
             <Legende />

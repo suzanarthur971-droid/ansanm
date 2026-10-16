@@ -16,7 +16,7 @@ export default function Accueil() {
     <div className="max-w-5xl mx-auto px-5">
       <section className="pt-16 sm:pt-28 max-w-3xl">
         <h1 className="text-[2.6rem] sm:text-7xl leading-[1.05]">
-          Une autre façon de faire avancer la Guadeloupe : <em className="text-terre">pavé par pavé.</em>
+          Une autre façon de faire avancer la Guadeloupe : <em className="text-terre-fonce">pavé par pavé.</em>
         </h1>
         <p className="mt-8 text-lg sm:text-xl text-gris leading-relaxed max-w-2xl">
           Ensemble, nous transformons l'envie d'agir en actions concrètes. Entreprises, associations et citoyens,
@@ -67,7 +67,7 @@ export default function Accueil() {
         <p className="font-display text-3xl sm:text-4xl leading-tight max-w-3xl">
           100 % de nos dons vont aux projets. Notre association vit de nos adhésions, et chacun de nous a une voix.
         </p>
-        <Link to="/regles" className="mt-6 inline-block underline hover:text-terre">Lire nos sept règles</Link>
+        <Link to="/regles" className="mt-6 inline-block underline hover:text-terre-fonce">Lire nos sept règles</Link>
       </Section>
     </div>
   )
