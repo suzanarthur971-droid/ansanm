@@ -16,8 +16,10 @@ npm run dev
 - `src/lib/store.jsx` — données + promesses enregistrées dans le navigateur (à remplacer par Supabase).
 - `src/pages/` — une page par écran.
 
-## Déploiement Cloudflare Pages
+## Déploiement Cloudflare
+
+Le projet est déployé comme Worker avec fichiers statiques (`wrangler.jsonc`).
 
 - Commande de build : `npm run build`
-- Dossier de sortie : `dist`
-- `public/_redirects` renvoie toutes les routes vers l'app.
+- Commande de déploiement : `npx wrangler deploy`
+- Les routes inconnues renvoient l'app (`not_found_handling: single-page-application`).
