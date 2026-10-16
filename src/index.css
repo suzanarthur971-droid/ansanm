@@ -2,6 +2,7 @@
 
 @theme {
   --font-display: "Source Serif 4", Georgia, serif;
+  --font-brico: "Bricolage Grotesque", -apple-system, sans-serif;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 
   /* Palette Ansanm : Warm Beige #E8DCC4, Deep Olive #4E5C4B, Terracotta Clay #C57B57, Soft Sage #A8BFA1 */
@@ -11,6 +12,8 @@
   --color-gris: #5F6A5B;
   --color-ligne: #E2D5BB;
   --color-sauge: #A8BFA1;
+  --color-olive: #4E5C4B;
+  --color-olive-nuit: #3D4A3B;
   --color-terre: #C57B57;
   /* nuances foncées du terracotta, lisibles en petit texte */
   --color-terre-fonce: #A35D3D;
@@ -82,4 +85,36 @@ a { text-underline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   .mini-pave { opacity: 1; }
   .mini-visible .mini-pave { animation: none; }
+}
+
+/* ——— Nouvelle direction (pages refaites) ———
+   Une seule famille, Bricolage Grotesque ; la palette en grands aplats. */
+.nouveau {
+  font-family: var(--font-brico);
+  font-variation-settings: "opsz" 16;
+}
+.nouveau h1, .nouveau h2, .nouveau h3, .nouveau .titre {
+  font-family: var(--font-brico);
+  font-weight: 760;
+  letter-spacing: -0.025em;
+  font-variation-settings: "opsz" 96, "wdth" 82;
+  line-height: 0.98;
+}
+.nouveau p { text-wrap: pretty; }
+.nouveau h1, .nouveau h2 { text-wrap: balance; }
+.nouveau :focus-visible { outline: 3px solid var(--color-terre); outline-offset: 3px; }
+
+/* La grande Trace de l'accueil : les pavés se posent un à un, une seule fois */
+@keyframes pose-hero {
+  0% { opacity: 0; transform: translateY(-28px) rotate(-14deg) scale(1.15); }
+  70% { opacity: 1; transform: translateY(2px) rotate(2deg) scale(1); }
+  100% { opacity: 1; transform: none; }
+}
+.hero-pave {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pose-hero 0.55s cubic-bezier(0.3, 0.7, 0.35, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-pave { animation: none; }
 }

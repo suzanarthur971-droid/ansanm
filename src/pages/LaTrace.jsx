@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { useData, useProjet } from '../lib/store.jsx'
 import { euros } from '../lib/paves.js'
 import Trace, { FichePave, Legende } from '../components/Trace.jsx'
-import { Barre, Bouton, EnTete } from '../components/Elements.jsx'
+import { Action, Aplat } from '../components/Nouveau.jsx'
 
 export default function LaTrace() {
   const { projects } = useData()
@@ -13,44 +13,54 @@ export default function LaTrace() {
   const [choisi, setChoisi] = useState(null)
 
   return (
-    <div className="max-w-5xl mx-auto px-5 pt-14">
-      <EnTete titre="La Trace" kreyol={['Sé ansanm nou ka vansé', 'C’est ensemble que nous avançons']}>
-        <p>
-          En Guadeloupe, une trace, c'est un chemin ouvert à la main à travers la forêt. Personne ne la construit seul,
-          et personne ne la construit en un jour.
-        </p>
-        <p className="mt-4">
-          Ici, chaque pavé est une contribution : un don, un outil prêté, quelques heures offertes. Plus la contribution
-          est grande, plus la pierre est large. Mais chaque pierre compte : sans les petites, la route a des trous.
-        </p>
-      </EnTete>
+    <div className="nouveau">
+      <Aplat couleur="olive" interieur="pt-14 sm:pt-20 pb-10 grid md:grid-cols-[1fr_1fr] gap-8 md:gap-16 items-end">
+        <div>
+          <p className="text-xl font-semibold text-sauge" lang="gcf">Sé ansanm nou ka vansé</p>
+          <p className="text-beige/70">C'est ensemble que nous avançons</p>
+          <h1 className="mt-6 text-6xl sm:text-8xl">La Trace</h1>
+        </div>
+        <div className="space-y-4 text-lg leading-relaxed text-beige/90">
+          <p>
+            En Guadeloupe, une trace, c'est un chemin ouvert à la main à travers la forêt. Personne ne la construit seul,
+            et personne ne la construit en un jour.
+          </p>
+          <p>
+            Ici, chaque pavé est une contribution : un don, un outil prêté, quelques heures offertes. Plus la contribution
+            est grande, plus la pierre est large. Mais chaque pierre compte : sans les petites, la route a des trous.
+          </p>
+        </div>
+        <div className="md:col-span-2 mt-4 flex gap-2 overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0" role="tablist" aria-label="Choisir un projet">
+          {projects.map((p) => (
+            <button
+              key={p.id}
+              role="tab"
+              aria-selected={p.id === id}
+              onClick={() => setParams({ projet: p.id }, { replace: true })}
+              className={`shrink-0 px-5 py-3 rounded-lg text-lg font-semibold transition-colors ${p.id === id ? 'bg-beige text-olive-nuit' : 'bg-olive-nuit text-beige hover:bg-[#344033]'}`}
+            >
+              {p.titre}
+            </button>
+          ))}
+        </div>
+      </Aplat>
 
-      <div className="mt-10 flex gap-6 overflow-x-auto border-b border-ligne -mx-5 px-5" role="tablist" aria-label="Choisir un projet">
-        {projects.map((p) => (
-          <button
-            key={p.id}
-            role="tab"
-            aria-selected={p.id === id}
-            onClick={() => setParams({ projet: p.id }, { replace: true })}
-            className={`shrink-0 pb-3 -mb-px border-b-2 transition-colors ${p.id === id ? 'border-encre text-encre' : 'border-transparent text-gris hover:text-encre'}`}
-          >
-            {p.titre}
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-10 grid md:grid-cols-[1fr_400px] gap-12 items-start">
-        <div className="md:sticky md:top-10 order-2 md:order-1">
-          <p className="text-sm text-gris">{projet.domaine}</p>
-          <h2 className="text-3xl mt-1">{projet.titre}</h2>
-          <p className="mt-3 text-gris leading-relaxed">{projet.accroche}</p>
-          <Barre valeur={progression} className="mt-6" />
-          <p className="mt-2 text-sm text-gris"><span className="text-encre">{euros(promis)}</span> promis sur {euros(projet.objectif_montant)} · {paves.length} pavés</p>
-          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <Bouton to={`/contribuer?projet=${id}`} variante="terre">Poser mon pavé</Bouton>
-            <Link to={`/projets/${id}`} className="underline hover:text-terre-fonce">Fiche du projet</Link>
+      <Aplat interieur="py-12 grid md:grid-cols-[1fr_420px] gap-12 items-start">
+        <div className="md:sticky md:top-8 order-2 md:order-1">
+          <h2 className="text-4xl sm:text-5xl">{projet.titre}</h2>
+          <p className="mt-3 text-xl leading-snug text-olive/85 max-w-md">{projet.accroche}</p>
+          <p className="mt-8 text-2xl font-[650]">
+            {euros(promis)} <span className="font-normal text-olive/75">sur {euros(projet.objectif_montant)}</span>
+          </p>
+          <div className="mt-3 h-3 rounded-full bg-beige overflow-hidden max-w-md" role="progressbar" aria-valuenow={Math.round(progression * 100)} aria-valuemin={0} aria-valuemax={100}>
+            <div className="h-full rounded-full bg-terre" style={{ width: `${Math.max(2, progression * 100)}%` }} />
           </div>
-          <div className="mt-12 pt-6 border-t border-ligne">
+          <p className="mt-2 text-olive/75">{paves.length} pavés posés</p>
+          <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+            <Action to={`/contribuer?projet=${id}`}>Poser mon pavé</Action>
+            <Link to={`/projets/${id}`} className="font-semibold underline decoration-2 underline-offset-4 hover:decoration-terre">Lire l'histoire du projet</Link>
+          </div>
+          <div className="mt-12 bg-beige rounded-[22px] p-6 max-w-md">
             <Legende />
           </div>
         </div>
@@ -59,14 +69,14 @@ export default function LaTrace() {
           {paves.length > 0 ? (
             <Trace projet={projet} paves={paves} progression={progression} onChoisir={setChoisi} />
           ) : (
-            <div className="py-10 border-y border-ligne">
-              <p className="font-display text-xl">Cette trace attend sa première pierre.</p>
-              <p className="mt-1 text-gris">Et si c'était la tienne ?</p>
-              <Bouton to={`/contribuer?projet=${id}`} variante="terre" className="mt-5">Poser le premier pavé</Bouton>
+            <div className="bg-beige rounded-[22px] p-8">
+              <p className="text-2xl font-[700]">Cette trace attend sa première pierre.</p>
+              <p className="mt-1 text-lg">Et si c'était la tienne ?</p>
+              <Action to={`/contribuer?projet=${id}`} className="mt-6">Poser le premier pavé</Action>
             </div>
           )}
         </div>
-      </div>
+      </Aplat>
 
       <FichePave pave={choisi} projet={projet} onFermer={() => setChoisi(null)} />
     </div>

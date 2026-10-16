@@ -4,7 +4,7 @@ import { useProjet } from '../lib/store.jsx'
 import { TYPES, euros } from '../lib/paves.js'
 import { partager } from '../lib/partage.js'
 import Trace, { FichePave, Legende } from '../components/Trace.jsx'
-import { Barre, Bouton } from '../components/Elements.jsx'
+import { Action, Aplat } from '../components/Nouveau.jsx'
 import Recrutement from '../components/Recrutement.jsx'
 import Introuvable from './Introuvable.jsx'
 
@@ -36,107 +36,115 @@ export default function Projet() {
   const voirMaPierre = () => document.getElementById('pave-' + nouveauId)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
   return (
-    <div className="max-w-5xl mx-auto px-5 pt-10">
-      <Link to="/trace" className="text-sm text-gris hover:text-encre">← La Trace</Link>
-
-      <div className="mt-8 grid md:grid-cols-[1fr_400px] gap-12 items-start">
-        <div>
-          <p className="text-sm text-gris">{projet.domaine}</p>
-          <h1 className="text-5xl sm:text-6xl mt-1 leading-none">{projet.titre}</h1>
-          <p className="mt-6 font-display text-2xl leading-snug text-terre-fonce">{projet.accroche}</p>
-
-          <Barre valeur={progression} className="mt-10" />
-          <div className="mt-3 flex flex-wrap items-baseline justify-between gap-2">
-            <p><span className="font-display text-3xl">{euros(promis)}</span> <span className="text-gris">promis sur {euros(projet.objectif_montant)}</span></p>
-            <p className="text-sm text-gris">Reste à financer : <span className="text-encre">{euros(reste)}</span></p>
+    <div className="nouveau">
+      <Aplat couleur="olive" interieur="pt-10 sm:pt-14 pb-12 sm:pb-16">
+        <Link to="/trace" className="text-beige/75 hover:text-beige underline underline-offset-4">Toutes les traces</Link>
+        <p className="mt-10 text-lg text-sauge font-semibold">{projet.domaine}</p>
+        <h1 className="mt-1 text-6xl sm:text-8xl">{projet.titre}</h1>
+        <p className="mt-6 text-2xl sm:text-3xl leading-snug max-w-3xl text-beige/90">{projet.accroche}</p>
+        <div className="mt-10 max-w-xl">
+          <p className="text-2xl">
+            <strong className="font-[750]">{euros(promis)}</strong> sur {euros(projet.objectif_montant)}
+          </p>
+          <div className="mt-3 h-3 rounded-full bg-olive-nuit overflow-hidden" role="progressbar" aria-valuenow={Math.round(progression * 100)} aria-valuemin={0} aria-valuemax={100}>
+            <div className="h-full rounded-full bg-terre" style={{ width: `${Math.max(2, progression * 100)}%` }} />
           </div>
+          <p className="mt-2 text-beige/75">Il reste {euros(reste)} à réunir, et {paves.length} pavés sont déjà posés.</p>
+        </div>
+        <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+          <Action to={`/contribuer?projet=${projet.id}`} sombre>Contribuer à ce projet</Action>
+          <Action onClick={() => partagerProjet(false)} discret>Partager ce projet</Action>
+        </div>
+        {etatPartage && !message && <p className="mt-3 text-beige/80" role="status">{etatPartage}</p>}
+      </Aplat>
 
-          <h2 className="mt-14 text-2xl sm:text-3xl">L'histoire</h2>
-          <div className="mt-4 space-y-4 text-lg text-gris leading-relaxed">
+      <Aplat interieur="py-16 sm:py-20 grid md:grid-cols-[1fr_420px] gap-14 items-start">
+        <div>
+          <h2 className="text-4xl sm:text-5xl">L'histoire</h2>
+          <div className="mt-6 space-y-5 text-xl leading-relaxed max-w-[62ch]">
             {projet.histoire.map((t, i) => <p key={i}>{t}</p>)}
           </div>
 
-          <h2 className="mt-14 text-2xl sm:text-3xl">Ce que ça change</h2>
-          <ul className="mt-4 border-t border-ligne">
-            {projet.impacts.map((t) => <li key={t} className="py-3 border-b border-ligne">{t}</li>)}
+          <h2 className="mt-16 text-4xl sm:text-5xl">Ce que ça change</h2>
+          <ul className="mt-6 space-y-3 text-xl">
+            {projet.impacts.map((t, i) => (
+              <li key={t} className="flex gap-4 items-baseline">
+                <span className="w-4 h-3.5 shrink-0 rounded-[3px] translate-y-[1px]" style={{ background: ['#C57B57', '#A8BFA1', '#C9A46E', '#4E5C4B'][i % 4], rotate: `${(i % 2 ? -1 : 1) * 8}deg` }} aria-hidden="true" />
+                {t}
+              </li>
+            ))}
           </ul>
 
-          <dl className="mt-14 grid sm:grid-cols-2 gap-8">
-            <div>
-              <dt className="font-display text-xl">Qui le porte</dt>
-              <dd className="mt-2 text-gris leading-relaxed">{projet.porteur}</dd>
+          <div className="mt-16 grid sm:grid-cols-2 gap-4">
+            <div className="bg-beige rounded-[22px] p-6">
+              <h3 className="text-2xl">Qui le porte</h3>
+              <p className="mt-3 text-lg leading-relaxed">{projet.porteur}</p>
             </div>
-            <div>
-              <dt className="font-display text-xl">Qui l'attend</dt>
-              <dd className="mt-2 text-gris leading-relaxed">{projet.attente}</dd>
+            <div className="bg-sauge rounded-[22px] p-6 text-olive-nuit">
+              <h3 className="text-2xl">Qui l'attend</h3>
+              <p className="mt-3 text-lg leading-relaxed">{projet.attente}</p>
             </div>
-          </dl>
+          </div>
 
-          <h2 className="mt-14 text-2xl sm:text-3xl">Ce dont on a besoin</h2>
-          <p className="mt-4 text-gris leading-relaxed">
+          <h2 className="mt-16 text-4xl sm:text-5xl">Ce dont on a besoin</h2>
+          <p className="mt-6 text-lg leading-relaxed max-w-[62ch] text-olive/85">
             Chaque projet est découpé en besoins précis. Tu peux en remplir un avec de l'argent, mais aussi avec du
             matériel, ton temps ou tes compétences. Le restaurateur qui donne son four, la retraitée qui offre trois
             heures par semaine, l'entreprise qui finance le reste : chacun pose sa pierre.
           </p>
-          <ul className="mt-5 border-t border-ligne">
+          <ul className="mt-8 space-y-2">
             {besoins.map((b) => {
               const pourvu = b.statut === 'pourvu'
               return (
-                <li key={b.id} className="flex items-baseline gap-3 py-3.5 border-b border-ligne">
-                  <span className="w-2.5 h-2.5 rounded-[2px] shrink-0 translate-y-[-1px]" style={{ background: TYPES[b.type].couleur }} aria-hidden="true" />
+                <li key={b.id} className={`flex items-center gap-4 rounded-xl px-5 py-4 ${pourvu ? 'bg-transparent border-2 border-dashed border-beige' : 'bg-beige'}`}>
+                  <span className="w-5 h-4 rounded-[3px] shrink-0" style={{ background: TYPES[b.type].couleur }} aria-hidden="true" />
                   <div className="flex-1 min-w-0">
-                    <p className={pourvu ? 'text-gris line-through decoration-1' : ''}>{b.libelle}</p>
-                    <p className="text-sm text-gris">{TYPES[b.type].label} · {b.type === 'argent' ? `reste ${euros(reste)}` : b.quantite}</p>
+                    <p className={`text-lg font-semibold leading-snug ${pourvu ? 'text-olive/60' : ''}`}>{b.libelle}</p>
+                    <p className="text-olive/75">{TYPES[b.type].label}, {b.type === 'argent' ? `il reste ${euros(reste)}` : b.quantite}</p>
                   </div>
-                  <span className={`text-sm shrink-0 ${pourvu ? 'text-gris' : 'text-terre-fonce'}`}>{pourvu ? 'pourvu' : 'ouvert'}</span>
+                  <span className={`shrink-0 font-semibold ${pourvu ? 'text-olive/60' : 'text-terre-fonce'}`}>{pourvu ? 'Pourvu' : 'Ouvert'}</span>
                 </li>
               )
             })}
           </ul>
 
-          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
-            <Bouton to={`/contribuer?projet=${projet.id}`} variante="terre">Contribuer à ce projet</Bouton>
-            <button onClick={() => partagerProjet(false)} className="underline hover:text-terre-fonce">Partager ce projet</button>
-          </div>
-          {etatPartage && !message && <p className="mt-3 text-sm text-gris" role="status">{etatPartage}</p>}
-
           {projet.recrute && <Recrutement projet={projet} />}
         </div>
 
-        <div className="md:sticky md:top-10">
-          <h2 className="text-2xl mb-2">Sa trace</h2>
+        <div className="md:sticky md:top-8">
+          <h2 className="text-3xl">Sa trace</h2>
           {paves.length > 0 ? (
             <>
-              <p className="text-sm text-gris mb-4">{paves.length} pavés posés. Touches-en un.</p>
+              <p className="mt-1 mb-4 text-olive/75">Touche un pavé pour savoir qui l'a posé.</p>
               <Trace projet={projet} paves={paves} progression={progression} nouveauId={nouveauId} onChoisir={setChoisi} />
             </>
           ) : (
-            <div className="py-10 border-y border-ligne">
-              <p className="font-display text-xl">Cette trace attend sa première pierre.</p>
-              <p className="mt-1 text-gris">Et si c'était la tienne ?</p>
-              <Bouton to={`/contribuer?projet=${projet.id}`} variante="terre" className="mt-5">Poser le premier pavé</Bouton>
+            <div className="mt-4 bg-beige rounded-[22px] p-8">
+              <p className="text-2xl font-[700]">Cette trace attend sa première pierre.</p>
+              <p className="mt-1 text-lg">Et si c'était la tienne ?</p>
+              <Action to={`/contribuer?projet=${projet.id}`} className="mt-6">Poser le premier pavé</Action>
             </div>
           )}
-          <div className="mt-6 pt-6 border-t border-ligne"><Legende /></div>
+          <div className="mt-6 bg-beige rounded-[22px] p-6"><Legende /></div>
         </div>
-      </div>
+      </Aplat>
 
       {nouveau && message && (
-        <div className="fixed bottom-5 inset-x-0 z-40 px-5 fondu" role="status">
-          <div className="max-w-md mx-auto bg-encre text-papier px-5 py-4 flex gap-4 items-start">
+        <div className="fixed bottom-4 inset-x-0 z-40 px-4 fondu" role="status">
+          <div className="max-w-md mx-auto bg-olive-nuit text-beige rounded-2xl px-6 py-5 shadow-2xl flex gap-4 items-start">
             <div className="flex-1">
-              <p className="font-display text-xl">Ta pierre est posée.</p>
-              <p className="text-sm opacity-80 mt-1">
+              <p className="text-2xl font-[760] tracking-tight">Ta pierre est posée.</p>
+              <p className="mt-1 text-beige/85">
                 {etatPartage || `Merci. Grâce à toi, la trace ${projet.titre} avance d'un pas. Partage-la autour de toi : une route se construit plus vite à plusieurs.`}
               </p>
-              <div className="mt-3 flex flex-wrap gap-x-4 gap-y-2 items-center">
-                <button onClick={() => partagerProjet(true)} className="bg-papier text-encre px-4 py-2 rounded-[3px] text-sm hover:bg-beige transition-colors">
+              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 items-center">
+                <button onClick={() => partagerProjet(true)} className="bg-beige text-olive-nuit font-semibold px-5 py-2.5 rounded-lg hover:bg-papier transition-colors">
                   Partager
                 </button>
-                <button onClick={voirMaPierre} className="text-sm underline opacity-90 hover:opacity-100">Voir ma pierre sur la Trace</button>
+                <button onClick={voirMaPierre} className="font-semibold underline underline-offset-4">Voir ma pierre sur la Trace</button>
               </div>
             </div>
-            <button onClick={() => { setMessage(false); setParams({}, { replace: true }) }} className="text-sm opacity-75 hover:opacity-100">
+            <button onClick={() => { setMessage(false); setParams({}, { replace: true }) }} className="text-beige/75 hover:text-beige">
               Fermer
             </button>
           </div>

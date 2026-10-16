@@ -39,7 +39,7 @@ function construire(paves, progression) {
   }
 }
 
-export default function MiniTrace({ paves, progression }) {
+export default function MiniTrace({ paves, progression, chemin = ['#EADFCA', '#DCCBA8'] }) {
   const ref = useRef(null)
   const [visible, setVisible] = useState(false)
   const t = useMemo(() => construire(paves, progression), [paves, progression])
@@ -56,8 +56,8 @@ export default function MiniTrace({ paves, progression }) {
 
   return (
     <svg ref={ref} viewBox={`0 0 ${W} ${H}`} className={`w-full block ${visible ? 'mini-visible' : ''}`} aria-hidden="true">
-      <path d={t.cheminTotal} stroke="#EADFCA" strokeWidth={34 * t.k} strokeLinecap="round" fill="none" />
-      <path d={t.cheminRempli} stroke="#DCCBA8" strokeWidth={34 * t.k} strokeLinecap="round" fill="none" />
+      <path d={t.cheminTotal} stroke={chemin[0]} strokeWidth={34 * t.k} strokeLinecap="round" fill="none" />
+      <path d={t.cheminRempli} stroke={chemin[1]} strokeWidth={34 * t.k} strokeLinecap="round" fill="none" />
       {t.places.map(({ c, taille, x, y, rot }, i) => (
         <g key={c.id} transform={`translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(1)}) scale(${(ECHELLE * t.k).toFixed(3)})`}>
           <g className="mini-pave" style={{ animationDelay: `${i * 35}ms` }}>
