@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
+function Logo({ className = 'h-10' }) {
+  return <img src="/logo-ansanm.png" alt="Ansanm" className={`${className} w-auto`} />
+}
+
 const liens = [
   { to: '/trace', label: 'La Trace' },
   { to: '/annuaire', label: 'Annuaire' },
@@ -32,7 +36,7 @@ export default function Layout({ children }) {
     <div className="min-h-dvh flex flex-col">
       <header className="border-b border-ligne">
         <div className="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-6">
-          <Link to="/" className="font-display text-2xl">Ansanm</Link>
+          <Link to="/" aria-label="Accueil"><Logo /></Link>
           <nav className="hidden md:flex items-center gap-7 text-[15px]" aria-label="Navigation principale">
             {liens.map((l) => (
               <NavLink key={l.to} to={l.to} className={({ isActive }) => (isActive ? 'text-encre underline' : 'text-gris hover:text-encre')}>
@@ -54,7 +58,7 @@ export default function Layout({ children }) {
       <footer className="border-t border-ligne mt-24">
         <div className="max-w-5xl mx-auto px-5 py-10 grid gap-8 sm:grid-cols-[1fr_auto] text-sm text-gris">
           <div className="max-w-sm space-y-3">
-            <p className="font-display text-xl text-encre">Ansanm</p>
+            <Logo className="h-12 -ml-1" />
             <p>Une autre façon de faire avancer la Guadeloupe : pavé par pavé.</p>
             <p>Version bêta de démonstration. Les personnes, structures et montants sont fictifs ; aucun paiement n'est demandé.</p>
           </div>
@@ -69,7 +73,7 @@ export default function Layout({ children }) {
       {menu && (
         <div className="fixed inset-0 z-50 bg-papier fondu md:hidden" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="px-5 h-16 flex items-center justify-between border-b border-ligne">
-            <Link to="/" className="font-display text-2xl">Ansanm</Link>
+            <Link to="/" aria-label="Accueil"><Logo /></Link>
             <button onClick={() => setMenu(false)} className="text-[15px] py-2">Fermer</button>
           </div>
           <ul className="px-5">
