@@ -10,6 +10,7 @@ const liens = [
   { to: '/annuaire', label: 'Annuaire' },
   { to: '/rendez-vous', label: 'Rendez-vous' },
   { to: '/regles', label: 'Nos règles' },
+  { to: '/t-shirts', label: 'T-shirts' },
   { to: '/adherer', label: 'Adhérer' },
 ]
 
@@ -41,7 +42,7 @@ export default function Layout({ children }) {
       <header className="border-b border-ligne">
         <div className="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-6">
           <Link to="/" aria-label="Accueil"><Logo /></Link>
-          <nav className="hidden md:flex items-center gap-7 text-[15px]" aria-label="Navigation principale">
+          <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-[15px]" aria-label="Navigation principale">
             {liens.map((l) => (
               <NavLink key={l.to} to={l.to} className={({ isActive }) => (isActive ? 'text-encre underline' : 'text-gris hover:text-encre')}>
                 {l.label}

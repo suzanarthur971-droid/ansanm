@@ -106,6 +106,20 @@ export default function Accueil() {
         </p>
         <Link to="/regles" className="mt-6 inline-block underline hover:text-terre-fonce">Lire nos règles</Link>
       </Section>
+
+      <Section className="grid sm:grid-cols-[1fr_1.2fr] gap-8 items-center">
+        <div>
+          <h2 className="text-2xl sm:text-3xl">Écris la phrase que la Guadeloupe portera.</h2>
+          <p className="mt-4 text-gris leading-relaxed">
+            Propose un slogan pour nos t-shirts et vote pour tes préférés. La marge de chaque t-shirt va dans la
+            cagnotte des projets.
+          </p>
+          <Link to="/t-shirts" className="mt-6 inline-block underline hover:text-terre-fonce">Proposer ou voter</Link>
+        </div>
+        <Link to="/t-shirts" aria-label="Voir la page t-shirts">
+          <img src="/tshirt-ansanm.jpg" alt="T-shirt blanc Ansanm, face et dos" className="w-full" width="1400" height="933" loading="lazy" />
+        </Link>
+      </Section>
     </div>
   )
 }
