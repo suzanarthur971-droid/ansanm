@@ -28,3 +28,19 @@ export async function enregistrer(table, ligne) {
   const { error } = await supabase.from(table).insert(ligne)
   if (error) throw error
 }
+
+export async function chargerSlogans() {
+  const { data, error } = await supabase.from('slogans_classement').select('id, texte, votes, created_at')
+  if (error) throw error
+  return data
+}
+
+export async function proposerSlogan(id, texte) {
+  const { error } = await supabase.from('slogans').insert({ id, texte })
+  if (error) throw error
+}
+
+export async function voterSlogan(slogan_id) {
+  const { error } = await supabase.from('votes').insert({ slogan_id })
+  if (error) throw error
+}

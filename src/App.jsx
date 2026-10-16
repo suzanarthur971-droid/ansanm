@@ -10,6 +10,7 @@ import Adherer from './pages/Adherer.jsx'
 import Proposer from './pages/Proposer.jsx'
 import RendezVous from './pages/RendezVous.jsx'
 import Regles from './pages/Regles.jsx'
+import Slogans from './pages/Slogans.jsx'
 import Introuvable from './pages/Introuvable.jsx'
 
 function RemonteEnHaut() {
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/proposer" element={<Proposer />} />
         <Route path="/rendez-vous" element={<RendezVous />} />
         <Route path="/regles" element={<Regles />} />
+        <Route path="/t-shirts" element={<Slogans />} />
         <Route path="*" element={<Introuvable />} />
       </Routes>
     </Layout>

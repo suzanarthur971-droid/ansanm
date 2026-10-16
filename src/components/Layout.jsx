@@ -22,6 +22,7 @@ const tousLesLiens = [
   { to: '/proposer', label: 'Proposer un projet' },
   { to: '/rendez-vous', label: 'Rendez-vous' },
   { to: '/regles', label: 'Nos règles' },
+  { to: '/t-shirts', label: 'T-shirts' },
 ]
 
 export default function Layout({ children }) {
