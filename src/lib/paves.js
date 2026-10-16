@@ -1,10 +1,10 @@
 // Règles visuelles des pavés : taille selon la contribution, couleur selon le type.
 
 export const TYPES = {
-  argent: { label: 'Argent', couleur: '#B84A26', teintes: ['#B84A26', '#C65D35', '#A6402A', '#CF7047'] },
-  materiel: { label: 'Matériel', couleur: '#D49A2E', teintes: ['#D49A2E', '#C98C22', '#DDA94A'] },
-  temps: { label: 'Temps', couleur: '#3D7A3A', teintes: ['#3D7A3A', '#4A8A45', '#356B33'] },
-  competences: { label: 'Compétences', couleur: '#1A8C9A', teintes: ['#1A8C9A', '#22A0AD', '#16798A'] },
+  argent: { label: 'Argent', couleur: '#A8431F', teintes: ['#A8431F', '#B5532D', '#9A3C1C'] },
+  materiel: { label: 'Matériel', couleur: '#C08A2E', teintes: ['#C08A2E', '#B8822A'] },
+  temps: { label: 'Temps', couleur: '#4F7A45', teintes: ['#4F7A45', '#48703F'] },
+  competences: { label: 'Compétences', couleur: '#2F6F7E', teintes: ['#2F6F7E', '#2A6573'] },
 }
 
 export const TAILLES = [

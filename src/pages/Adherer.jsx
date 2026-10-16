@@ -1,15 +1,13 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useData } from '../lib/store.jsx'
-import { Bouton, EnTete } from '../components/Elements.jsx'
-import Icone from '../components/Icones.jsx'
+import { Choix, EnTete, Groupe, champ } from '../components/Elements.jsx'
 
 const TARIFS = [
-  { type: 'particulier', label: 'Particulier', prix: 10, inclus: ['Droit de vote en AG', 'Le magazine trimestriel'] },
-  { type: 'association', label: 'Association', prix: 25, inclus: ['Droit de vote en AG', 'Fiche dans l’annuaire', 'Stand aux marchés Ansanm'] },
-  { type: 'entreprise', label: 'Entreprise', prix: 60, inclus: ['Droit de vote en AG', 'Fiche dans l’annuaire', 'Badge partenaire si vous contribuez'] },
+  { type: 'particulier', label: 'Particulier', prix: 10, inclus: 'droit de vote en AG, magazine trimestriel' },
+  { type: 'association', label: 'Association', prix: 25, inclus: 'droit de vote, fiche dans l’annuaire, stand aux marchés' },
+  { type: 'entreprise', label: 'Entreprise', prix: 60, inclus: 'droit de vote, fiche dans l’annuaire' },
 ]
-
-const champ = 'w-full rounded-2xl bg-sable-clair ring-1 ring-sable-fonce px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-terre'
 
 export default function Adherer() {
   const { ajouterAdhesion } = useData()
@@ -20,66 +18,60 @@ export default function Adherer() {
 
   const envoyer = (e) => {
     e.preventDefault()
-    if (!f.nom.trim() || !f.email.includes('@')) return setErreur('Indique ton nom et une adresse e-mail valide.')
+    if (!f.nom.trim() || !f.email.includes('@')) return setErreur('Indiquez votre nom et une adresse e-mail valide.')
     ajouterAdhesion(f)
     setEnvoye(true)
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 pt-8">
-      <EnTete surtitre="Adhérer" titre="L'adhésion fait vivre l'association.">
-        Grâce aux adhésions, 100 % des dons vont aux projets. Chaque membre a une voix en assemblée générale, quel que soit le montant qu'il donne.
+    <div className="max-w-2xl mx-auto px-5 pt-14">
+      <EnTete titre="Adhérer">
+        Les adhésions font vivre l'association : c'est ce qui permet que 100 % des dons aillent aux projets.
+        Chaque membre a une voix en assemblée générale, quel que soit le montant qu'il donne.
       </EnTete>
 
-      <div className="mt-8 grid gap-3 md:grid-cols-3">
-        {TARIFS.map((t) => (
-          <button
-            key={t.type}
-            onClick={() => setF({ ...f, type: t.type })}
-            aria-pressed={f.type === t.type}
-            className={`text-left rounded-3xl p-6 ring-2 transition ${f.type === t.type ? 'bg-white ring-feuille' : 'bg-white/60 ring-sable-fonce/60'}`}
-          >
-            <p className="font-semibold">{t.label}</p>
-            <p className="mt-1"><span className="font-display text-4xl font-extrabold text-feuille-fonce">{t.prix} €</span> <span className="text-encre-doux">/ an</span></p>
-            <ul className="mt-4 space-y-1.5 text-sm">
-              {t.inclus.map((i) => (
-                <li key={i} className="flex gap-2"><Icone nom="check" className="w-4 h-4 text-feuille shrink-0 mt-0.5" />{i}</li>
-              ))}
-            </ul>
-          </button>
-        ))}
-      </div>
-      <p className="mt-3 text-sm text-encre-doux">Tarifs indicatifs pour la bêta.</p>
+      {envoye ? (
+        <div className="mt-12 pt-8 border-t border-ligne fondu" role="status">
+          <p className="font-display text-3xl">Bienvenue dans le koudmen.</p>
+          <p className="mt-3 text-gris">Votre pré-adhésion est enregistrée. Nous vous recontacterons à l'ouverture des adhésions.</p>
+          <Link to="/trace" className="mt-6 inline-block underline hover:text-terre">Voir la Trace</Link>
+        </div>
+      ) : (
+        <form onSubmit={envoyer} className="mt-10" noValidate>
+          <Groupe titre="Formule">
+            {TARIFS.map((t) => (
+              <Choix key={t.type} name="type" value={t.type} checked={f.type === t.type} onChange={maj('type')}>
+                {t.label}, {t.prix} € par an <span className="text-gris">— {t.inclus}</span>
+              </Choix>
+            ))}
+            <p className="mt-2 text-sm text-gris">Tarifs indicatifs. Aucun paiement pendant la bêta.</p>
+          </Groupe>
 
-      <div className="mt-8 bg-white rounded-3xl p-6 ring-1 ring-sable-fonce/60 max-w-2xl">
-        {envoye ? (
-          <div className="text-center py-6 fondu" role="status">
-            <span className="mx-auto w-14 h-14 rounded-full bg-feuille text-white grid place-items-center"><Icone nom="check" className="w-7 h-7" /></span>
-            <p className="mt-4 font-display text-2xl font-bold">Bienvenue dans le koudmen !</p>
-            <p className="mt-2 text-encre-doux">Ta pré-adhésion est enregistrée. Nous te recontacterons à l'ouverture des adhésions.</p>
-            <Bouton to="/trace" className="mt-6">Voir la Trace</Bouton>
+          <Groupe titre="Coordonnées">
+            <div className="space-y-5">
+              <div>
+                <label htmlFor="nom" className="text-sm text-gris">{f.type === 'particulier' ? 'Prénom et nom' : 'Nom de la structure'}</label>
+                <input id="nom" value={f.nom} onChange={maj('nom')} className={champ + ' mt-2'} />
+              </div>
+              <div>
+                <label htmlFor="email" className="text-sm text-gris">E-mail</label>
+                <input id="email" type="email" value={f.email} onChange={maj('email')} className={champ + ' mt-2'} autoComplete="email" />
+              </div>
+              <div>
+                <label htmlFor="commune" className="text-sm text-gris">Commune (facultatif)</label>
+                <input id="commune" value={f.commune} onChange={maj('commune')} className={champ + ' mt-2'} />
+              </div>
+            </div>
+          </Groupe>
+
+          <div className="pt-8 border-t border-ligne">
+            {erreur && <p className="mb-4 text-terre" role="alert">{erreur}</p>}
+            <button type="submit" className="bg-encre text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre transition-colors">
+              Je pré-adhère
+            </button>
           </div>
-        ) : (
-          <form onSubmit={envoyer} className="space-y-4" noValidate>
-            <h2 className="text-2xl font-extrabold text-terre-fonce">Pré-adhésion</h2>
-            <p className="text-sm bg-mangue/15 text-terre-fonce rounded-2xl px-4 py-3">Aucun paiement pendant la bêta.</p>
-            <div>
-              <label htmlFor="nom" className="font-medium">{f.type === 'particulier' ? 'Prénom et nom' : 'Nom de la structure'}</label>
-              <input id="nom" value={f.nom} onChange={maj('nom')} className={champ + ' mt-2'} />
-            </div>
-            <div>
-              <label htmlFor="email" className="font-medium">E-mail</label>
-              <input id="email" type="email" value={f.email} onChange={maj('email')} className={champ + ' mt-2'} autoComplete="email" />
-            </div>
-            <div>
-              <label htmlFor="commune" className="font-medium">Commune <span className="text-encre-doux font-normal">(facultatif)</span></label>
-              <input id="commune" value={f.commune} onChange={maj('commune')} className={champ + ' mt-2'} />
-            </div>
-            {erreur && <p className="text-terre-fonce font-medium" role="alert">{erreur}</p>}
-            <Bouton type="submit" variante="vert" className="w-full">Je pré-adhère ({TARIFS.find((t) => t.type === f.type).prix} €/an)</Bouton>
-          </form>
-        )}
-      </div>
+        </form>
+      )}
     </div>
   )
 }

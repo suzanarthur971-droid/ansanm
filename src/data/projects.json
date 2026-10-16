@@ -7,11 +7,16 @@
     "description": "Un terrain existant, déjà planté d'arbres fruitiers, entretenu en syntropie par une équipe mobile de jardiniers. Les fruits et légumes alimentent la cuisine collective, et les restes de la cuisine reviennent au jardin sous forme de compost.",
     "objectif_montant": 4000,
     "emplois_crees": "2 jardiniers à temps partiel",
-    "referent": { "prenom": "Josette", "role": "jardinière en agroforesterie" },
+    "referent": {
+      "prenom": "Josette",
+      "role": "jardinière en agroforesterie"
+    },
     "preuve_demande": "12 familles inscrites pour les paniers et 2 cantines scolaires intéressées",
     "statut": "en cours",
-    "recrute": { "poste": "2 jardiniers·ères à temps partiel", "detail": "Taille, paillage, récolte. Formation à la syntropie assurée sur place." },
-    "couleur": "#3D7A3A"
+    "recrute": {
+      "poste": "2 jardiniers·ères à temps partiel",
+      "detail": "Taille, paillage, récolte. Formation à la syntropie assurée sur place."
+    }
   },
   {
     "id": "cuisine-collective",
@@ -21,11 +26,16 @@
     "description": "Des ateliers de batch cooking pour préparer les repas de la semaine ensemble et alléger la charge mentale des parents. La cuisine transforme les fruits du jardin et les invendus des commerçants partenaires en confitures, sirops et plats préparés.",
     "objectif_montant": 6000,
     "emplois_crees": "1 cuisinier·ère référent·e",
-    "referent": { "prenom": "Marius", "role": "cuisinier" },
+    "referent": {
+      "prenom": "Marius",
+      "role": "cuisinier"
+    },
     "preuve_demande": "35 familles intéressées",
     "statut": "en cours",
-    "recrute": { "poste": "1 cuisinier·ère référent·e", "detail": "Animer les ateliers, organiser la transformation des produits, garantir l'hygiène." },
-    "couleur": "#B84A26"
+    "recrute": {
+      "poste": "1 cuisinier·ère référent·e",
+      "detail": "Animer les ateliers, organiser la transformation des produits, garantir l'hygiène."
+    }
   },
   {
     "id": "atelier-upcycling",
@@ -35,10 +45,15 @@
     "description": "Un atelier ouvert où l'on transforme les déchets en objets utiles : sacs en bâches publicitaires, mobilier en palettes, bijoux en capsules. Des ateliers pour les écoles et les seniors, et une petite boutique pour faire vivre le lieu.",
     "objectif_montant": 3000,
     "emplois_crees": "1 animateur·rice",
-    "referent": { "prenom": "Nadège", "role": "couturière et créatrice" },
+    "referent": {
+      "prenom": "Nadège",
+      "role": "couturière et créatrice"
+    },
     "preuve_demande": "3 écoles et 1 EHPAD demandent des ateliers",
     "statut": "en cours",
-    "recrute": { "poste": "1 animateur·rice d'atelier", "detail": "Accueillir les groupes, animer les ateliers, gérer la collecte des matériaux." },
-    "couleur": "#1A8C9A"
+    "recrute": {
+      "poste": "1 animateur·rice d'atelier",
+      "detail": "Accueillir les groupes, animer les ateliers, gérer la collecte des matériaux."
+    }
   }
 ]

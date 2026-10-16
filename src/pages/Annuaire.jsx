@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useData } from '../lib/store.jsx'
 import { EnTete } from '../components/Elements.jsx'
-import Icone from '../components/Icones.jsx'
 
 export default function Annuaire() {
   const { members, contributions, projects } = useData()
@@ -14,62 +13,54 @@ export default function Annuaire() {
   const liste = members.filter((m) => domaine === 'tous' || m.domaine === domaine)
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-8">
-      <EnTete surtitre="Annuaire" titre="Les entreprises et associations membres.">
-        Elles font vivre Ansanm par leur adhésion, et certaines soutiennent directement les projets.
+    <div className="max-w-5xl mx-auto px-5 pt-14">
+      <EnTete titre="Annuaire">
+        Les entreprises et associations membres. Elles font vivre Ansanm par leur adhésion, et certaines soutiennent directement les projets.
       </EnTete>
 
-      <div className="mt-6 -mx-4 px-4 flex gap-2 overflow-x-auto pb-2" aria-label="Filtrer par domaine">
+      <div className="mt-10 flex gap-5 overflow-x-auto border-b border-ligne -mx-5 px-5 text-sm" aria-label="Filtrer par domaine">
         {['tous', ...domaines].map((d) => (
           <button
             key={d}
             onClick={() => setDomaine(d)}
             aria-pressed={domaine === d}
-            className={`shrink-0 px-4 py-2 rounded-full text-sm font-semibold capitalize ring-1 transition ${domaine === d ? 'bg-encre text-sable ring-encre' : 'bg-white ring-sable-fonce'}`}
+            className={`shrink-0 pb-3 -mb-px border-b-2 capitalize transition-colors ${domaine === d ? 'border-encre' : 'border-transparent text-gris hover:text-encre'}`}
           >
             {d}
           </button>
         ))}
       </div>
 
-      <ul className="mt-6 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+      <ul>
         {liste.map((m) => {
           const projetsSoutenus = soutiens(m.id)
           const partenaire = m.partenaire || projetsSoutenus.length > 0
           const deplie = ouvert === m.id
           return (
-            <li key={m.id} className="bg-white rounded-3xl p-5 ring-1 ring-sable-fonce/60">
-              <button className="w-full text-left" onClick={() => setOuvert(deplie ? null : m.id)} aria-expanded={deplie}>
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="font-display text-lg font-bold leading-tight">{m.nom}</p>
-                    <p className="text-sm text-encre-doux mt-0.5">{m.activite} · {m.commune}</p>
-                  </div>
-                  <span className="text-xs capitalize px-2.5 py-1 rounded-full bg-sable text-encre-doux shrink-0">{m.type}</span>
-                </div>
-                {partenaire && (
-                  <span className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-feuille-fonce bg-feuille/12 px-2.5 py-1 rounded-full">
-                    <svg viewBox="0 0 12 12" className="w-3 h-3" aria-hidden="true"><rect x="1" y="2" width="10" height="8" rx="2" fill="currentColor" /></svg>
-                    Partenaire Ansanm
-                  </span>
-                )}
+            <li key={m.id} className="border-b border-ligne">
+              <button className="w-full text-left py-5 flex items-baseline justify-between gap-4" onClick={() => setOuvert(deplie ? null : m.id)} aria-expanded={deplie}>
+                <span>
+                  <span className="font-display text-xl">{m.nom}</span>
+                  <span className="block text-sm text-gris mt-0.5">{m.activite}, {m.commune}</span>
+                </span>
+                <span className="text-sm text-gris shrink-0 text-right">
+                  {partenaire && <span className="text-terre">Partenaire Ansanm</span>}
+                  <span className="block capitalize">{m.type}</span>
+                </span>
               </button>
               {deplie && (
-                <div className="mt-4 pt-4 border-t border-sable fondu">
-                  <p className="text-sm">{m.description}</p>
+                <div className="pb-6 -mt-1 max-w-2xl fondu">
+                  <p className="text-gris leading-relaxed">{m.description}</p>
                   {projetsSoutenus.length > 0 && (
-                    <div className="mt-3">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-encre-doux">Projets soutenus</p>
-                      <ul className="mt-1.5 flex flex-wrap gap-2">
-                        {projetsSoutenus.map((p) => (
-                          <li key={p.id}>
-                            <Link to={`/projets/${p.id}`} className="inline-flex items-center gap-1 text-sm font-semibold px-3 py-1 rounded-full text-white" style={{ background: p.couleur }}>
-                              {p.titre} <Icone nom="fleche" className="w-3.5 h-3.5" />
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <p className="mt-3 text-sm">
+                      Soutient :{' '}
+                      {projetsSoutenus.map((p, i) => (
+                        <span key={p.id}>
+                          {i > 0 && ', '}
+                          <Link to={`/projets/${p.id}`} className="underline hover:text-terre">{p.titre}</Link>
+                        </span>
+                      ))}
+                    </p>
                   )}
                 </div>
               )}
@@ -78,12 +69,10 @@ export default function Annuaire() {
         })}
       </ul>
 
-      <p className="mt-8 text-sm text-encre-doux max-w-2xl">
-        Mécénat : les membres sont mentionnés sobrement, avec les projets qu'ils soutiennent. Pas de publicité commerciale sur Ansanm.
+      <p className="mt-10 text-sm text-gris max-w-xl">
+        Mécénat : les membres sont mentionnés sobrement, avec les projets qu'ils soutiennent. Pas de publicité commerciale.
+        Votre structure veut apparaître ici ? <Link to="/adherer" className="underline hover:text-terre">Adhérer</Link>.
       </p>
-      <Link to="/adherer" className="mt-4 inline-flex items-center gap-1 font-semibold text-terre">
-        Votre structure veut rejoindre l'annuaire ? Adhérer <Icone nom="fleche" className="w-4 h-4" />
-      </Link>
     </div>
   )
 }

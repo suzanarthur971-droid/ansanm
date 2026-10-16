@@ -2,31 +2,14 @@ import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useData } from '../lib/store.jsx'
 import { PROFILS, TYPES, euros, tailleDeMontant } from '../lib/paves.js'
-import { PaveForme } from '../components/Trace.jsx'
-import { EnTete } from '../components/Elements.jsx'
-import Icone from '../components/Icones.jsx'
+import { Choix, EnTete, Groupe, champ } from '../components/Elements.jsx'
 
 const MONTANTS = [5, 10, 20, 50, 100, 200]
 const EXEMPLES = {
-  materiel: 'Ex. : un lot de bocaux, une brouette, des chutes de tissu…',
-  temps: 'Ex. : 2 heures par semaine pour les ateliers…',
-  competences: 'Ex. : photos, comptabilité, menuiserie, formation…',
+  materiel: 'Un lot de bocaux, une brouette, des chutes de tissu…',
+  temps: 'Deux heures par semaine pour les ateliers…',
+  competences: 'Photos, comptabilité, menuiserie, formation…',
 }
-
-function Etape({ n, titre, children }) {
-  return (
-    <fieldset className="bg-white rounded-3xl p-5 sm:p-6 ring-1 ring-sable-fonce/60">
-      <legend className="sr-only">{titre}</legend>
-      <p className="flex items-center gap-3 font-display text-lg font-bold" aria-hidden="true">
-        <span className="w-7 h-7 rounded-full bg-terre text-white text-sm grid place-items-center font-sans">{n}</span>
-        {titre}
-      </p>
-      <div className="mt-4">{children}</div>
-    </fieldset>
-  )
-}
-
-const champ = 'w-full rounded-2xl bg-sable-clair ring-1 ring-sable-fonce px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-terre'
 
 export default function Contribuer() {
   const { projects, needs, ajouterContribution } = useData()
@@ -50,15 +33,14 @@ export default function Contribuer() {
   const maj = (k) => (e) => setF({ ...f, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value })
 
   const montant = Number(f.montant) || 0
-  const taille = f.type === 'argent' ? tailleDeMontant(montant) : tailleDeMontant(30)
+  const taille = tailleDeMontant(f.type === 'argent' ? montant : 30)
   const besoins = needs.filter((n) => n.project_id === f.project_id && n.type === f.type && n.statut === 'ouvert')
-  const projet = projects.find((p) => p.id === f.project_id)
 
   const envoyer = (e) => {
     e.preventDefault()
-    if (f.type === 'argent' && montant < 1) return setErreur('Indique un montant d’au moins 1 €.')
-    if (f.type !== 'argent' && f.description.trim().length < 3) return setErreur('Décris en quelques mots ce que tu proposes.')
-    if (f.afficher && !f.nom.trim()) return setErreur('Indique le nom à afficher, ou décoche l’affichage pour rester anonyme.')
+    if (f.type === 'argent' && montant < 1) return setErreur('Indiquez un montant d’au moins 1 €.')
+    if (f.type !== 'argent' && f.description.trim().length < 3) return setErreur('Décrivez en quelques mots ce que vous proposez.')
+    if (f.afficher && !f.nom.trim()) return setErreur('Indiquez le nom à afficher, ou décochez l’affichage pour rester anonyme.')
     setErreur('')
     const id = ajouterContribution({
       project_id: f.project_id,
@@ -78,128 +60,107 @@ export default function Contribuer() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 pt-8">
-      <EnTete surtitre="Poser mon pavé" titre="Chacun contribue comme il peut.">
-        De l'argent, du matériel, du temps ou des compétences : toute contribution compte et devient un pavé sur la Trace.
+    <div className="max-w-2xl mx-auto px-5 pt-14">
+      <EnTete titre="Poser mon pavé">
+        De l'argent, du matériel, du temps ou des compétences : chacun contribue comme il peut, et chaque contribution devient un pavé sur la Trace.
       </EnTete>
-      <p className="mt-4 text-sm bg-mangue/15 text-terre-fonce rounded-2xl px-4 py-3">
-        Version bêta : ta contribution est enregistrée comme une <strong>promesse</strong>. Aucun paiement n'est demandé.
-      </p>
+      <p className="mt-6 text-sm text-gris">Pendant la bêta, votre contribution est enregistrée comme une promesse. Aucun paiement n'est demandé.</p>
 
-      <form onSubmit={envoyer} className="mt-6 space-y-4" noValidate>
-        <Etape n="1" titre="Quel projet ?">
-          <div className="grid gap-2 sm:grid-cols-3">
-            {projects.map((p) => (
-              <label key={p.id} className={`cursor-pointer rounded-2xl p-4 ring-2 transition ${f.project_id === p.id ? 'bg-sable-clair' : 'ring-sable-fonce/60 hover:ring-sable-fonce'}`} style={f.project_id === p.id ? { '--tw-ring-color': p.couleur } : undefined}>
-                <input type="radio" name="projet" value={p.id} checked={f.project_id === p.id} onChange={maj('project_id')} className="sr-only" />
-                <span className="text-xs font-semibold uppercase tracking-wider" style={{ color: p.couleur }}>{p.domaine}</span>
-                <span className="block font-display font-bold text-lg leading-tight mt-0.5">{p.titre}</span>
-              </label>
-            ))}
-          </div>
-        </Etape>
+      <form onSubmit={envoyer} className="mt-10" noValidate>
+        <Groupe titre="Projet">
+          {projects.map((p) => (
+            <Choix key={p.id} name="projet" value={p.id} checked={f.project_id === p.id} onChange={maj('project_id')}>
+              {p.titre} <span className="text-gris">— {p.accroche}</span>
+            </Choix>
+          ))}
+        </Groupe>
 
-        <Etape n="2" titre="Que veux-tu apporter ?">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+        <Groupe titre="Ce que vous apportez">
+          <div className="flex flex-wrap gap-x-6">
             {Object.entries(TYPES).map(([k, t]) => (
-              <label key={k} className={`cursor-pointer rounded-2xl p-3 flex flex-col items-center gap-1.5 ring-2 transition ${f.type === k ? 'text-white ring-transparent' : 'ring-sable-fonce/60'}`} style={f.type === k ? { background: t.couleur } : undefined}>
-                <input type="radio" name="type" value={k} checked={f.type === k} onChange={(e) => setF({ ...f, type: e.target.value, need_id: '' })} className="sr-only" />
-                <Icone nom={k} className="w-6 h-6" style={f.type === k ? undefined : { color: t.couleur }} />
-                <span className="font-semibold text-sm">{t.label}</span>
-              </label>
+              <Choix key={k} name="type" value={k} checked={f.type === k} onChange={(e) => setF({ ...f, type: e.target.value, need_id: '' })}>
+                {t.label}
+              </Choix>
             ))}
           </div>
 
           {f.type === 'argent' ? (
-            <div className="mt-5">
-              <label htmlFor="montant" className="font-medium">Montant de ta promesse</label>
-              <div className="mt-2 flex flex-wrap gap-2">
+            <div className="mt-6">
+              <label htmlFor="montant" className="text-sm text-gris">Montant</label>
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                <div className="relative w-32">
+                  <input id="montant" type="number" inputMode="numeric" min="1" value={f.montant} onChange={maj('montant')} className={champ + ' pr-8'} />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gris">€</span>
+                </div>
                 {MONTANTS.map((m) => (
-                  <button type="button" key={m} onClick={() => setF({ ...f, montant: m })} className={`px-4 py-2 rounded-full text-sm font-semibold ring-1 ${montant === m ? 'bg-terre text-white ring-terre' : 'ring-sable-fonce bg-sable-clair'}`}>
+                  <button type="button" key={m} onClick={() => setF({ ...f, montant: m })} className={`px-3 py-2.5 text-sm border rounded-[3px] ${montant === m ? 'border-encre' : 'border-ligne text-gris hover:text-encre'}`}>
                     {m} €
                   </button>
                 ))}
               </div>
-              <div className="mt-3 flex items-center gap-4">
-                <div className="relative w-40">
-                  <input id="montant" type="number" inputMode="numeric" min="1" value={f.montant} onChange={maj('montant')} className={champ + ' pr-10'} />
-                  <span className="absolute right-4 top-1/2 -translate-y-1/2 text-encre-doux">€</span>
-                </div>
-                <div className="flex items-center gap-2" aria-live="polite">
-                  <svg viewBox="-26 -22 52 44" className="w-12 h-10" aria-hidden="true">
-                    <PaveForme type="argent" taille={taille.key} />
-                  </svg>
-                  <span className="text-sm">Ce sera un <strong>{taille.label.toLowerCase()}</strong></span>
-                </div>
-              </div>
+              <p className="mt-3 text-sm text-gris" aria-live="polite">Votre contribution sera un <span className="text-encre">{taille.label.toLowerCase()}</span> sur la Trace.</p>
             </div>
           ) : (
-            <div className="mt-5 space-y-4">
+            <div className="mt-6 space-y-5">
               <div>
-                <label htmlFor="description" className="font-medium">Décris ta contribution</label>
+                <label htmlFor="description" className="text-sm text-gris">Description</label>
                 <textarea id="description" rows="2" value={f.description} onChange={maj('description')} placeholder={EXEMPLES[f.type]} className={champ + ' mt-2'} />
               </div>
               {besoins.length > 0 && (
                 <div>
-                  <label htmlFor="besoin" className="font-medium">Elle répond à quel besoin ? <span className="text-encre-doux font-normal">(facultatif)</span></label>
+                  <label htmlFor="besoin" className="text-sm text-gris">Besoin concerné (facultatif)</label>
                   <select id="besoin" value={f.need_id} onChange={maj('need_id')} className={champ + ' mt-2'}>
-                    <option value="">— Autre / je ne sais pas</option>
+                    <option value="">Autre, ou je ne sais pas</option>
                     {besoins.map((b) => <option key={b.id} value={b.id}>{b.libelle}</option>)}
                   </select>
                 </div>
               )}
             </div>
           )}
-        </Etape>
+        </Groupe>
 
-        <Etape n="3" titre="Qui pose ce pavé ?">
-          <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Profil">
+        <Groupe titre="Vous">
+          <div className="flex flex-wrap gap-x-6">
             {Object.entries(PROFILS).map(([k, label]) => (
-              <label key={k} className={`cursor-pointer px-4 py-2 rounded-full text-sm font-semibold ring-1 ${f.profil === k ? 'bg-encre text-sable ring-encre' : 'ring-sable-fonce bg-sable-clair'}`}>
-                <input type="radio" name="profil" value={k} checked={f.profil === k} onChange={maj('profil')} className="sr-only" />
-                {label}
-              </label>
+              <Choix key={k} name="profil" value={k} checked={f.profil === k} onChange={maj('profil')}>{label}</Choix>
             ))}
           </div>
 
-          <label className="mt-5 flex gap-3 items-start cursor-pointer">
-            <input type="checkbox" checked={f.afficher} onChange={maj('afficher')} className="mt-1 w-5 h-5 accent-terre shrink-0" />
-            <span>Afficher mon nom et ma motivation sur la Trace <span className="text-encre-doux">(sinon, ton pavé sera anonyme)</span></span>
+          <label className="mt-4 flex gap-3 items-baseline cursor-pointer">
+            <input type="checkbox" checked={f.afficher} onChange={maj('afficher')} className="accent-terre translate-y-[1px]" />
+            <span>Afficher mon nom et ma motivation sur la Trace <span className="text-gris">(sinon, le pavé est anonyme)</span></span>
           </label>
 
           {f.afficher && (
-            <div className="mt-4 space-y-4">
+            <div className="mt-5 space-y-5">
               <div>
-                <label htmlFor="nom" className="font-medium">Nom affiché</label>
-                <input id="nom" value={f.nom} onChange={maj('nom')} placeholder={f.profil === 'particulier' ? 'Ex. : Arthur S., coach' : 'Nom de la structure'} className={champ + ' mt-2'} autoComplete="off" />
+                <label htmlFor="nom" className="text-sm text-gris">Nom affiché</label>
+                <input id="nom" value={f.nom} onChange={maj('nom')} placeholder={f.profil === 'particulier' ? 'Arthur S., coach' : 'Nom de la structure'} className={champ + ' mt-2'} autoComplete="off" />
               </div>
               <div>
-                <label htmlFor="motivation" className="font-medium">Ta motivation, en une phrase <span className="text-encre-doux font-normal">(facultatif)</span></label>
-                <textarea id="motivation" rows="2" maxLength={140} value={f.motivation} onChange={maj('motivation')} placeholder="Pourquoi ce projet te tient à cœur ?" className={champ + ' mt-2'} />
-                <p className="text-xs text-encre-doux text-right mt-1">{f.motivation.length}/140</p>
+                <label htmlFor="motivation" className="text-sm text-gris">Votre motivation, en une phrase (facultatif)</label>
+                <textarea id="motivation" rows="2" maxLength={140} value={f.motivation} onChange={maj('motivation')} className={champ + ' mt-2'} />
+                <p className="text-xs text-gris text-right mt-1">{f.motivation.length}/140</p>
               </div>
             </div>
           )}
 
-          <label className="mt-4 flex gap-3 items-start cursor-pointer">
-            <input type="checkbox" checked={f.tenirInforme} onChange={maj('tenirInforme')} className="mt-1 w-5 h-5 accent-terre shrink-0" />
+          <label className="mt-4 flex gap-3 items-baseline cursor-pointer">
+            <input type="checkbox" checked={f.tenirInforme} onChange={maj('tenirInforme')} className="accent-terre translate-y-[1px]" />
             <span>Me tenir informé·e des projets similaires</span>
           </label>
           {f.tenirInforme && (
             <div className="mt-3">
               <label htmlFor="email" className="sr-only">Adresse e-mail</label>
-              <input id="email" type="email" value={f.email} onChange={maj('email')} placeholder="ton@email.fr" className={champ} autoComplete="email" />
+              <input id="email" type="email" value={f.email} onChange={maj('email')} placeholder="Adresse e-mail" className={champ} autoComplete="email" />
             </div>
           )}
-        </Etape>
+        </Groupe>
 
-        {erreur && <p className="text-terre-fonce bg-terre/10 rounded-2xl px-4 py-3 font-medium" role="alert">{erreur}</p>}
-
-        <div className="sticky bottom-20 md:bottom-4 z-10">
-          <button type="submit" className="w-full rounded-full bg-terre text-white font-semibold text-lg py-4 shadow-lg shadow-terre/30 hover:bg-terre-fonce transition">
-            Poser mon pavé
-            {f.type === 'argent' && montant > 0 && <span className="opacity-80"> · {euros(montant)}</span>}
-            <span className="sr-only"> sur le projet {projet.titre}</span>
+        <div className="pt-8 border-t border-ligne">
+          {erreur && <p className="mb-4 text-terre" role="alert">{erreur}</p>}
+          <button type="submit" className="w-full sm:w-auto bg-terre text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre-fonce transition-colors">
+            Poser mon pavé{f.type === 'argent' && montant > 0 ? ` · ${euros(montant)}` : ''}
           </button>
         </div>
       </form>

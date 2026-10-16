@@ -1,11 +1,10 @@
-import { Bouton } from '../components/Elements.jsx'
+import { Link } from 'react-router-dom'
 
 export default function Introuvable() {
   return (
-    <div className="max-w-xl mx-auto px-4 pt-20 text-center">
-      <p className="font-display text-6xl font-extrabold text-terre">404</p>
-      <h1 className="mt-2 text-2xl font-extrabold">Ce chemin n'est pas encore pavé.</h1>
-      <Bouton to="/" className="mt-6">Retour à l'accueil</Bouton>
+    <div className="max-w-2xl mx-auto px-5 pt-24">
+      <h1 className="text-4xl">Ce chemin n'est pas encore pavé.</h1>
+      <Link to="/" className="mt-6 inline-block underline hover:text-terre">Retour à l'accueil</Link>
     </div>
   )
 }

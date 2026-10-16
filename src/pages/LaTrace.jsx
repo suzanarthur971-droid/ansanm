@@ -4,64 +4,51 @@ import { useData, useProjet } from '../lib/store.jsx'
 import { euros } from '../lib/paves.js'
 import Trace, { FichePave, Legende } from '../components/Trace.jsx'
 import { Barre, Bouton, EnTete } from '../components/Elements.jsx'
-import Icone from '../components/Icones.jsx'
 
 export default function LaTrace() {
   const { projects } = useData()
   const [params, setParams] = useSearchParams()
   const id = projects.some((p) => p.id === params.get('projet')) ? params.get('projet') : projects[0].id
-  const { projet, paves, promis, progression, reste } = useProjet(id)
+  const { projet, paves, promis, progression } = useProjet(id)
   const [choisi, setChoisi] = useState(null)
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-8">
-      <EnTete surtitre="La Trace" titre="Chaque contribution est un pavé posé sur le chemin.">
-        Argent, matériel, temps ou compétences : toutes les contributions comptent. Touchez un pavé pour découvrir qui l'a posé, et pourquoi.
+    <div className="max-w-5xl mx-auto px-5 pt-14">
+      <EnTete titre="La Trace">
+        Chaque contribution est un pavé posé sur le chemin d'un projet. Touchez un pavé pour savoir qui l'a posé, et pourquoi.
       </EnTete>
 
-      <div className="mt-6 -mx-4 px-4 flex gap-2 overflow-x-auto pb-2" role="tablist" aria-label="Choisir un projet">
+      <div className="mt-10 flex gap-6 overflow-x-auto border-b border-ligne -mx-5 px-5" role="tablist" aria-label="Choisir un projet">
         {projects.map((p) => (
           <button
             key={p.id}
             role="tab"
             aria-selected={p.id === id}
             onClick={() => setParams({ projet: p.id }, { replace: true })}
-            className={`shrink-0 px-4 py-2 rounded-full text-sm font-semibold transition ring-1 ${p.id === id ? 'text-white ring-transparent' : 'bg-white text-encre ring-sable-fonce'}`}
-            style={p.id === id ? { background: p.couleur } : undefined}
+            className={`shrink-0 pb-3 -mb-px border-b-2 transition-colors ${p.id === id ? 'border-encre text-encre' : 'border-transparent text-gris hover:text-encre'}`}
           >
             {p.titre}
           </button>
         ))}
       </div>
 
-      <div className="mt-6 grid lg:grid-cols-[1fr_440px] gap-8 items-start">
-        <div className="lg:sticky lg:top-24 space-y-6 order-2 lg:order-1">
-          <div className="bg-white rounded-3xl p-6 ring-1 ring-sable-fonce/60">
-            <p className="text-sm font-semibold uppercase tracking-wider" style={{ color: projet.couleur }}>{projet.domaine}</p>
-            <h2 className="mt-1 text-2xl font-extrabold">{projet.titre}</h2>
-            <p className="mt-2 text-encre-doux">{projet.accroche}</p>
-            <div className="mt-5">
-              <Barre valeur={progression} couleur={projet.couleur} />
-              <div className="mt-2 flex flex-wrap justify-between gap-x-4 text-sm">
-                <span><strong>{euros(promis)}</strong> promis sur {euros(projet.objectif_montant)}</span>
-                <span className="text-encre-doux">reste {euros(reste)}</span>
-              </div>
-            </div>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <Bouton to={`/contribuer?projet=${id}`}>Poser mon pavé</Bouton>
-              <Bouton to={`/projets/${id}`} variante="contour">Fiche du projet</Bouton>
-            </div>
+      <div className="mt-10 grid md:grid-cols-[1fr_400px] gap-12 items-start">
+        <div className="md:sticky md:top-10 order-2 md:order-1">
+          <p className="text-sm text-gris">{projet.domaine}</p>
+          <h2 className="text-3xl mt-1">{projet.titre}</h2>
+          <p className="mt-3 text-gris leading-relaxed">{projet.accroche}</p>
+          <Barre valeur={progression} className="mt-6" />
+          <p className="mt-2 text-sm text-gris"><span className="text-encre">{euros(promis)}</span> promis sur {euros(projet.objectif_montant)} · {paves.length} pavés</p>
+          <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Bouton to={`/contribuer?projet=${id}`} variante="terre">Poser mon pavé</Bouton>
+            <Link to={`/projets/${id}`} className="underline hover:text-terre">Fiche du projet</Link>
           </div>
-          <div className="bg-white/60 rounded-3xl p-6 ring-1 ring-sable-fonce/60">
+          <div className="mt-12 pt-6 border-t border-ligne">
             <Legende />
           </div>
-          <p className="text-sm text-encre-doux flex gap-2">
-            <Icone nom="boucle" className="w-5 h-5 shrink-0 text-feuille" />
-            <span>Les trois traces se rejoignent : le jardin nourrit la cuisine, et les restes de la cuisine retournent au jardin. <Link to="/" className="underline">Voir la boucle</Link></span>
-          </p>
         </div>
 
-        <div className="order-1 lg:order-2 bg-sable/60 rounded-3xl py-4 -mx-4 sm:mx-0">
+        <div className="order-1 md:order-2">
           <Trace projet={projet} paves={paves} progression={progression} onChoisir={setChoisi} />
         </div>
       </div>

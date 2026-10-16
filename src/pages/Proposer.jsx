@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useData } from '../lib/store.jsx'
-import { Bouton, EnTete } from '../components/Elements.jsx'
-import Icone from '../components/Icones.jsx'
+import { EnTete, Groupe, champ } from '../components/Elements.jsx'
 
 const DOMAINES = ['Terre', 'Alimentation', 'Matière', 'Artisanat', 'Services', 'Culture', 'Autre']
 const CHECKLIST = [
@@ -9,8 +9,6 @@ const CHECKLIST = [
   { k: 'referent', label: 'Un·e référent·e est trouvé·e pour porter et guider le projet.' },
   { k: 'emploi', label: 'Le projet crée de l’emploi ou une activité durable, pas juste un achat.' },
 ]
-
-const champ = 'w-full rounded-2xl bg-sable-clair ring-1 ring-sable-fonce px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-terre'
 
 export default function Proposer() {
   const { ajouterProposition } = useData()
@@ -29,60 +27,62 @@ export default function Proposer() {
 
   if (envoye) {
     return (
-      <div className="max-w-xl mx-auto px-4 pt-16 text-center fondu" role="status">
-        <span className="mx-auto w-14 h-14 rounded-full bg-feuille text-white grid place-items-center"><Icone nom="check" className="w-7 h-7" /></span>
-        <h1 className="mt-4 text-3xl font-extrabold text-terre-fonce">Merci pour « {f.titre} » !</h1>
-        <p className="mt-3 text-encre-doux">Ta proposition sera présentée à la prochaine assemblée générale. Les projets sont étudiés tous les six mois.</p>
-        <Bouton to="/rendez-vous" className="mt-6">Voir la date de la prochaine AG</Bouton>
+      <div className="max-w-2xl mx-auto px-5 pt-20 fondu" role="status">
+        <h1 className="text-4xl">Merci pour « {f.titre} ».</h1>
+        <p className="mt-4 text-gris">Votre proposition sera présentée à la prochaine assemblée générale. Les projets sont étudiés tous les six mois.</p>
+        <Link to="/rendez-vous" className="mt-6 inline-block underline hover:text-terre">Date de la prochaine AG</Link>
       </div>
     )
   }
 
   const zone = (k, label, props = {}) => (
     <div>
-      <label htmlFor={k} className="font-medium">{label}</label>
+      <label htmlFor={k} className="text-sm text-gris">{label}</label>
       {props.rows ? <textarea id={k} value={f[k]} onChange={maj(k)} className={champ + ' mt-2'} {...props} /> : <input id={k} value={f[k]} onChange={maj(k)} className={champ + ' mt-2'} {...props} />}
     </div>
   )
 
   return (
-    <div className="max-w-3xl mx-auto px-4 pt-8">
-      <EnTete surtitre="Proposer un projet" titre="Tu as une idée qui répond à un vrai besoin ?">
-        Les projets sont étudiés en assemblée générale tous les six mois.
+    <div className="max-w-2xl mx-auto px-5 pt-14">
+      <EnTete titre="Proposer un projet">
+        Vous avez une idée qui répond à un vrai besoin ? Les projets sont étudiés en assemblée générale tous les six mois.
       </EnTete>
 
-      <form onSubmit={envoyer} className="mt-8 space-y-4">
-        <div className="bg-white rounded-3xl p-5 sm:p-6 ring-1 ring-sable-fonce/60 space-y-4">
-          {zone('titre', 'Titre du projet', { placeholder: 'Ex. : Atelier de réparation de vélos' })}
-          <div>
-            <label htmlFor="domaine" className="font-medium">Domaine</label>
-            <select id="domaine" value={f.domaine} onChange={maj('domaine')} className={champ + ' mt-2'}>
-              {DOMAINES.map((d) => <option key={d}>{d}</option>)}
-            </select>
+      <form onSubmit={envoyer} className="mt-10">
+        <Groupe titre="Le projet">
+          <div className="space-y-5">
+            {zone('titre', 'Titre', { placeholder: 'Atelier de réparation de vélos' })}
+            <div>
+              <label htmlFor="domaine" className="text-sm text-gris">Domaine</label>
+              <select id="domaine" value={f.domaine} onChange={maj('domaine')} className={champ + ' mt-2'}>
+                {DOMAINES.map((d) => <option key={d}>{d}</option>)}
+              </select>
+            </div>
+            {zone('description', 'Description', { rows: 4, placeholder: 'Ce que fait le projet, pour qui, où…' })}
+            {zone('emplois', 'Emplois créés', { placeholder: '1 mécanicien·ne à mi-temps' })}
+            {zone('referent', 'Référent·e pressenti·e', { placeholder: 'Prénom et rôle' })}
+            {zone('preuve', 'Preuve de demande', { placeholder: '40 personnes sondées au marché' })}
+            {zone('besoins', 'Besoins : argent, matériel, temps, compétences', { rows: 3 })}
           </div>
-          {zone('description', 'Description', { rows: 4, placeholder: 'Ce que fait le projet, pour qui, où…' })}
-          {zone('emplois', 'Emplois créés', { placeholder: 'Ex. : 1 mécanicien·ne à mi-temps' })}
-          {zone('referent', 'Référent·e pressenti·e', { placeholder: 'Prénom et rôle' })}
-          {zone('preuve', 'Preuve de demande', { placeholder: 'Ex. : 40 personnes sondées au marché' })}
-          {zone('besoins', 'Besoins (argent, matériel, temps, compétences)', { rows: 3 })}
-        </div>
+        </Groupe>
 
-        <fieldset className="bg-feuille/10 rounded-3xl p-5 sm:p-6">
-          <legend className="font-display text-lg font-bold text-feuille-fonce px-1">Avant d'envoyer, on vérifie</legend>
-          <div className="space-y-3 mt-2">
+        <Groupe titre="Avant d'envoyer">
+          <div className="space-y-3">
             {CHECKLIST.map((c) => (
-              <label key={c.k} className="flex gap-3 items-start cursor-pointer">
-                <input type="checkbox" checked={!!coche[c.k]} onChange={(e) => setCoche({ ...coche, [c.k]: e.target.checked })} className="mt-1 w-5 h-5 accent-feuille shrink-0" />
+              <label key={c.k} className="flex gap-3 items-baseline cursor-pointer">
+                <input type="checkbox" checked={!!coche[c.k]} onChange={(e) => setCoche({ ...coche, [c.k]: e.target.checked })} className="accent-terre translate-y-[1px]" />
                 <span>{c.label}</span>
               </label>
             ))}
           </div>
-        </fieldset>
+        </Groupe>
 
-        <Bouton type="submit" disabled={!pret} className="w-full disabled:opacity-40 disabled:cursor-not-allowed">
-          Envoyer ma proposition
-        </Bouton>
-        {!pret && <p className="text-sm text-encre-doux text-center">Le titre, la description et les trois cases sont nécessaires.</p>}
+        <div className="pt-8 border-t border-ligne">
+          <button type="submit" disabled={!pret} className="bg-encre text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre transition-colors disabled:opacity-30 disabled:hover:bg-encre disabled:cursor-not-allowed">
+            Envoyer ma proposition
+          </button>
+          {!pret && <p className="mt-3 text-sm text-gris">Le titre, la description et les trois cases sont nécessaires.</p>}
+        </div>
       </form>
     </div>
   )
