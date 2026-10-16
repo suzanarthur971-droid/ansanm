@@ -15,7 +15,7 @@ export default function LaTrace() {
   return (
     <div className="max-w-5xl mx-auto px-5 pt-14">
       <EnTete titre="La Trace">
-        Chaque contribution est un pavé posé sur le chemin d'un projet. Touchez un pavé pour savoir qui l'a posé, et pourquoi.
+        Ensemble, nous construisons le chemin de chaque projet, pavé par pavé. Touche un pavé pour savoir qui l'a posé, et pourquoi.
       </EnTete>
 
       <div className="mt-10 flex gap-6 overflow-x-auto border-b border-ligne -mx-5 px-5" role="tablist" aria-label="Choisir un projet">

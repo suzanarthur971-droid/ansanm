@@ -18,7 +18,7 @@ export default function Adherer() {
 
   const envoyer = (e) => {
     e.preventDefault()
-    if (!f.nom.trim() || !f.email.includes('@')) return setErreur('Indiquez votre nom et une adresse e-mail valide.')
+    if (!f.nom.trim() || !f.email.includes('@')) return setErreur('Indique ton nom et une adresse e-mail valide.')
     ajouterAdhesion(f)
     setEnvoye(true)
   }
@@ -26,14 +26,14 @@ export default function Adherer() {
   return (
     <div className="max-w-2xl mx-auto px-5 pt-14">
       <EnTete titre="Adhérer">
-        Les adhésions font vivre l'association : c'est ce qui permet que 100 % des dons aillent aux projets.
-        Chaque membre a une voix en assemblée générale, quel que soit le montant qu'il donne.
+        Nos adhésions font vivre l'association : c'est grâce à elles que 100 % des dons vont aux projets.
+        En adhérant, tu nous rejoins et tu as une voix en assemblée générale, quel que soit le montant que tu donnes.
       </EnTete>
 
       {envoye ? (
         <div className="mt-12 pt-8 border-t border-ligne fondu" role="status">
           <p className="font-display text-3xl">Bienvenue dans le koudmen.</p>
-          <p className="mt-3 text-gris">Votre pré-adhésion est enregistrée. Nous vous recontacterons à l'ouverture des adhésions.</p>
+          <p className="mt-3 text-gris">Ta pré-adhésion est enregistrée. Nous te recontacterons à l'ouverture des adhésions.</p>
           <Link to="/trace" className="mt-6 inline-block underline hover:text-terre">Voir la Trace</Link>
         </div>
       ) : (

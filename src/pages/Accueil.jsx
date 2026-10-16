@@ -19,8 +19,8 @@ export default function Accueil() {
           Une autre façon de faire avancer la Guadeloupe : <em className="text-terre">pavé par pavé.</em>
         </h1>
         <p className="mt-8 text-lg sm:text-xl text-gris leading-relaxed max-w-2xl">
-          Ansanm est une association qui transforme l'envie d'agir en actions concrètes. Entreprises, associations
-          et citoyens financent et soutiennent des projets qui créent de l'emploi et renforcent l'autonomie du territoire.
+          Ensemble, nous transformons l'envie d'agir en actions concrètes. Entreprises, associations et citoyens,
+          nous finançons et soutenons des projets qui créent de l'emploi et renforcent l'autonomie de notre territoire.
         </p>
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
           <Bouton to="/contribuer" variante="terre">Poser mon pavé</Bouton>
@@ -39,7 +39,7 @@ export default function Accueil() {
         ))}
       </dl>
 
-      <Section titre="Les projets en cours">
+      <Section titre="Nos projets en cours">
         <div className="border-b border-ligne">
           {projects.map((p) => <LigneProjet key={p.id} id={p.id} />)}
         </div>
@@ -49,11 +49,11 @@ export default function Accueil() {
         <div>
           <h2 className="text-2xl sm:text-3xl">Imiter le vivant</h2>
           <p className="mt-4 text-gris leading-relaxed">
-            Comme dans une forêt, la diversité vaut mieux que la dépendance. Les projets se nourrissent les uns
+            Comme dans une forêt, nous préférons la diversité à la dépendance. Nos projets se nourrissent les uns
             les autres, en cycles fermés : les ressources se succèdent comme les saisons.
           </p>
           <p className="mt-4 text-gris leading-relaxed">
-            C'est un koudmen moderne : chacun vient poser sa pierre, avec ce qu'il a.
+            C'est notre koudmen moderne : chacun de nous vient poser sa pierre, avec ce qu'il a.
           </p>
         </div>
         <ol className="self-end text-lg border-t border-ligne">
@@ -65,7 +65,7 @@ export default function Accueil() {
 
       <Section>
         <p className="font-display text-3xl sm:text-4xl leading-tight max-w-3xl">
-          100 % des dons vont aux projets. L'association vit de ses adhésions, et chaque membre a une voix.
+          100 % de nos dons vont aux projets. Notre association vit de nos adhésions, et chacun de nous a une voix.
         </p>
         <Link to="/regles" className="mt-6 inline-block underline hover:text-terre">Lire nos sept règles</Link>
       </Section>

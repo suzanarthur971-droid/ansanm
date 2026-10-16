@@ -15,7 +15,7 @@ export default function Annuaire() {
   return (
     <div className="max-w-5xl mx-auto px-5 pt-14">
       <EnTete titre="Annuaire">
-        Les entreprises et associations membres. Elles font vivre Ansanm par leur adhésion, et certaines soutiennent directement les projets.
+        Les entreprises et associations qui avancent avec nous. Elles font vivre Ansanm par leur adhésion, et beaucoup soutiennent directement nos projets.
       </EnTete>
 
       <div className="mt-10 flex gap-5 overflow-x-auto border-b border-ligne -mx-5 px-5 text-sm" aria-label="Filtrer par domaine">
@@ -71,7 +71,7 @@ export default function Annuaire() {
 
       <p className="mt-10 text-sm text-gris max-w-xl">
         Mécénat : les membres sont mentionnés sobrement, avec les projets qu'ils soutiennent. Pas de publicité commerciale.
-        Votre structure veut apparaître ici ? <Link to="/adherer" className="underline hover:text-terre">Adhérer</Link>.
+        Ta structure veut nous rejoindre ? <Link to="/adherer" className="underline hover:text-terre">Adhérer</Link>.
       </p>
     </div>
   )

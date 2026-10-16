@@ -15,7 +15,7 @@ export default function Regles() {
   return (
     <div className="max-w-3xl mx-auto px-5 pt-14">
       <EnTete titre="Nos règles">
-        Ansanm est un koudmen moderne : on avance ensemble, avec des règles claires pour tout le monde.
+        Ansanm, c'est notre koudmen moderne : nous avançons ensemble, avec des règles claires pour tout le monde.
       </EnTete>
 
       <ol className="mt-12 border-t border-ligne">
@@ -32,20 +32,20 @@ export default function Regles() {
 
       <h2 className="mt-16 text-3xl">Gouvernance</h2>
       <p className="mt-4 text-gris leading-relaxed">
-        Une assemblée générale se tient tous les six mois. Chaque membre y a une voix, quel que soit le montant donné.
-        Les nouveaux projets y sont étudiés et votés, et les comptes sont publiés dans le magazine trimestriel.
+        Nous nous réunissons en assemblée générale tous les six mois. Chacun de nous y a une voix, quel que soit le montant donné.
+        Nous y étudions et votons les nouveaux projets, et nous publions nos comptes dans le magazine trimestriel.
       </p>
 
       <h2 className="mt-12 text-3xl">Des financements diversifiés</h2>
       <p className="mt-4 text-gris leading-relaxed">
-        Comme dans le vivant, la diversité plutôt que la dépendance : les adhésions font vivre l'association, les dons et
+        Comme dans le vivant, nous préférons la diversité à la dépendance : nos adhésions font vivre l'association, les dons et
         le mécénat vont aux projets, les marchés trimestriels et la vente de t-shirts (dont la marge rejoint la cagnotte)
         complètent l'ensemble.
       </p>
 
       <h2 className="mt-12 text-3xl">Horizon</h2>
       <p className="mt-4 text-gris leading-relaxed">
-        Demain, une coopérative pour les investissements citoyens : terrains, locaux, logements.
+        Demain, nous voulons créer une coopérative pour investir ensemble : terrains, locaux, logements.
       </p>
 
       <p className="mt-12 flex gap-6">

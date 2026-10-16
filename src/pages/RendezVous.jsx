@@ -10,7 +10,7 @@ export default function RendezVous() {
 
   return (
     <div className="max-w-3xl mx-auto px-5 pt-14">
-      <EnTete titre="Rendez-vous">Un marché chaque trimestre, une assemblée générale tous les six mois.</EnTete>
+      <EnTete titre="Rendez-vous">Nous nous retrouvons au marché chaque trimestre, et en assemblée générale tous les six mois.</EnTete>
 
       <ol className="mt-12 border-t border-ligne">
         {liste.map((e) => {

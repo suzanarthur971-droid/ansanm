@@ -38,9 +38,9 @@ export default function Contribuer() {
 
   const envoyer = (e) => {
     e.preventDefault()
-    if (f.type === 'argent' && montant < 1) return setErreur('Indiquez un montant d’au moins 1 €.')
-    if (f.type !== 'argent' && f.description.trim().length < 3) return setErreur('Décrivez en quelques mots ce que vous proposez.')
-    if (f.afficher && !f.nom.trim()) return setErreur('Indiquez le nom à afficher, ou décochez l’affichage pour rester anonyme.')
+    if (f.type === 'argent' && montant < 1) return setErreur('Indique un montant d’au moins 1 €.')
+    if (f.type !== 'argent' && f.description.trim().length < 3) return setErreur('Décris en quelques mots ce que tu proposes.')
+    if (f.afficher && !f.nom.trim()) return setErreur('Indique le nom à afficher, ou décoche l’affichage pour rester anonyme.')
     setErreur('')
     const id = ajouterContribution({
       project_id: f.project_id,
@@ -62,9 +62,9 @@ export default function Contribuer() {
   return (
     <div className="max-w-2xl mx-auto px-5 pt-14">
       <EnTete titre="Poser mon pavé">
-        De l'argent, du matériel, du temps ou des compétences : chacun contribue comme il peut, et chaque contribution devient un pavé sur la Trace.
+        De l'argent, du matériel, du temps ou des compétences : chez nous, chacun contribue comme il peut, et chaque contribution devient un pavé sur la Trace.
       </EnTete>
-      <p className="mt-6 text-sm text-gris">Pendant la bêta, votre contribution est enregistrée comme une promesse. Aucun paiement n'est demandé.</p>
+      <p className="mt-6 text-sm text-gris">Pendant la bêta, ta contribution est enregistrée comme une promesse. Aucun paiement n'est demandé.</p>
 
       <form onSubmit={envoyer} className="mt-10" noValidate>
         <Groupe titre="Projet">
@@ -75,7 +75,7 @@ export default function Contribuer() {
           ))}
         </Groupe>
 
-        <Groupe titre="Ce que vous apportez">
+        <Groupe titre="Ce que tu apportes">
           <div className="flex flex-wrap gap-x-6">
             {Object.entries(TYPES).map(([k, t]) => (
               <Choix key={k} name="type" value={k} checked={f.type === k} onChange={(e) => setF({ ...f, type: e.target.value, need_id: '' })}>
@@ -98,7 +98,7 @@ export default function Contribuer() {
                   </button>
                 ))}
               </div>
-              <p className="mt-3 text-sm text-gris" aria-live="polite">Votre contribution sera un <span className="text-encre">{taille.label.toLowerCase()}</span> sur la Trace.</p>
+              <p className="mt-3 text-sm text-gris" aria-live="polite">Ta contribution sera un <span className="text-encre">{taille.label.toLowerCase()}</span> sur la Trace.</p>
             </div>
           ) : (
             <div className="mt-6 space-y-5">
@@ -119,7 +119,7 @@ export default function Contribuer() {
           )}
         </Groupe>
 
-        <Groupe titre="Vous">
+        <Groupe titre="Toi">
           <div className="flex flex-wrap gap-x-6">
             {Object.entries(PROFILS).map(([k, label]) => (
               <Choix key={k} name="profil" value={k} checked={f.profil === k} onChange={maj('profil')}>{label}</Choix>
@@ -138,7 +138,7 @@ export default function Contribuer() {
                 <input id="nom" value={f.nom} onChange={maj('nom')} placeholder={f.profil === 'particulier' ? 'Arthur S., coach' : 'Nom de la structure'} className={champ + ' mt-2'} autoComplete="off" />
               </div>
               <div>
-                <label htmlFor="motivation" className="text-sm text-gris">Votre motivation, en une phrase (facultatif)</label>
+                <label htmlFor="motivation" className="text-sm text-gris">Ta motivation, en une phrase (facultatif)</label>
                 <textarea id="motivation" rows="2" maxLength={140} value={f.motivation} onChange={maj('motivation')} className={champ + ' mt-2'} />
                 <p className="text-xs text-gris text-right mt-1">{f.motivation.length}/140</p>
               </div>

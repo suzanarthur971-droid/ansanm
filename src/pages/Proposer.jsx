@@ -29,7 +29,7 @@ export default function Proposer() {
     return (
       <div className="max-w-2xl mx-auto px-5 pt-20 fondu" role="status">
         <h1 className="text-4xl">Merci pour « {f.titre} ».</h1>
-        <p className="mt-4 text-gris">Votre proposition sera présentée à la prochaine assemblée générale. Les projets sont étudiés tous les six mois.</p>
+        <p className="mt-4 text-gris">Ta proposition sera présentée à notre prochaine assemblée générale : nous étudions les projets ensemble, tous les six mois.</p>
         <Link to="/rendez-vous" className="mt-6 inline-block underline hover:text-terre">Date de la prochaine AG</Link>
       </div>
     )
@@ -45,7 +45,7 @@ export default function Proposer() {
   return (
     <div className="max-w-2xl mx-auto px-5 pt-14">
       <EnTete titre="Proposer un projet">
-        Vous avez une idée qui répond à un vrai besoin ? Les projets sont étudiés en assemblée générale tous les six mois.
+        Tu as une idée qui répond à un vrai besoin ? Nous étudions les projets ensemble, en assemblée générale, tous les six mois.
       </EnTete>
 
       <form onSubmit={envoyer} className="mt-10">

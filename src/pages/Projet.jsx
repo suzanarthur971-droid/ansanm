@@ -88,7 +88,7 @@ export default function Projet() {
 
         <div className="md:sticky md:top-10">
           <h2 className="text-2xl mb-2">Sa trace</h2>
-          <p className="text-sm text-gris mb-4">{paves.length} pavés posés. Touchez-en un.</p>
+          <p className="text-sm text-gris mb-4">{paves.length} pavés posés. Touches-en un.</p>
           <Trace projet={projet} paves={paves} progression={progression} nouveauId={nouveauId} onChoisir={setChoisi} />
           <div className="mt-6 pt-6 border-t border-ligne"><Legende /></div>
         </div>
@@ -98,8 +98,8 @@ export default function Projet() {
         <div className="fixed bottom-5 inset-x-0 z-40 px-5 fondu" role="status">
           <div className="max-w-md mx-auto bg-encre text-papier px-5 py-4 flex gap-4 items-start">
             <div className="flex-1">
-              <p className="font-display text-lg">Votre pavé est posé.</p>
-              <p className="text-sm opacity-75 mt-0.5">Merci. Partagez la Trace pour que d'autres posent le leur.</p>
+              <p className="font-display text-lg">Ton pavé est posé.</p>
+              <p className="text-sm opacity-75 mt-0.5">Merci ! Partage la Trace pour que d'autres posent le leur.</p>
             </div>
             <button onClick={() => { setMessage(false); setParams({}, { replace: true }) }} className="text-sm opacity-75 hover:opacity-100">
               Fermer
