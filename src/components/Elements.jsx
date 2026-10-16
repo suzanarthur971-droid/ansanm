@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useProjet } from '../lib/store.jsx'
 import { euros } from '../lib/paves.js'
+import MiniTrace from './MiniTrace.jsx'
 
 export function Barre({ valeur, className = '' }) {
   return (
@@ -20,7 +21,7 @@ export function LigneProjet({ id }) {
         <span className="text-sm text-gris shrink-0">{projet.domaine}</span>
       </div>
       <p className="mt-1 text-gris">{projet.accroche}</p>
-      <Barre valeur={progression} className="mt-5" />
+      <div className="mt-4 -mx-3"><MiniTrace paves={paves} progression={progression} /></div>
       <p className="mt-2 text-sm text-gris">
         <span className="text-encre">{euros(promis)}</span> sur {euros(projet.objectif_montant)} · {paves.length} pavés
       </p>

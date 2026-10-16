@@ -5,7 +5,7 @@ import { TAILLES, TYPES, euros, hash, tailleDe, teinteDe, PROFILS, resumeContrib
 const S = Object.fromEntries(TAILLES.map((t) => [t.key, t.s]))
 
 // Dimensions d'un pavé : largeur le long du chemin, hauteur en travers
-function dims(taille) {
+export function dims(taille) {
   const s = S[taille]
   if (taille === 'galet') return { w: s * 1.24, h: s * 0.88 }
   if (taille === 'pave') return { w: s, h: s * 0.92 }
@@ -148,18 +148,19 @@ export function Legende() {
         {TAILLES.map((t) => (
           <li key={t.key} className="flex items-center gap-2">
             <svg viewBox="-24 -20 48 40" className="w-7 h-6 shrink-0" aria-hidden="true"><PaveForme type="argent" taille={t.key} /></svg>
-            <span><span className="text-encre">{t.label}</span> {t.regle}</span>
+            <span><span className="text-encre">{t.label}</span> : {t.regle}</span>
           </li>
         ))}
       </ul>
-      <ul className="flex flex-wrap gap-x-5 gap-y-2">
-        {Object.entries(TYPES).map(([k, v]) => (
-          <li key={k} className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-[2px]" style={{ background: v.couleur }} aria-hidden="true" />
-            <span className="text-encre">{v.label}</span>
-          </li>
+      <p className="flex flex-wrap items-center gap-x-2 gap-y-1">
+        <span className="text-encre">Pierres de couleur</span> : matériel, temps et compétences offerts
+        {['materiel', 'temps', 'competences'].map((k) => (
+          <span key={k} className="inline-flex items-center gap-1.5 ml-2">
+            <span className="w-3 h-3 rounded-[2px]" style={{ background: TYPES[k].couleur }} aria-hidden="true" />
+            {TYPES[k].label.toLowerCase()}
+          </span>
         ))}
-      </ul>
+      </p>
     </div>
   )
 }
@@ -184,9 +185,10 @@ export function FichePave({ pave, projet, onFermer }) {
           </div>
           <button onClick={onFermer} className="text-sm text-gris hover:text-encre py-1">Fermer</button>
         </div>
-        <p className="mt-5">
-          {TYPES[pave.type].label} — {resumeContribution(pave)}, au projet {projet.titre}.
+        <p className="mt-5 text-lg leading-snug">
+          {nom} a posé {taille.key === 'dalle' ? 'une' : 'un'} {taille.label.toLowerCase()} sur la trace {projet.titre}.
         </p>
+        <p className="mt-1 text-sm text-gris">{TYPES[pave.type].label} : {resumeContribution(pave)}</p>
         {pave.motivation && (
           <p className="mt-4 font-display text-xl leading-snug">« {pave.motivation} »</p>
         )}

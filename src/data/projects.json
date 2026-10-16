@@ -3,57 +3,64 @@
     "id": "jardin-nourricier",
     "titre": "Jardin nourricier",
     "domaine": "Terre",
-    "accroche": "Un verger vivant qui nourrit le quartier.",
-    "description": "Un terrain existant, déjà planté d'arbres fruitiers, entretenu en syntropie par une équipe mobile de jardiniers. Les fruits et légumes alimentent la cuisine collective, et les restes de la cuisine reviennent au jardin sous forme de compost.",
+    "accroche": "Des arbres chargés de fruits, et personne pour les cueillir.",
+    "histoire": [
+      "Partout en Guadeloupe, des terrains dorment. Leurs propriétaires vivent loin, ou ne savent pas quoi en faire. Pourtant, les manguiers, les avocatiers et les arbres à pain continuent de donner, saison après saison, et les fruits pourrissent au sol.",
+      "Ce projet commence sur un terrain déjà planté d'arbres fruitiers. Une équipe mobile, formée à la syntropie, va l'entretenir, l'enrichir et le rendre nourricier. Les récoltes alimentent la cuisine collective, et le terrain reprend vie."
+    ],
+    "impacts": [
+      "2 emplois de jardiniers à temps partiel",
+      "Des fruits locaux en circuit court pour la cuisine",
+      "Un modèle reproductible sur d'autres terrains en friche"
+    ],
+    "porteur": "Un jardinier formé à la syntropie, qui transmet son savoir à l'équipe.",
+    "attente": "La cuisine collective, et les familles qui veulent des fruits locaux.",
     "objectif_montant": 4000,
     "emplois_crees": "2 jardiniers à temps partiel",
-    "referent": {
-      "prenom": "Josette",
-      "role": "jardinière en agroforesterie"
-    },
-    "preuve_demande": "12 familles inscrites pour les paniers et 2 cantines scolaires intéressées",
     "statut": "en cours",
-    "recrute": {
-      "poste": "2 jardiniers·ères à temps partiel",
-      "detail": "Taille, paillage, récolte. Formation à la syntropie assurée sur place."
-    }
+    "recrute": { "poste": "2 jardiniers·ères à temps partiel", "detail": "Taille, paillage, récolte. Formation à la syntropie assurée sur place." }
   },
   {
     "id": "cuisine-collective",
     "titre": "Cuisine collective",
     "domaine": "Alimentation",
-    "accroche": "Des plats maison pour alléger la charge des parents.",
-    "description": "Des ateliers de batch cooking pour préparer les repas de la semaine ensemble et alléger la charge mentale des parents. La cuisine transforme les fruits du jardin et les invendus des commerçants partenaires en confitures, sirops et plats préparés.",
+    "accroche": "Et si préparer à manger n'était plus une charge, mais un moment partagé ?",
+    "histoire": [
+      "Ce projet est né d'une réunion entre parents. Tous parlaient de la même chose : la fatigue de devoir penser, chaque soir, à ce qu'on va manger. Faire les courses, cuisiner, recommencer.",
+      "La cuisine collective permet de préparer ensemble, en une session, les repas de la semaine. Avec des produits locaux, des fruits du jardin nourricier et les invendus de nos partenaires, qui sont transformés au lieu d'être jetés."
+    ],
+    "impacts": [
+      "1 emploi de cuisinier ou cuisinière référent",
+      "Moins de charge mentale pour les familles",
+      "Moins de gaspillage alimentaire",
+      "Un débouché garanti pour les petits producteurs locaux"
+    ],
+    "porteur": "Une personne passionnée de cuisine, qui encadre les ateliers.",
+    "attente": "35 familles déjà intéressées.",
     "objectif_montant": 6000,
     "emplois_crees": "1 cuisinier·ère référent·e",
-    "referent": {
-      "prenom": "Marius",
-      "role": "cuisinier"
-    },
-    "preuve_demande": "35 familles intéressées",
     "statut": "en cours",
-    "recrute": {
-      "poste": "1 cuisinier·ère référent·e",
-      "detail": "Animer les ateliers, organiser la transformation des produits, garantir l'hygiène."
-    }
+    "recrute": { "poste": "1 cuisinier·ère référent·e", "detail": "Animer les ateliers, organiser la transformation des produits, garantir l'hygiène." }
   },
   {
     "id": "atelier-upcycling",
     "titre": "Atelier upcycling",
     "domaine": "Matière",
-    "accroche": "Nos déchets deviennent des objets utiles.",
-    "description": "Un atelier ouvert où l'on transforme les déchets en objets utiles : sacs en bâches publicitaires, mobilier en palettes, bijoux en capsules. Des ateliers pour les écoles et les seniors, et une petite boutique pour faire vivre le lieu.",
+    "accroche": "Ce qu'on jette aujourd'hui peut devenir ce dont on a besoin demain.",
+    "histoire": [
+      "Palettes, pneus, tissus, bidons : nos déchets s'accumulent sur une île où tout arrive par bateau. Pourtant, avec de l'imagination et du savoir-faire, ils peuvent redevenir des meubles, des bacs à plantes, des objets utiles.",
+      "L'atelier upcycling est un lieu où l'on apprend à transformer, et où l'on fabrique des objets vendus localement."
+    ],
+    "impacts": [
+      "1 emploi d'animateur ou animatrice",
+      "Moins de déchets envoyés à la décharge",
+      "Des savoir-faire transmis aux jeunes et aux moins jeunes"
+    ],
+    "porteur": "Un ou une artisan qui aime transmettre.",
+    "attente": "Les écoles, les associations et les particuliers qui veulent apprendre.",
     "objectif_montant": 3000,
     "emplois_crees": "1 animateur·rice",
-    "referent": {
-      "prenom": "Nadège",
-      "role": "couturière et créatrice"
-    },
-    "preuve_demande": "3 écoles et 1 EHPAD demandent des ateliers",
     "statut": "en cours",
-    "recrute": {
-      "poste": "1 animateur·rice d'atelier",
-      "detail": "Accueillir les groupes, animer les ateliers, gérer la collecte des matériaux."
-    }
+    "recrute": { "poste": "1 animateur·rice d'atelier", "detail": "Accueillir les groupes, animer les ateliers, gérer la collecte des matériaux." }
   }
 ]

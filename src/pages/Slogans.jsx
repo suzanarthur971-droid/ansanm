@@ -39,6 +39,8 @@ export default function Slogans() {
   const [votes, setVotes] = useState(lireVotes)
   const [texte, setTexte] = useState('')
   const [message, setMessage] = useState('')
+  const [accord, setAccord] = useState(false)
+  const [erreurChargement, setErreurChargement] = useState(false)
 
   useEffect(() => {
     if (!supabase) return
@@ -46,6 +48,7 @@ export default function Slogans() {
       .then((d) => setSlogans(d))
       .catch((e) => {
         console.warn('Supabase : slogans indisponibles', e)
+        setErreurChargement(true)
         setSlogans(DEMO)
       })
       .finally(() => setCharge(true))
@@ -63,12 +66,14 @@ export default function Slogans() {
   const proposer = (e) => {
     e.preventDefault()
     const t = texte.trim()
-    if (t.length < 3) return setMessage('Ton slogan doit faire au moins 3 caractères.')
+    if (t.length < 3) return setMessage('Ta phrase doit faire au moins 3 caractères.')
+    if (!accord) return setMessage('Coche la case pour accepter que ta phrase soit utilisée par Ansanm.')
     if (slogans.some((s) => s.texte.toLowerCase() === t.toLowerCase())) return setMessage('Ce slogan est déjà proposé : vote pour lui !')
     const id = crypto.randomUUID()
     setSlogans((l) => [...l, { id, texte: t, votes: 0 }])
     setTexte('')
-    setMessage('Merci ! Ton slogan est en lice.')
+    setAccord(false)
+    setMessage('Merci ! Ta phrase est en lice.')
     if (supabase) proposerSlogan(id, t).catch((err) => console.warn('Supabase : slogan non enregistré', err))
   }
 
@@ -77,41 +82,49 @@ export default function Slogans() {
 
   return (
     <div className="max-w-2xl mx-auto px-5 pt-14">
-      <EnTete titre="Nos t-shirts">
-        Nous choisissons ensemble le slogan de nos futurs t-shirts. Propose le tien et vote pour tes préférés :
-        toute la marge des t-shirts rejoint la cagnotte des projets.
+      <EnTete titre="Écris la phrase que la Guadeloupe portera">
+        <p>Au dos : ANSANM. Devant : ta phrase.</p>
+        <p className="mt-4">
+          Propose un slogan, vote pour tes préférés. Le gagnant sera mis en forme par un graphiste local et imprimé en
+          précommande. La marge de chaque t-shirt va dans la cagnotte des projets.
+        </p>
       </EnTete>
 
       <figure className="mt-10 -mx-5 sm:mx-0">
         <img src="/tshirt-ansanm.jpg" alt="T-shirt blanc Ansanm, vu de face et de dos avec le logo imprimé dans le dos" className="w-full" width="1400" height="933" />
-        <figcaption className="mt-2 px-5 sm:px-0 text-sm text-gris">Maquette : le slogan gagnant viendra compléter ce t-shirt.</figcaption>
+        <figcaption className="mt-2 px-5 sm:px-0 text-sm text-gris">Maquette : le logo au dos, la phrase gagnante devant.</figcaption>
       </figure>
 
       <form onSubmit={proposer} className="mt-10 pt-8 border-t border-ligne">
-        <label htmlFor="slogan" className="font-display text-xl">Proposer un slogan</label>
+        <label htmlFor="slogan" className="font-display text-xl">Ta phrase</label>
         <div className="mt-4 flex flex-col sm:flex-row gap-3">
           <input
             id="slogan"
             value={texte}
             maxLength={MAX}
             onChange={(e) => { setTexte(e.target.value); setMessage('') }}
-            placeholder="Ton idée de slogan"
+            placeholder="Ta phrase pour le devant du t-shirt"
             className={champ + ' flex-1'}
             autoComplete="off"
           />
-          <button type="submit" className="bg-encre text-papier px-6 py-2.5 rounded-[3px] hover:bg-terre-fonce transition-colors">
-            Proposer
-          </button>
         </div>
-        <p className="mt-2 text-sm text-gris flex justify-between gap-4" aria-live="polite">
-          <span>{message}</span>
-          <span>{texte.length}/{MAX}</span>
-        </p>
+        <p className="mt-1 text-xs text-gris text-right">{texte.length}/{MAX}</p>
+        <label className="mt-3 flex gap-3 items-baseline cursor-pointer">
+          <input type="checkbox" checked={accord} onChange={(e) => { setAccord(e.target.checked); setMessage('') }} className="accent-terre translate-y-[1px]" />
+          <span>J'accepte que ma proposition soit utilisée par l'association Ansanm.</span>
+        </label>
+        <button type="submit" className="mt-4 bg-encre text-papier px-6 py-3 rounded-[3px] hover:bg-terre-fonce transition-colors">
+          Proposer mon slogan
+        </button>
+        <p className="mt-3 text-sm text-gris min-h-5" aria-live="polite">{message}</p>
       </form>
 
       <h2 className="mt-14 text-2xl sm:text-3xl">Le classement</h2>
+      {erreurChargement && <p className="mt-3 text-sm text-terre-fonce">Oups, une pierre a glissé. Réessaie dans un instant.</p>}
       {!charge ? (
-        <p className="mt-6 text-gris">Chargement…</p>
+        <p className="mt-6 text-gris">On pose les pavés…</p>
+      ) : classement.length === 0 ? (
+        <p className="mt-6 text-gris">Rien ici pour le moment. La route commence toujours par un premier pas.</p>
       ) : (
         <ol className="mt-6 border-t border-ligne">
           {classement.map((s, i) => {

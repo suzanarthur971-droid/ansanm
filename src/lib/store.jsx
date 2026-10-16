@@ -32,7 +32,7 @@ const DataContext = createContext(null)
 
 export function DataProvider({ children }) {
   const [local, setLocal] = useState(() =>
-    supabase ? { contributions: [], adhesions: [], propositions: [] } : { contributions: [], adhesions: [], propositions: [], ...lire() },
+    supabase ? { contributions: [], adhesions: [], propositions: [], interets: [] } : { contributions: [], adhesions: [], propositions: [], interets: [], ...lire() },
   )
   const [distants, setDistants] = useState([])
 
@@ -45,7 +45,7 @@ export function DataProvider({ children }) {
 
   const maj = (champ, item) =>
     setLocal((prev) => {
-      const next = { ...prev, [champ]: [...prev[champ], item] }
+      const next = { ...prev, [champ]: [...(prev[champ] || []), item] }
       if (!supabase) ecrire(next)
       return next
     })
@@ -70,6 +70,10 @@ export function DataProvider({ children }) {
       ajouterAdhesion: (a) => {
         maj('adhesions', a)
         if (supabase) enregistrer('adhesions', a).catch((e) => console.warn('Supabase : adhésion non enregistrée', e))
+      },
+      ajouterInteret: (i) => {
+        maj('interets', i)
+        if (supabase) enregistrer('interets', i).catch((e) => console.warn('Supabase : intérêt non enregistré', e))
       },
       ajouterProposition: (p) => {
         maj('propositions', p)

@@ -14,8 +14,12 @@ export default function Annuaire() {
 
   return (
     <div className="max-w-5xl mx-auto px-5 pt-14">
-      <EnTete titre="Annuaire">
-        Les entreprises et associations qui avancent avec nous. Elles font vivre Ansanm par leur adhésion, et beaucoup soutiennent directement nos projets.
+      <EnTete titre="Ceux qui construisent avec nous">
+        <p>
+          Ici, tu trouves les entreprises et associations qui font vivre Ansanm. Elles ne sont pas là pour vendre : elles
+          sont là parce qu'elles croient, comme toi, que la Guadeloupe peut avancer autrement.
+        </p>
+        <p className="mt-4">Quand tu fais appel à elles, tu fais aussi vivre le territoire.</p>
       </EnTete>
 
       <div className="mt-10 flex gap-5 overflow-x-auto border-b border-ligne -mx-5 px-5 text-sm" aria-label="Filtrer par domaine">
@@ -34,7 +38,7 @@ export default function Annuaire() {
       <ul>
         {liste.map((m) => {
           const projetsSoutenus = soutiens(m.id)
-          const partenaire = m.partenaire || projetsSoutenus.length > 0
+          const partenaire = projetsSoutenus.length > 0
           const deplie = ouvert === m.id
           return (
             <li key={m.id} className="border-b border-ligne">
@@ -44,16 +48,18 @@ export default function Annuaire() {
                   <span className="block text-sm text-gris mt-0.5">{m.activite}, {m.commune}</span>
                 </span>
                 <span className="text-sm text-gris shrink-0 text-right">
-                  {partenaire && <span className="text-terre-fonce">Partenaire Ansanm</span>}
+                  {partenaire && <span className="text-terre-fonce" title="Cette structure soutient au moins un projet.">Partenaire Ansanm</span>}
                   <span className="block capitalize">{m.type}</span>
                 </span>
               </button>
               {deplie && (
                 <div className="pb-6 -mt-1 max-w-2xl fondu">
                   <p className="text-gris leading-relaxed">{m.description}</p>
+                  {m.citation && <p className="mt-3 font-display text-lg leading-snug">« {m.citation} »</p>}
+                  {partenaire && <p className="mt-3 text-sm text-gris">Partenaire Ansanm : cette structure soutient au moins un projet.</p>}
                   {projetsSoutenus.length > 0 && (
-                    <p className="mt-3 text-sm">
-                      Soutient :{' '}
+                    <p className="mt-1 text-sm">
+                      Projets soutenus :{' '}
                       {projetsSoutenus.map((p, i) => (
                         <span key={p.id}>
                           {i > 0 && ', '}
@@ -69,10 +75,15 @@ export default function Annuaire() {
         })}
       </ul>
 
-      <p className="mt-10 text-sm text-gris max-w-xl">
-        Mécénat : les membres sont mentionnés sobrement, avec les projets qu'ils soutiennent. Pas de publicité commerciale.
-        Ta structure veut nous rejoindre ? <Link to="/adherer" className="underline hover:text-terre-fonce">Adhérer</Link>.
-      </p>
+      <section className="mt-16 max-w-2xl">
+        <h2 className="text-2xl sm:text-3xl">Votre structure partage ces valeurs ?</h2>
+        <p className="mt-4 text-gris leading-relaxed">
+          Rejoignez l'annuaire en adhérant à Ansanm, et montrez à la Guadeloupe ce que vous construisez.
+        </p>
+        <Link to="/adherer?type=entreprise" className="mt-6 inline-block bg-encre text-papier px-5 py-3 rounded-[3px] hover:bg-terre-fonce transition-colors">
+          Inscrire ma structure
+        </Link>
+      </section>
     </div>
   )
 }

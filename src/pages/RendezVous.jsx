@@ -1,7 +1,13 @@
 import { useData } from '../lib/store.jsx'
 import { EnTete } from '../components/Elements.jsx'
 
-const TYPES = { marche: 'Marché', ag: 'Assemblée générale', magazine: 'Magazine' }
+const TYPES = { marche: 'Rendez-vous Ansanm', ag: 'Assemblée générale', magazine: 'Magazine' }
+
+const FORMATS = [
+  ['Rendez-vous Ansanm', 'tous les trois mois', 'Marché, ventes solidaires, adhésions sur place.'],
+  ['Assemblée générale', 'tous les six mois', 'On décide ensemble des prochains projets.'],
+  ['Le magazine', 'tous les trois mois', 'Les histoires de ceux qui construisent, à garder et à faire passer.'],
+]
 
 export default function RendezVous() {
   const { events } = useData()
@@ -10,9 +16,27 @@ export default function RendezVous() {
 
   return (
     <div className="max-w-3xl mx-auto px-5 pt-14">
-      <EnTete titre="Rendez-vous">Nous nous retrouvons au marché chaque trimestre, et en assemblée générale tous les six mois.</EnTete>
+      <EnTete titre="On se retrouve sur le terrain">
+        <p>
+          Ansanm ne vit pas que sur un écran. Tous les trois mois, on se retrouve au marché : des tartes, des produits de
+          nos partenaires, des rencontres, et la Trace en version géante, où chacun vient coller son pavé.
+        </p>
+        <p className="mt-4 text-encre">C'est là que l'élan devient visible.</p>
+      </EnTete>
 
-      <ol className="mt-12 border-t border-ligne">
+      <dl className="mt-12 grid sm:grid-cols-3 gap-8">
+        {FORMATS.map(([t, rythme, d]) => (
+          <div key={t} className="border-t border-ligne pt-4">
+            <dt className="font-display text-xl">{t}</dt>
+            <dd className="text-sm text-terre-fonce mt-1">{rythme}</dd>
+            <dd className="mt-2 text-gris leading-relaxed">{d}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <h2 className="mt-16 text-2xl sm:text-3xl">Les prochaines dates</h2>
+
+      <ol className="mt-6 border-t border-ligne">
         {liste.map((e) => {
           const d = new Date(e.date + 'T12:00:00')
           return (

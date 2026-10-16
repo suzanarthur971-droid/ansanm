@@ -5,31 +5,34 @@ import { EnTete, Groupe, champ } from '../components/Elements.jsx'
 
 const DOMAINES = ['Terre', 'Alimentation', 'Matière', 'Artisanat', 'Services', 'Culture', 'Autre']
 const CHECKLIST = [
-  { k: 'demande', label: 'La demande est identifiée : des utilisateurs ou des clients attendent ce projet.' },
-  { k: 'referent', label: 'Un·e référent·e est trouvé·e pour porter et guider le projet.' },
-  { k: 'emploi', label: 'Le projet crée de l’emploi ou une activité durable, pas juste un achat.' },
+  { k: 'demande_ok', q: 'Des gens l’attendent-ils ?', a: 'On ne construit pas une route vers nulle part.' },
+  { k: 'referent_ok', q: 'Quelqu’un est-il prêt à le porter ?', a: 'Un projet sans référent, c’est un outil qui rouille.' },
+  { k: 'emploi_ok', q: 'Crée-t-il de l’emploi ou une activité durable ?', a: 'On ne finance pas un achat, on finance un avenir.' },
 ]
 
 export default function Proposer() {
   const { ajouterProposition } = useData()
-  const [f, setF] = useState({ titre: '', domaine: 'Terre', description: '', emplois: '', referent: '', preuve: '', besoins: '' })
+  const [f, setF] = useState({ titre: '', domaine: 'Terre', description: '', emplois: '', referent: '', preuve: '', besoins: '', contact: '' })
   const [coche, setCoche] = useState({})
   const [envoye, setEnvoye] = useState(false)
   const maj = (k) => (e) => setF({ ...f, [k]: e.target.value })
-  const pret = CHECKLIST.every((c) => coche[c.k]) && f.titre.trim() && f.description.trim()
+  const pret = f.titre.trim() && f.description.trim() && f.contact.trim().length >= 5
 
   const envoyer = (e) => {
     e.preventDefault()
     if (!pret) return
-    ajouterProposition(f)
+    ajouterProposition({ ...f, ...Object.fromEntries(CHECKLIST.map((c) => [c.k, !!coche[c.k]])) })
     setEnvoye(true)
   }
 
   if (envoye) {
     return (
       <div className="max-w-2xl mx-auto px-5 pt-20 fondu" role="status">
-        <h1 className="text-4xl">Merci pour « {f.titre} ».</h1>
-        <p className="mt-4 text-gris">Ta proposition sera présentée à notre prochaine assemblée générale : nous étudions les projets ensemble, tous les six mois.</p>
+        <h1 className="text-4xl">Merci.</h1>
+        <p className="mt-4 text-lg text-gris leading-relaxed">
+          Ton idée « {f.titre} » sera présentée à la prochaine assemblée générale. Les adhérents décideront ensemble des
+          projets qui rejoignent la Trace.
+        </p>
         <Link to="/rendez-vous" className="mt-6 inline-block underline hover:text-terre-fonce">Date de la prochaine AG</Link>
       </div>
     )
@@ -44,12 +47,26 @@ export default function Proposer() {
 
   return (
     <div className="max-w-2xl mx-auto px-5 pt-14">
-      <EnTete titre="Proposer un projet">
-        Tu as une idée qui répond à un vrai besoin ? Nous étudions les projets ensemble, en assemblée générale, tous les six mois.
+      <EnTete titre="Tu as une idée pour la Guadeloupe ?">
+        Les meilleurs projets viennent de ceux qui vivent les problèmes au quotidien. Si tu as une idée qui crée de
+        l'emploi et rend notre territoire plus autonome, propose-la.
       </EnTete>
 
       <form onSubmit={envoyer} className="mt-10">
-        <Groupe titre="Le projet">
+        <Groupe titre="Avant de commencer">
+          <p className="text-gris mb-4">Pour qu'un projet arrive sur la Trace, il doit répondre « oui » à trois questions :</p>
+          <div className="space-y-4">
+            {CHECKLIST.map((c) => (
+              <label key={c.k} className="flex gap-3 items-baseline cursor-pointer">
+                <input type="checkbox" checked={!!coche[c.k]} onChange={(e) => setCoche({ ...coche, [c.k]: e.target.checked })} className="accent-terre translate-y-[1px]" />
+                <span><span className="text-encre">{c.q}</span> <span className="text-gris">{c.a}</span></span>
+              </label>
+            ))}
+          </div>
+          <p className="mt-5 text-sm text-gris">Si tu n'as pas encore toutes les réponses, ce n'est pas grave : propose quand même, on t'aidera à les trouver.</p>
+        </Groupe>
+
+        <Groupe titre="Ton projet">
           <div className="space-y-5">
             {zone('titre', 'Titre', { placeholder: 'Atelier de réparation de vélos' })}
             <div>
@@ -61,19 +78,9 @@ export default function Proposer() {
             {zone('description', 'Description', { rows: 4, placeholder: 'Ce que fait le projet, pour qui, où…' })}
             {zone('emplois', 'Emplois créés', { placeholder: '1 mécanicien·ne à mi-temps' })}
             {zone('referent', 'Référent·e pressenti·e', { placeholder: 'Prénom et rôle' })}
-            {zone('preuve', 'Preuve de demande', { placeholder: '40 personnes sondées au marché' })}
+            {zone('preuve', 'Qui l’attend ?', { placeholder: '40 personnes sondées au marché' })}
             {zone('besoins', 'Besoins : argent, matériel, temps, compétences', { rows: 3 })}
-          </div>
-        </Groupe>
-
-        <Groupe titre="Avant d'envoyer">
-          <div className="space-y-3">
-            {CHECKLIST.map((c) => (
-              <label key={c.k} className="flex gap-3 items-baseline cursor-pointer">
-                <input type="checkbox" checked={!!coche[c.k]} onChange={(e) => setCoche({ ...coche, [c.k]: e.target.checked })} className="accent-terre translate-y-[1px]" />
-                <span>{c.label}</span>
-              </label>
-            ))}
+            {zone('contact', 'Ton e-mail ou téléphone, pour qu’on te recontacte', { autoComplete: 'email' })}
           </div>
         </Groupe>
 
@@ -81,7 +88,7 @@ export default function Proposer() {
           <button type="submit" disabled={!pret} className="bg-encre text-papier px-8 py-3.5 rounded-[3px] hover:bg-terre-fonce transition-colors disabled:opacity-30 disabled:hover:bg-encre disabled:cursor-not-allowed">
             Envoyer ma proposition
           </button>
-          {!pret && <p className="mt-3 text-sm text-gris">Le titre, la description et les trois cases sont nécessaires.</p>}
+          {!pret && <p className="mt-3 text-sm text-gris">Il nous faut au moins un titre, une description et un moyen de te recontacter.</p>}
         </div>
       </form>
     </div>

@@ -15,7 +15,14 @@ export default function LaTrace() {
   return (
     <div className="max-w-5xl mx-auto px-5 pt-14">
       <EnTete titre="La Trace">
-        Ensemble, nous construisons le chemin de chaque projet, pavé par pavé. Touche un pavé pour savoir qui l'a posé, et pourquoi.
+        <p>
+          En Guadeloupe, une trace, c'est un chemin ouvert à la main à travers la forêt. Personne ne la construit seul,
+          et personne ne la construit en un jour.
+        </p>
+        <p className="mt-4">
+          Ici, chaque pavé est une contribution : un don, un outil prêté, quelques heures offertes. Plus la contribution
+          est grande, plus la pierre est large. Mais chaque pierre compte : sans les petites, la route a des trous.
+        </p>
       </EnTete>
 
       <div className="mt-10 flex gap-6 overflow-x-auto border-b border-ligne -mx-5 px-5" role="tablist" aria-label="Choisir un projet">
@@ -49,7 +56,15 @@ export default function LaTrace() {
         </div>
 
         <div className="order-1 md:order-2">
-          <Trace projet={projet} paves={paves} progression={progression} onChoisir={setChoisi} />
+          {paves.length > 0 ? (
+            <Trace projet={projet} paves={paves} progression={progression} onChoisir={setChoisi} />
+          ) : (
+            <div className="py-10 border-y border-ligne">
+              <p className="font-display text-xl">Cette trace attend sa première pierre.</p>
+              <p className="mt-1 text-gris">Et si c'était la tienne ?</p>
+              <Bouton to={`/contribuer?projet=${id}`} variante="terre" className="mt-5">Poser le premier pavé</Bouton>
+            </div>
+          )}
         </div>
       </div>
 

@@ -35,6 +35,9 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-dvh flex flex-col">
+      <p className="bg-encre text-papier text-center text-xs px-4 py-1.5">
+        Version de lancement — les dons sont des promesses en attendant l'ouverture officielle.
+      </p>
       <header className="border-b border-ligne">
         <div className="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-6">
           <Link to="/" aria-label="Accueil"><Logo /></Link>
@@ -60,8 +63,9 @@ export default function Layout({ children }) {
         <div className="max-w-5xl mx-auto px-5 py-10 grid gap-8 sm:grid-cols-[1fr_auto] text-sm text-gris">
           <div className="max-w-sm space-y-3">
             <Logo className="h-12 -ml-1" />
-            <p>Une autre façon de faire avancer la Guadeloupe : pavé par pavé.</p>
-            <p>Version bêta de démonstration. Les personnes, structures et montants sont fictifs ; aucun paiement n'est demandé.</p>
+            <p className="font-display text-2xl text-encre leading-tight">Sé ansanm nou ké rivé.</p>
+            <p>Ensemble, on y arrivera.</p>
+            <p className="pt-3 text-xs">Version de lancement : les projets, personnes et montants de démonstration sont fictifs, et aucun paiement n'est demandé.</p>
           </div>
           <ul className="grid grid-cols-2 gap-x-8 gap-y-2">
             {tousLesLiens.slice(1).map((l) => (

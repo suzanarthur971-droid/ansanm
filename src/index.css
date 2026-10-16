@@ -67,3 +67,19 @@ a { text-underline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   .pave-pose, .pave-onde, .fondu { animation: none; }
 }
+
+/* Mini-Traces de l'accueil : les pavés se posent un à un */
+@keyframes mini-pose {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: none; }
+}
+.mini-pave {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.mini-visible .mini-pave { animation: mini-pose 0.45s ease-out both; }
+@media (prefers-reduced-motion: reduce) {
+  .mini-pave { opacity: 1; }
+  .mini-visible .mini-pave { animation: none; }
+}

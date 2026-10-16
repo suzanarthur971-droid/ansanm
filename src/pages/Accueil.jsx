@@ -3,6 +3,12 @@ import { useData } from '../lib/store.jsx'
 import { euros, nombre } from '../lib/paves.js'
 import { Bouton, LigneProjet, Section } from '../components/Elements.jsx'
 
+const GESTES = [
+  ['Choisis un projet qui te parle.', 'Alimentation, terre, artisanat : tu décides où va ton soutien.'],
+  ['Pose ton pavé.', 'De l’argent, du matériel, du temps ou une compétence. Tout compte.'],
+  ['Vois la route avancer.', 'Chaque contribution apparaît sur la Trace, avec ton nom et la raison de ton geste.'],
+]
+
 export default function Accueil() {
   const { projects, stats } = useData()
   const chiffres = [
@@ -15,19 +21,72 @@ export default function Accueil() {
   return (
     <div className="max-w-5xl mx-auto px-5">
       <section className="pt-16 sm:pt-28 max-w-3xl">
-        <h1 className="text-[2.6rem] sm:text-7xl leading-[1.05]">
-          Une autre façon de faire avancer la Guadeloupe : <em className="text-terre-fonce">pavé par pavé.</em>
-        </h1>
-        <p className="mt-8 text-lg sm:text-xl text-gris leading-relaxed max-w-2xl">
-          Ensemble, nous transformons l'envie d'agir en actions concrètes. Entreprises, associations et citoyens,
-          nous finançons et soutenons des projets qui créent de l'emploi et renforcent l'autonomie de notre territoire.
-        </p>
+        <h1 className="text-[2.6rem] sm:text-7xl leading-[1.05]">Une autre façon de faire avancer la Guadeloupe.</h1>
+        <p className="mt-5 font-display italic text-3xl sm:text-4xl text-terre-fonce">Pavé par pavé, ansanm.</p>
         <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
           <Bouton to="/contribuer" variante="terre">Poser mon pavé</Bouton>
-          <Bouton to="/trace" variante="lien">Voir la Trace</Bouton>
-          <Bouton to="/adherer" variante="lien">Adhérer</Bouton>
+          <Bouton to="/trace" variante="lien">Découvrir la Trace</Bouton>
         </div>
       </section>
+
+      <Section titre="On a tous envie que ça bouge." className="max-w-2xl">
+        <div className="space-y-4 text-lg text-gris leading-relaxed">
+          <p>
+            On en parle au marché, en famille, sur les réseaux. On voit les terrains en friche, les fruits qui tombent
+            sans être ramassés, les petits producteurs qui s'épuisent, les jeunes qui partent faute de travail.
+          </p>
+          <p className="text-encre">
+            L'envie d'agir est là. Ce qui manque, c'est un chemin concret pour la transformer en quelque chose de réel.
+          </p>
+        </div>
+      </Section>
+
+      <Section titre="Ansanm, c'est un koudmen pour tout un pays." className="max-w-2xl">
+        <div className="space-y-4 text-lg text-gris leading-relaxed">
+          <p>
+            Autrefois, quand quelqu'un construisait sa case, les voisins venaient donner un coup de main. Chacun
+            apportait ce qu'il pouvait : ses bras, ses outils, un repas. Et le soir, la case était debout.
+          </p>
+          <p>
+            Ansanm reprend cet esprit. Citoyens, entreprises et associations financent et soutiennent ensemble des
+            projets qui créent de l'emploi et rendent la Guadeloupe plus autonome. Chaque contribution devient un pavé.
+            Et pavé après pavé, on trace la route.
+          </p>
+        </div>
+      </Section>
+
+      <Section titre="Trois gestes simples.">
+        <ol className="grid sm:grid-cols-3 gap-8 sm:gap-10">
+          {GESTES.map(([titre, texte], i) => (
+            <li key={titre} className="border-t border-ligne pt-5">
+              <span className="font-display text-4xl text-terre-fonce">{i + 1}</span>
+              <p className="mt-3 font-display text-xl">{titre}</p>
+              <p className="mt-2 text-gris leading-relaxed">{texte}</p>
+            </li>
+          ))}
+        </ol>
+      </Section>
+
+      <Section titre="Les traces en cours">
+        <div className="border-b border-ligne">
+          {projects.map((p) => <LigneProjet key={p.id} id={p.id} />)}
+        </div>
+      </Section>
+
+      <Section className="grid sm:grid-cols-2 gap-10">
+        <div>
+          <h2 className="text-2xl sm:text-3xl">Comme la nature, rien ne se perd.</h2>
+          <p className="mt-4 text-gris leading-relaxed">
+            Nos projets ne sont pas des initiatives isolées : ils se nourrissent les uns les autres, comme les arbres
+            d'une même forêt.
+          </p>
+        </div>
+        <ol className="self-end text-lg border-t border-ligne">
+          <li className="py-3 border-b border-ligne">Le <span className="font-display">jardin</span> nourrit la cuisine.</li>
+          <li className="py-3 border-b border-ligne">La <span className="font-display">cuisine</span> transforme les fruits et sauve les invendus de nos partenaires.</li>
+          <li className="py-3 border-b border-ligne">Les restes repartent en <span className="font-display">compost</span> au jardin.</li>
+        </ol>
+      </Section>
 
       <dl className="mt-20 grid grid-cols-2 sm:grid-cols-4 border-t border-ligne">
         {chiffres.map(([v, l], i) => (
@@ -39,35 +98,13 @@ export default function Accueil() {
         ))}
       </dl>
 
-      <Section titre="Nos projets en cours">
-        <div className="border-b border-ligne">
-          {projects.map((p) => <LigneProjet key={p.id} id={p.id} />)}
-        </div>
-      </Section>
-
-      <Section className="grid sm:grid-cols-2 gap-10">
-        <div>
-          <h2 className="text-2xl sm:text-3xl">Imiter le vivant</h2>
-          <p className="mt-4 text-gris leading-relaxed">
-            Comme dans une forêt, nous préférons la diversité à la dépendance. Nos projets se nourrissent les uns
-            les autres, en cycles fermés : les ressources se succèdent comme les saisons.
-          </p>
-          <p className="mt-4 text-gris leading-relaxed">
-            C'est notre koudmen moderne : chacun de nous vient poser sa pierre, avec ce qu'il a.
-          </p>
-        </div>
-        <ol className="self-end text-lg border-t border-ligne">
-          <li className="py-3 border-b border-ligne">Le <span className="font-display">jardin</span> nourrit la cuisine.</li>
-          <li className="py-3 border-b border-ligne">La <span className="font-display">cuisine</span> récupère aussi les invendus des partenaires.</li>
-          <li className="py-3 border-b border-ligne">Les restes retournent en <span className="font-display">compost</span> au jardin.</li>
-        </ol>
-      </Section>
-
       <Section>
-        <p className="font-display text-3xl sm:text-4xl leading-tight max-w-3xl">
-          100 % de nos dons vont aux projets. Notre association vit de nos adhésions, et chacun de nous a une voix.
+        <h2 className="text-3xl sm:text-5xl leading-tight">100 % de ton don va au projet.</h2>
+        <p className="mt-5 text-lg text-gris leading-relaxed max-w-2xl">
+          Pas un centime ne sert à faire tourner l'association : ce sont les adhésions qui la font vivre. Ton pavé va
+          entièrement là où tu l'as posé.
         </p>
-        <Link to="/regles" className="mt-6 inline-block underline hover:text-terre-fonce">Lire nos sept règles</Link>
+        <Link to="/regles" className="mt-6 inline-block underline hover:text-terre-fonce">Lire nos règles</Link>
       </Section>
     </div>
   )
