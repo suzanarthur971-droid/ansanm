@@ -1,0 +1,6 @@
+[
+  { "id": "e-marche-dec", "titre": "Marché Ansanm de Noël", "type": "marche", "date": "2026-12-12", "heure": "8 h – 14 h", "lieu": "Place de la Victoire, Pointe-à-Pitre", "description": "Producteurs, artisans et associations membres. Dégustation des confitures de la cuisine collective, tambour avec la Compagnie Tambour Lakou." },
+  { "id": "e-magazine-1", "titre": "Magazine Ansanm n° 1", "type": "magazine", "date": "2027-01-10", "lieu": "En ligne et chez les partenaires", "description": "Premier numéro du magazine trimestriel : portraits des référents, la boucle jardin – cuisine – compost, et les comptes de l'association." },
+  { "id": "e-ag-jan", "titre": "Assemblée générale", "type": "ag", "date": "2027-01-23", "heure": "9 h 30", "lieu": "Salle des fêtes, Le Moule", "description": "Bilan des 3 premiers projets et vote des nouveaux projets proposés. Une personne = une voix." },
+  { "id": "e-marche-mars", "titre": "Marché Ansanm de printemps", "type": "marche", "date": "2027-03-20", "heure": "8 h – 14 h", "lieu": "Jardin botanique, Basse-Terre", "description": "Deuxième marché trimestriel, avec un atelier upcycling ouvert aux enfants." }
+]

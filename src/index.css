@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
+
+  --color-terre: #B84A26;
+  --color-terre-fonce: #7A2E17;
+  --color-terre-clair: #E9A07A;
+  --color-feuille: #3D7A3A;
+  --color-feuille-fonce: #1E4425;
+  --color-feuille-clair: #A9CC8A;
+  --color-sable: #F3E6CF;
+  --color-sable-fonce: #E4CFA9;
+  --color-sable-clair: #FBF6EC;
+  --color-ocre: #D49A2E;
+  --color-lagon: #1A8C9A;
+  --color-mangue: #F5B315;
+  --color-encre: #2A1E17;
+  --color-encre-doux: #6B5A4C;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: var(--color-sable-clair);
+  color: var(--color-encre);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Le pavé qui se pose sur la Trace */
+@keyframes pave-pose {
+  0% { transform: translateY(-140px) scale(1.6) rotate(-25deg); opacity: 0; }
+  55% { transform: translateY(4px) scale(1.05) rotate(4deg); opacity: 1; }
+  75% { transform: translateY(-6px) scale(1) rotate(-2deg); }
+  100% { transform: translateY(0) scale(1) rotate(0); opacity: 1; }
+}
+@keyframes onde {
+  0% { r: 6; opacity: 0.8; }
+  100% { r: 46; opacity: 0; }
+}
+@keyframes lueur {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.7; }
+}
+.pave-pose {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pave-pose 1.1s cubic-bezier(0.3, 0.7, 0.35, 1) 0.5s both;
+}
+.pave-onde {
+  animation: onde 1.2s ease-out 1.05s both;
+}
+.pave-lueur {
+  animation: lueur 2s ease-in-out 1.6s infinite;
+}
+.pave {
+  cursor: pointer;
+  transition: transform 0.15s;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.pave:hover, .pave:focus-visible {
+  transform: scale(1.18);
+  outline: none;
+}
+
+@keyframes monte {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+@keyframes fondu {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.feuille-monte { animation: monte 0.28s cubic-bezier(0.2, 0.8, 0.3, 1); }
+.fondu { animation: fondu 0.2s ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pave-pose, .pave-onde, .pave-lueur, .feuille-monte, .fondu { animation: none; }
+}

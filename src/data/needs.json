@@ -1,0 +1,19 @@
+[
+  { "id": "j-outils", "project_id": "jardin-nourricier", "libelle": "Outillage : sécateurs, brouettes, fourches", "type": "materiel", "quantite": "1 lot", "statut": "ouvert" },
+  { "id": "j-broyat", "project_id": "jardin-nourricier", "libelle": "Broyat pour le paillage", "type": "materiel", "quantite": "10 m³", "statut": "pourvu" },
+  { "id": "j-chantiers", "project_id": "jardin-nourricier", "libelle": "Chantiers participatifs", "type": "temps", "quantite": "2 samedis par mois", "statut": "ouvert" },
+  { "id": "j-formation", "project_id": "jardin-nourricier", "libelle": "Formation à la syntropie", "type": "competences", "quantite": "2 journées", "statut": "pourvu" },
+  { "id": "j-argent", "project_id": "jardin-nourricier", "libelle": "Salaires des jardiniers (6 premiers mois)", "type": "argent", "quantite": 4000, "statut": "ouvert" },
+
+  { "id": "c-materiel", "project_id": "cuisine-collective", "libelle": "Matériel de cuisine : marmites, bocaux, robot", "type": "materiel", "quantite": "1 lot", "statut": "ouvert" },
+  { "id": "c-ateliers", "project_id": "cuisine-collective", "libelle": "Encadrement des ateliers", "type": "temps", "quantite": "3 h par semaine", "statut": "ouvert" },
+  { "id": "c-local", "project_id": "cuisine-collective", "libelle": "Local avec cuisine (mise à disposition)", "type": "materiel", "quantite": "1 jour par semaine", "statut": "pourvu" },
+  { "id": "c-hygiene", "project_id": "cuisine-collective", "libelle": "Formation hygiène alimentaire", "type": "competences", "quantite": "1 journée", "statut": "pourvu" },
+  { "id": "c-argent", "project_id": "cuisine-collective", "libelle": "Salaire du cuisinier·ère et denrées", "type": "argent", "quantite": 6000, "statut": "ouvert" },
+
+  { "id": "u-collecte", "project_id": "atelier-upcycling", "libelle": "Collecte de bâches, palettes et tissus", "type": "materiel", "quantite": "en continu", "statut": "ouvert" },
+  { "id": "u-machine", "project_id": "atelier-upcycling", "libelle": "Machine à coudre professionnelle", "type": "materiel", "quantite": "1", "statut": "pourvu" },
+  { "id": "u-ateliers", "project_id": "atelier-upcycling", "libelle": "Aide à l'animation des ateliers scolaires", "type": "temps", "quantite": "2 h par semaine", "statut": "ouvert" },
+  { "id": "u-com", "project_id": "atelier-upcycling", "libelle": "Photos et réseaux sociais de la boutique", "type": "competences", "quantite": "ponctuel", "statut": "ouvert" },
+  { "id": "u-argent", "project_id": "atelier-upcycling", "libelle": "Salaire de l'animateur·rice et outillage", "type": "argent", "quantite": 3000, "statut": "ouvert" }
+]
