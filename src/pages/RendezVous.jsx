@@ -16,7 +16,7 @@ export default function RendezVous() {
 
   return (
     <div className="max-w-3xl mx-auto px-5 pt-14">
-      <EnTete titre="On se retrouve sur le terrain" kreyol={['Men nan men', 'Main dans la main']}>
+      <EnTete titre="On se retrouve sur le terrain">
         <p>
           Ansanm ne vit pas que sur un écran. Tous les trois mois, on se retrouve au marché : des tartes, des produits de
           nos partenaires, des rencontres, et la Trace en version géante, où chacun vient coller son pavé.

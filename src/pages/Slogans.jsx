@@ -9,7 +9,6 @@ const MAX = 60
 const DEMO = [
   ['Sé on min ka lavé lòt', 'Une main lave l’autre'],
   ['Ansanm nou pli fò', 'Ensemble, nous sommes plus forts'],
-  ['Men nan men', 'Main dans la main'],
   ['Yonn pou lòt', 'L’un pour l’autre'],
   ['Chak moun ni on bagay a pòté', 'Chaque personne a quelque chose à apporter'],
   ['Sé ansanm nou ka vansé', 'C’est ensemble que nous avançons'],
