@@ -13,6 +13,7 @@ import Regles from './pages/Regles.jsx'
 import Slogans from './pages/Slogans.jsx'
 import BesoinsPros from './pages/BesoinsPros.jsx'
 import PublierBesoin from './pages/PublierBesoin.jsx'
+import Idees from './pages/Idees.jsx'
 import Introuvable from './pages/Introuvable.jsx'
 
 function RemonteEnHaut() {
@@ -37,6 +38,7 @@ export default function App() {
         <Route path="/regles" element={<Regles />} />
         <Route path="/t-shirts" element={<Slogans />} />
         <Route path="/besoins-pros" element={<BesoinsPros />} />
+        <Route path="/idees" element={<Idees />} />
         <Route path="/besoins-pros/publier" element={<PublierBesoin />} />
         <Route path="*" element={<Introuvable />} />
       </Routes>

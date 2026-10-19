@@ -1,0 +1,62 @@
+[
+  {
+    "id": "i-livres",
+    "titre": "Des livres guadeloupéens à faire circuler",
+    "domaine": "Culture",
+    "description": "J'ai des centaines de livres d'auteurs guadeloupéens et caribéens, contes, romans, livres jeunesse. Je voudrais les vendre ou les prêter, mais je ne sais pas si ça intéresse du monde.",
+    "porteur": "Marlène, ancienne libraire",
+    "votes_depart": 14,
+    "rapprochements": [
+      { "project_id": "cuisine-collective", "message": "Un coin lecture pour les enfants pendant que les parents cuisinent." },
+      { "project_id": "cuisine-collective", "message": "Les livres de recettes créoles anciennes pourraient servir aux ateliers." }
+    ],
+    "date": "2026-09-18"
+  },
+  {
+    "id": "i-velos",
+    "titre": "Un atelier de réparation de vélos",
+    "domaine": "Matière",
+    "description": "Apprendre à réparer son vélo soi-même, avec des pièces récupérées. Beaucoup de vélos dorment dans les garages faute d'une chambre à air.",
+    "porteur": "Kevin, mécanicien",
+    "votes_depart": 23,
+    "rapprochements": [
+      { "project_id": "atelier-upcycling", "message": "Les pièces récupérées et l'outillage pourraient être partagés avec l'atelier upcycling." }
+    ],
+    "date": "2026-08-30"
+  },
+  {
+    "id": "i-sechoir",
+    "titre": "Un séchoir solaire pour les fruits",
+    "domaine": "Alimentation",
+    "description": "Sécher les mangues, bananes et caramboles en surplus plutôt que de les laisser pourrir. Des fruits secs locaux à vendre toute l'année.",
+    "porteur": "Jean-Claude, agriculteur",
+    "votes_depart": 9,
+    "rapprochements": [
+      { "project_id": "jardin-nourricier", "message": "Le jardin aura des surplus en pleine saison des mangues." },
+      { "project_id": "cuisine-collective", "message": "La cuisine pourrait transformer et vendre les fruits séchés." }
+    ],
+    "date": "2026-10-02"
+  },
+  {
+    "id": "i-kreyol",
+    "titre": "Des ateliers de créole pour les enfants",
+    "domaine": "Culture",
+    "description": "Contes, chansons et jeux en créole le mercredi après-midi, pour que les plus jeunes gardent la langue.",
+    "porteur": "Sandrine, conteuse",
+    "votes_depart": 31,
+    "rapprochements": [],
+    "date": "2026-09-05"
+  },
+  {
+    "id": "i-ruches",
+    "titre": "Des ruches sur les toits",
+    "domaine": "Terre",
+    "description": "Installer quelques ruches en ville pour polliniser les jardins et produire un miel local.",
+    "porteur": "Anonyme",
+    "votes_depart": 6,
+    "rapprochements": [
+      { "project_id": "jardin-nourricier", "message": "Les abeilles aideraient les arbres fruitiers du jardin." }
+    ],
+    "date": "2026-10-09"
+  }
+]

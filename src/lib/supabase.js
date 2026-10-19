@@ -52,3 +52,29 @@ export async function chargerBesoinsPros() {
   if (error) throw error
   return data.map(({ created_at, ...b }) => ({ ...b, date: created_at.slice(0, 10) }))
 }
+
+// Idées en germe : propositions rendues publiques, avec leurs « je le rechercherais » et rapprochements
+export async function chargerIdees() {
+  const [idees, votes, liens] = await Promise.all([
+    supabase.from('propositions').select('id, created_at, titre, domaine, description, porteur').eq('publique', true),
+    supabase.from('idees_votes').select('proposition_id'),
+    supabase.from('idees_liens').select('proposition_id, project_id, message'),
+  ])
+  for (const r of [idees, votes, liens]) if (r.error) throw r.error
+  return idees.data.map(({ created_at, ...i }) => ({
+    ...i,
+    date: created_at.slice(0, 10),
+    votes: votes.data.filter((v) => v.proposition_id === i.id).length,
+    rapprochements: liens.data.filter((l) => l.proposition_id === i.id),
+  }))
+}
+
+export async function voterIdee(proposition_id) {
+  const { error } = await supabase.from('idees_votes').insert({ proposition_id })
+  if (error) throw error
+}
+
+export async function lierIdee(lien) {
+  const { error } = await supabase.from('idees_liens').insert(lien)
+  if (error) throw error
+}

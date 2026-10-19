@@ -8,7 +8,7 @@ os.makedirs(OUT, exist_ok=True)
 
 PAGES = ['/', '/trace', '/projets/jardin-nourricier', '/projets/cuisine-collective', '/projets/atelier-upcycling',
          '/contribuer', '/annuaire', '/besoins-pros', '/besoins-pros/publier', '/adherer', '/proposer',
-         '/rendez-vous', '/regles', '/t-shirts', '/page-inconnue']
+         '/rendez-vous', '/regles', '/t-shirts', '/idees', '/page-inconnue']
 
 resultats = []
 def ok(nom, cond, detail=''):
@@ -120,6 +120,19 @@ with sync_playwright() as p:
     ok('Proposer : bouton activé une fois rempli', bouton.is_enabled())
     bouton.click()
     ok('Proposer : confirmation', page.get_by_text('Merci.').count() > 0)
+
+    # Idées en germe : l'idée proposée apparaît, on vote, on rapproche
+    aller(page, '/idees')
+    premiere = page.locator('main ul > li').first
+    avant = premiere.locator('strong').first.inner_text()
+    premiere.get_by_role('button', name='Je le rechercherais').click()
+    ok('Idées : vote compté', int(premiere.locator('strong').first.inner_text()) == int(avant) + 1, f'{avant} → {premiere.locator("strong").first.inner_text()}')
+    ok('Idées : bouton passé à « Tu le recherches aussi »', premiere.get_by_role('button', name='Tu le recherches aussi').count() == 1)
+    premiere.get_by_role('button', name='Ça irait avec un projet existant ?').click()
+    premiere.locator('textarea').fill('Test de rapprochement')
+    premiere.get_by_role('button', name='Proposer ce rapprochement').click()
+    ok('Idées : rapprochement ajouté', premiere.get_by_text('Test de rapprochement').count() > 0)
+    ok('Idées : l’idée proposée plus haut est visible', page.get_by_text('Test projet', exact=True).count() > 0)
 
     # T-shirts
     aller(page, '/t-shirts')

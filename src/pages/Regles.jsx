@@ -7,7 +7,7 @@ const REGLES = [
   ['100 % des dons vont aux projets.', 'Les adhésions font vivre l’association.',
     'Le site, l’assurance et le compte en banque sont payés par les adhésions, jamais par les dons. Un euro posé sur un projet va à ce projet.'],
   ['Pas de projet sans demande.', 'On vérifie que des gens l’attendent avant de construire.',
-    'Familles inscrites, clients, écoles qui demandent des ateliers : chaque fiche projet affiche la preuve que le projet est attendu.'],
+    'Familles inscrites, clients, écoles qui demandent des ateliers : chaque fiche projet affiche la preuve que le projet est attendu. Et dans les idées en germe, chacun peut dire « je le rechercherais » : la demande se mesure.'],
   ['Un projet, un référent.', 'Quelqu’un qui le porte et le guide.',
     'Le référent fait avancer le projet au quotidien, présente son avancée à chaque assemblée générale et reste le contact de ceux qui y contribuent.'],
   ['Chacun contribue comme il peut.', 'Argent, matériel, temps, compétences : toute pierre compte.',
@@ -22,7 +22,7 @@ const REGLES = [
 
 // Le chemin d'une idée jusqu'à la Trace : une vraie séquence
 const ETAPES = [
-  ['Quelqu’un propose une idée.', 'Avec le formulaire « Proposer un projet », même si toutes les réponses ne sont pas encore là.', '#C57B57'],
+  ['Quelqu’un propose une idée.', 'Elle peut germer en public : chacun dit s’il la rechercherait, ou propose de la rattacher à un projet existant.', '#C57B57'],
   ['Un comité fait le tri.', 'Un petit groupe d’adhérents vérifie les trois conditions : une demande, un référent, des emplois. Et aide le porteur à compléter ce qui manque.', '#A8BFA1'],
   ['L’assemblée générale vote.', 'Tous les six mois, les adhérents votent parmi les projets retenus. Une personne, une voix.', '#C9A46E'],
   ['Le projet rejoint la Trace.', 'Sa fiche est publiée, et chacun peut commencer à poser ses pavés.', '#F5F0E6'],

@@ -12,7 +12,8 @@ const CHECKLIST = [
 
 export default function Proposer() {
   const { ajouterProposition } = useData()
-  const [f, setF] = useState({ titre: '', domaine: 'Terre', description: '', emplois: '', referent: '', preuve: '', besoins: '', contact: '' })
+  const [f, setF] = useState({ titre: '', domaine: 'Terre', description: '', emplois: '', referent: '', preuve: '', besoins: '', contact: '', porteur: '' })
+  const [publique, setPublique] = useState(true)
   const [coche, setCoche] = useState({})
   const [envoye, setEnvoye] = useState(false)
   const maj = (k) => (e) => setF({ ...f, [k]: e.target.value })
@@ -21,7 +22,7 @@ export default function Proposer() {
   const envoyer = (e) => {
     e.preventDefault()
     if (!pret) return
-    ajouterProposition({ ...f, ...Object.fromEntries(CHECKLIST.map((c) => [c.k, !!coche[c.k]])) })
+    ajouterProposition({ ...f, porteur: f.porteur.trim() || null, publique, ...Object.fromEntries(CHECKLIST.map((c) => [c.k, !!coche[c.k]])) })
     setEnvoye(true)
   }
 
@@ -52,7 +53,16 @@ export default function Proposer() {
               Ton idée « {f.titre} » sera présentée à la prochaine assemblée générale. Les adhérents décideront ensemble des
               projets qui rejoignent la Trace.
             </p>
-            <Link to="/rendez-vous" className="mt-6 inline-block font-semibold underline decoration-2 underline-offset-4">Date de la prochaine AG</Link>
+            {publique && (
+              <p className="mt-4 text-lg leading-relaxed">
+                Elle est aussi visible dans les idées en germe : chacun peut dire qu'il la rechercherait, ou la rapprocher
+                d'un projet existant.
+              </p>
+            )}
+            <div className="mt-6 flex flex-wrap gap-x-7 gap-y-3">
+              {publique && <Link to="/idees" className="font-semibold underline decoration-2 underline-offset-4">Voir les idées en germe</Link>}
+              <Link to="/rendez-vous" className="font-semibold underline decoration-2 underline-offset-4">Date de la prochaine AG</Link>
+            </div>
           </div>
         ) : (
           <form onSubmit={envoyer} className="grid lg:grid-cols-[1fr_1.4fr] gap-8 items-start">
@@ -90,6 +100,21 @@ export default function Proposer() {
                 {zone('preuve', 'Qui l’attend ?', { placeholder: '40 personnes sondées au marché' })}
                 {zone('besoins', 'Besoins : argent, matériel, temps, compétences', { rows: 3, large: true })}
                 {zone('contact', 'Ton e-mail ou téléphone, pour qu’on te recontacte', { autoComplete: 'email', large: true })}
+              </div>
+              <div className="mt-6 bg-papier rounded-xl p-5">
+                <label className="flex gap-3 items-baseline cursor-pointer">
+                  <input type="checkbox" checked={publique} onChange={(e) => setPublique(e.target.checked)} className="accent-terre w-5 h-5 shrink-0 translate-y-[3px]" />
+                  <span>
+                    <span className="font-[700]">Montrer mon idée dans les idées en germe</span>
+                    <span className="block text-olive/75">Chacun pourra dire qu'il la rechercherait, et la rapprocher d'un projet existant. Ton contact reste privé.</span>
+                  </span>
+                </label>
+                {publique && (
+                  <div className="mt-4">
+                    <label htmlFor="porteur" className="font-semibold">Nom affiché <span className="font-normal text-olive/70">(facultatif)</span></label>
+                    <input id="porteur" value={f.porteur} onChange={maj('porteur')} placeholder="Marlène, ancienne libraire" className={champ + ' mt-2'} />
+                  </div>
+                )}
               </div>
               <button type="submit" disabled={!pret} className="mt-7 bg-terre-fonce text-papier text-xl font-semibold px-9 py-4 rounded-lg hover:bg-terre-profond transition-colors disabled:opacity-40 disabled:hover:bg-terre-fonce disabled:cursor-not-allowed">
                 Envoyer ma proposition

@@ -8,8 +8,9 @@ import site from '../data/site.json'
 import demoBesoinsPros from '../data/besoins-pros.json'
 import reponsesPros from '../data/reponses-pros.json'
 import partenaires from '../data/partenaires.json'
+import demoIdees from '../data/idees.json'
 
-import { chargerBesoinsPros, chargerPaves, enregistrer, enregistrerPave, supabase } from './supabase.js'
+import { chargerBesoinsPros, chargerIdees, chargerPaves, enregistrer, enregistrerPave, lierIdee, supabase, voterIdee } from './supabase.js'
 
 // Avec Supabase configuré, les promesses, adhésions et propositions y sont enregistrées
 // et la Trace affiche les pavés de tout le monde. Sinon, tout reste dans le navigateur.
@@ -39,6 +40,9 @@ export function DataProvider({ children }) {
   )
   const [distants, setDistants] = useState([])
   const [besoinsDistants, setBesoinsDistants] = useState([])
+  const [ideesDistantes, setIdeesDistantes] = useState([])
+  // Ajouts de cette visite sur les idées (votes et rapprochements), pour un affichage immédiat
+  const [ideesAjouts, setIdeesAjouts] = useState({ votes: {}, liens: [] })
 
   useEffect(() => {
     if (!supabase) return
@@ -48,6 +52,9 @@ export function DataProvider({ children }) {
     chargerBesoinsPros()
       .then(setBesoinsDistants)
       .catch((e) => console.warn('Supabase : lecture des besoins des pros impossible', e))
+    chargerIdees()
+      .then(setIdeesDistantes)
+      .catch((e) => console.warn('Supabase : lecture des idées impossible', e))
   }, [])
 
   const maj = (champ, item) =>
@@ -62,6 +69,17 @@ export function DataProvider({ children }) {
     const contributions = [...demoContributions, ...distants, ...local.contributions.filter((c) => !vus.has(c.id))]
     const besoinsVus = new Set(besoinsDistants.map((b) => b.id))
     const besoinsPros = [...demoBesoinsPros, ...besoinsDistants, ...(local.besoinsPros || []).filter((b) => !besoinsVus.has(b.id))]
+    const ideesVues = new Set(ideesDistantes.map((i) => i.id))
+    const idees = [
+      ...demoIdees.map(({ votes_depart, ...i }) => ({ ...i, votes: votes_depart })),
+      ...ideesDistantes,
+      ...(local.propositions || []).filter((p) => p.publique && !ideesVues.has(p.id))
+        .map((p) => ({ id: p.id, titre: p.titre, domaine: p.domaine, description: p.description, porteur: p.porteur, date: p.date, votes: 0, rapprochements: [] })),
+    ].map((i) => ({
+      ...i,
+      votes: i.votes + (ideesAjouts.votes[i.id] || 0),
+      rapprochements: [...i.rapprochements, ...ideesAjouts.liens.filter((l) => l.proposition_id === i.id)],
+    }))
     return {
       projects,
       needs,
@@ -103,8 +121,19 @@ export function DataProvider({ children }) {
         if (supabase) enregistrer('interets', i).catch((e) => console.warn('Supabase : intérêt non enregistré', e))
       },
       ajouterProposition: (p) => {
-        maj('propositions', p)
-        if (supabase) enregistrer('propositions', p).catch((e) => console.warn('Supabase : proposition non enregistrée', e))
+        const id = crypto.randomUUID()
+        maj('propositions', { ...p, id, date: new Date().toISOString().slice(0, 10) })
+        if (supabase) enregistrer('propositions', { ...p, id }).catch((e) => console.warn('Supabase : proposition non enregistrée', e))
+        return id
+      },
+      idees,
+      voterPourIdee: (id) => {
+        setIdeesAjouts((a) => ({ ...a, votes: { ...a.votes, [id]: (a.votes[id] || 0) + 1 } }))
+        if (supabase && !id.startsWith('i-')) voterIdee(id).catch((e) => console.warn('Supabase : vote non enregistré', e))
+      },
+      rapprocherIdee: (lien) => {
+        setIdeesAjouts((a) => ({ ...a, liens: [...a.liens, lien] }))
+        if (supabase && !lien.proposition_id.startsWith('i-')) lierIdee(lien).catch((e) => console.warn('Supabase : rapprochement non enregistré', e))
       },
       stats: {
         totalPromis: contributions.filter((c) => c.type === 'argent').reduce((s, c) => s + c.montant, 0),
@@ -113,7 +142,7 @@ export function DataProvider({ children }) {
         membres: site.membres_particuliers + members.length + local.adhesions.length,
       },
     }
-  }, [local, distants, besoinsDistants])
+  }, [local, distants, besoinsDistants, ideesDistantes, ideesAjouts])
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

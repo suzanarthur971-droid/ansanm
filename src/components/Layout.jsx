@@ -12,6 +12,7 @@ const FAMILLES = [
     liens: [
       { to: '/trace', label: 'La Trace' },
       { to: '/contribuer', label: 'Poser mon pavé' },
+      { to: '/idees', label: 'Idées en germe' },
       { to: '/proposer', label: 'Proposer un projet' },
     ],
   },
@@ -36,6 +37,7 @@ const FAMILLES = [
 // En haut sur ordinateur : les pages principales, puis « L'association » qui déroule le reste
 const liens = [
   { to: '/trace', label: 'La Trace' },
+  { to: '/idees', label: 'Idées' },
   { to: '/annuaire', label: 'Annuaire' },
   { to: '/besoins-pros', label: 'Entre pros' },
 ]
