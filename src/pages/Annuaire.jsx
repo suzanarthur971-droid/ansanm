@@ -4,13 +4,19 @@ import { useData } from '../lib/store.jsx'
 import { EnTete } from '../components/Elements.jsx'
 
 export default function Annuaire() {
-  const { members, contributions, projects } = useData()
+  const { members, contributions, projects, besoinsPros, reponsesPros } = useData()
   const [domaine, setDomaine] = useState('tous')
   const [ouvert, setOuvert] = useState(null)
 
   const domaines = useMemo(() => [...new Set(members.map((m) => m.domaine))].sort(), [members])
   const soutiens = (id) => [...new Set(contributions.filter((c) => c.member_id === id).map((c) => c.project_id))].map((pid) => projects.find((p) => p.id === pid))
   const liste = members.filter((m) => domaine === 'tous' || m.domaine === domaine)
+  // Coups de pouce donnés : réponses bénévoles acceptées, et structures aidées
+  const coupsDePouce = (id) =>
+    reponsesPros
+      .filter((r) => r.responder_member_id === id && r.type === 'coup_de_pouce' && r.statut !== 'envoyé')
+      .map((r) => members.find((m) => m.id === besoinsPros.find((b) => b.id === r.need_id)?.member_id))
+      .filter(Boolean)
 
   return (
     <div className="max-w-5xl mx-auto px-5 pt-14">
@@ -39,6 +45,8 @@ export default function Annuaire() {
         {liste.map((m) => {
           const projetsSoutenus = soutiens(m.id)
           const partenaire = projetsSoutenus.length > 0
+          const aides = coupsDePouce(m.id)
+          const sesBesoins = besoinsPros.filter((b) => b.member_id === m.id && b.statut !== 'pourvu')
           const deplie = ouvert === m.id
           return (
             <li key={m.id} className="border-b border-ligne">
@@ -48,7 +56,8 @@ export default function Annuaire() {
                   <span className="block text-sm text-gris mt-0.5">{m.activite}, {m.commune}</span>
                 </span>
                 <span className="text-sm text-gris shrink-0 text-right">
-                  {partenaire && <span className="text-terre-fonce" title="Cette structure soutient au moins un projet.">Partenaire Ansanm</span>}
+                  {partenaire && <span className="text-terre-fonce block" title="Cette structure soutient au moins un projet.">Partenaire Ansanm</span>}
+                  {aides.length > 0 && <span className="text-encre block" title="Cette structure a aidé au moins une autre structure.">Coup de pouce</span>}
                   <span className="block capitalize">{m.type}</span>
                 </span>
               </button>
@@ -68,6 +77,26 @@ export default function Annuaire() {
                       ))}
                     </p>
                   )}
+                  {aides.length > 0 && (
+                    <p className="mt-3 text-sm">
+                      A donné {aides.length} coup{aides.length > 1 ? 's' : ''} de pouce, à {aides.map((a) => a.nom).join(', ')}.
+                    </p>
+                  )}
+                  <div className="mt-5">
+                    <p className="font-display text-lg">Ce dont nous avons besoin</p>
+                    {sesBesoins.length > 0 ? (
+                      <ul className="mt-2 space-y-1.5 text-sm">
+                        {sesBesoins.map((b) => (
+                          <li key={b.id}>
+                            <Link to="/besoins-pros" className="underline hover:text-terre-fonce">{b.description}</Link>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="mt-1 text-sm text-gris">Aucun besoin publié pour l'instant.</p>
+                    )}
+                    <Link to={`/besoins-pros/publier?structure=${m.id}`} className="mt-2 inline-block text-sm text-terre-fonce underline">Publier un besoin pour cette structure</Link>
+                  </div>
                 </div>
               )}
             </li>

@@ -5,8 +5,11 @@ import demoContributions from '../data/contributions.json'
 import members from '../data/members.json'
 import events from '../data/events.json'
 import site from '../data/site.json'
+import demoBesoinsPros from '../data/besoins-pros.json'
+import reponsesPros from '../data/reponses-pros.json'
+import partenaires from '../data/partenaires.json'
 
-import { chargerPaves, enregistrer, enregistrerPave, supabase } from './supabase.js'
+import { chargerBesoinsPros, chargerPaves, enregistrer, enregistrerPave, supabase } from './supabase.js'
 
 // Avec Supabase configuré, les promesses, adhésions et propositions y sont enregistrées
 // et la Trace affiche les pavés de tout le monde. Sinon, tout reste dans le navigateur.
@@ -35,12 +38,16 @@ export function DataProvider({ children }) {
     supabase ? { contributions: [], adhesions: [], propositions: [], interets: [] } : { contributions: [], adhesions: [], propositions: [], interets: [], ...lire() },
   )
   const [distants, setDistants] = useState([])
+  const [besoinsDistants, setBesoinsDistants] = useState([])
 
   useEffect(() => {
     if (!supabase) return
     chargerPaves()
       .then(setDistants)
       .catch((e) => console.warn('Supabase : lecture de la Trace impossible', e))
+    chargerBesoinsPros()
+      .then(setBesoinsDistants)
+      .catch((e) => console.warn('Supabase : lecture des besoins des pros impossible', e))
   }, [])
 
   const maj = (champ, item) =>
@@ -53,6 +60,8 @@ export function DataProvider({ children }) {
   const value = useMemo(() => {
     const vus = new Set(distants.map((c) => c.id))
     const contributions = [...demoContributions, ...distants, ...local.contributions.filter((c) => !vus.has(c.id))]
+    const besoinsVus = new Set(besoinsDistants.map((b) => b.id))
+    const besoinsPros = [...demoBesoinsPros, ...besoinsDistants, ...(local.besoinsPros || []).filter((b) => !besoinsVus.has(b.id))]
     return {
       projects,
       needs,
@@ -60,6 +69,24 @@ export function DataProvider({ children }) {
       events,
       contributions,
       adhesions: local.adhesions,
+      besoinsPros,
+      reponsesPros,
+      partenaires: partenaires.filter((p) => p.visible),
+      ajouterBesoinPro: (b) => {
+        const id = crypto.randomUUID()
+        const { contact, ...publique } = b
+        maj('besoinsPros', { ...publique, id, statut: 'ouvert', date: new Date().toISOString().slice(0, 10) })
+        if (supabase) enregistrer('besoins_pros', { ...b, id }).catch((e) => console.warn('Supabase : besoin non enregistré', e))
+        return id
+      },
+      ajouterReponsePro: (r) => {
+        maj('reponsesEnvoyees', r)
+        if (supabase) enregistrer('reponses_besoins', r).catch((e) => console.warn('Supabase : réponse non enregistrée', e))
+      },
+      demanderDiagnostic: (d) => {
+        maj('diagnostics', d)
+        if (supabase) enregistrer('demandes_diagnostic', d).catch((e) => console.warn('Supabase : demande non enregistrée', e))
+      },
       ajouterContribution: (c) => {
         const id = crypto.randomUUID()
         const pave = { ...c, id, date: new Date().toISOString().slice(0, 10) }
@@ -86,7 +113,7 @@ export function DataProvider({ children }) {
         membres: site.membres_particuliers + members.length + local.adhesions.length,
       },
     }
-  }, [local, distants])
+  }, [local, distants, besoinsDistants])
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

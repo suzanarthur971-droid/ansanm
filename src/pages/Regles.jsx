@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { EnTete } from '../components/Elements.jsx'
+import { useData } from '../lib/store.jsx'
 
 const REGLES = [
   ['100 % des dons vont aux projets.', 'Les adhésions font vivre l’association.'],
@@ -12,6 +13,7 @@ const REGLES = [
 ]
 
 export default function Regles() {
+  const { partenaires } = useData()
   return (
     <div className="max-w-3xl mx-auto px-5 pt-14">
       <EnTete titre="Ce qui ne bougera jamais" kreyol={['On sèl dwèt pa ka manjé kalalou', 'Un seul doigt ne peut pas manger le calalou']}>
@@ -42,6 +44,27 @@ export default function Regles() {
           tient debout parce qu'elle est diverse.
         </p>
       </div>
+
+      <h2 className="mt-12 text-3xl">Ils construisent aussi</h2>
+      <p className="mt-4 text-gris leading-relaxed">
+        Ansanm ne veut remplacer personne. Quand une belle initiative existe déjà, on s'associe pour qu'elle grandisse.
+        Plusieurs arbres, une même forêt.
+      </p>
+      {partenaires.length > 0 ? (
+        <ul className="mt-6 border-t border-ligne">
+          {partenaires.map((p) => (
+            <li key={p.id} className="py-4 border-b border-ligne">
+              <a href={p.lien} className="font-display text-xl underline hover:text-terre-fonce" target="_blank" rel="noreferrer">{p.nom}</a>
+              <p className="mt-1 text-gris">{p.description}</p>
+              {p.type_de_partenariat && <p className="mt-1 text-sm text-terre-fonce">{p.type_de_partenariat}</p>}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-6 py-6 px-5 border-2 border-dashed border-ligne text-gris">
+          Bientôt : les premières structures amies apparaîtront ici, dès que nous aurons construit le partenariat ensemble.
+        </p>
+      )}
 
       <h2 className="mt-12 text-3xl">Et demain ?</h2>
       <p className="mt-4 text-gris leading-relaxed">

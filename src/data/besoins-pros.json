@@ -1,0 +1,82 @@
+[
+  {
+    "id": "b-soley-insta",
+    "member_id": "m-soley",
+    "description": "Un regard extérieur sur notre communication Instagram",
+    "type": "coup_de_pouce",
+    "domaine": "alimentation",
+    "situation_actuelle": "On publie au feeling, sans vraie ligne éditoriale.",
+    "statut": "pourvu",
+    "date": "2026-08-20"
+  },
+  {
+    "id": "b-lafleur-sacs",
+    "member_id": "m-lafleur",
+    "description": "On fait imprimer nos sacs à pain en Hexagone : quelqu'un peut le faire ici ?",
+    "type": "relocalisation",
+    "domaine": "alimentation",
+    "situation_actuelle": "Une commande tous les trois mois chez un imprimeur en Bretagne, plus le fret.",
+    "statut": "pourvu",
+    "date": "2026-08-05"
+  },
+  {
+    "id": "b-parents-compta",
+    "member_id": "m-parents",
+    "description": "On cherche un comptable qui connaît les associations",
+    "type": "service",
+    "domaine": "solidarité",
+    "situation_actuelle": "La trésorière fait tout seule, le soir, sur un tableur.",
+    "statut": "en cours",
+    "date": "2026-09-02"
+  },
+  {
+    "id": "b-madras-photos",
+    "member_id": "m-madras",
+    "description": "Des photos produits pour notre boutique en ligne",
+    "type": "service",
+    "domaine": "artisanat",
+    "situation_actuelle": "On prend les photos au téléphone, sur la table de l'atelier.",
+    "statut": "ouvert",
+    "date": "2026-09-14"
+  },
+  {
+    "id": "b-pepiniere-livraison",
+    "member_id": "m-pepiniere",
+    "description": "Mutualiser une tournée de livraison vers la Grande-Terre",
+    "type": "service",
+    "domaine": "agriculture",
+    "situation_actuelle": "Trois allers-retours par semaine avec notre propre camionnette, souvent à moitié vide.",
+    "statut": "ouvert",
+    "date": "2026-09-21"
+  },
+  {
+    "id": "b-manlucie-emballages",
+    "member_id": "m-manlucie",
+    "description": "Nos barquettes à emporter viennent d'Asie : une alternative locale ?",
+    "type": "relocalisation",
+    "domaine": "alimentation",
+    "situation_actuelle": "Des cartons de 500 barquettes commandés via un grossiste, livrés par conteneur.",
+    "statut": "ouvert",
+    "date": "2026-09-30"
+  },
+  {
+    "id": "b-recyclerie-traduction",
+    "member_id": "m-recyclerie",
+    "description": "Un avis sur la traduction anglaise de notre présentation pour les croisiéristes",
+    "type": "coup_de_pouce",
+    "domaine": "environnement",
+    "situation_actuelle": "Traduite avec un outil en ligne, sans relecture.",
+    "statut": "ouvert",
+    "date": "2026-10-06"
+  },
+  {
+    "id": "b-lakou-jeunes",
+    "member_id": "m-lakou",
+    "description": "Des idées pour faire connaître nos ateliers de tambour aux 15-25 ans",
+    "type": "coup_de_pouce",
+    "domaine": "culture",
+    "situation_actuelle": "Surtout du bouche-à-oreille et des affiches à la mairie.",
+    "statut": "ouvert",
+    "date": "2026-10-11"
+  }
+]

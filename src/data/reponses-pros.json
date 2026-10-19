@@ -1,0 +1,29 @@
+[
+  {
+    "id": "r-karukera-sacs",
+    "need_id": "b-lafleur-sacs",
+    "responder_member_id": "m-karukera",
+    "type": "service",
+    "statut": "partenariat",
+    "histoire": "L'Imprimerie Karukera imprime désormais les sacs de la Boulangerie Lafleur, à Jarry. 3 000 sacs par trimestre qui ne traversent plus l'Atlantique.",
+    "date": "2026-08-12"
+  },
+  {
+    "id": "r-madras-insta",
+    "need_id": "b-soley-insta",
+    "responder_member_id": "m-madras",
+    "type": "coup_de_pouce",
+    "statut": "partenariat",
+    "histoire": "Madras & Co a offert une heure de regard sur l'Instagram de l'Épicerie Vrac Soley. Trois idées plus tard, les deux structures préparent ensemble un panier cadeau pour Noël, vendu dans les deux boutiques.",
+    "date": "2026-08-27"
+  },
+  {
+    "id": "r-belair-compta",
+    "need_id": "b-parents-compta",
+    "responder_member_id": "m-belair",
+    "type": "coup_de_pouce",
+    "statut": "accepté",
+    "histoire": "Le Cabinet Bélair a donné une heure pour poser les bases de la comptabilité de Parents Debout.",
+    "date": "2026-09-08"
+  }
+]

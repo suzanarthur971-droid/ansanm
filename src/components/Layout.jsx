@@ -8,6 +8,7 @@ function Logo({ className = 'h-10' }) {
 const liens = [
   { to: '/trace', label: 'La Trace' },
   { to: '/annuaire', label: 'Annuaire' },
+  { to: '/besoins-pros', label: 'Entre pros' },
   { to: '/rendez-vous', label: 'Rendez-vous' },
   { to: '/regles', label: 'Nos règles' },
   { to: '/t-shirts', label: 'T-shirts' },
@@ -19,6 +20,7 @@ const tousLesLiens = [
   { to: '/trace', label: 'La Trace' },
   { to: '/contribuer', label: 'Poser mon pavé' },
   { to: '/annuaire', label: 'Annuaire' },
+  { to: '/besoins-pros', label: 'Besoins des pros' },
   { to: '/adherer', label: 'Adhérer' },
   { to: '/proposer', label: 'Proposer un projet' },
   { to: '/rendez-vous', label: 'Rendez-vous' },
@@ -42,7 +44,7 @@ export default function Layout({ children }) {
       <header className="border-b border-ligne">
         <div className="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between gap-6">
           <Link to="/" aria-label="Accueil"><Logo /></Link>
-          <nav className="hidden md:flex items-center gap-5 lg:gap-7 text-[15px]" aria-label="Navigation principale">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-7 text-[15px]" aria-label="Navigation principale">
             {liens.map((l) => (
               <NavLink key={l.to} to={l.to} className={({ isActive }) => (isActive ? 'text-encre underline' : 'text-gris hover:text-encre')}>
                 {l.label}
@@ -52,7 +54,7 @@ export default function Layout({ children }) {
               Poser mon pavé
             </Link>
           </nav>
-          <button onClick={() => setMenu(true)} className="md:hidden text-[15px] py-2" aria-label="Ouvrir le menu">
+          <button onClick={() => setMenu(true)} className="lg:hidden text-[15px] py-2" aria-label="Ouvrir le menu">
             Menu
           </button>
         </div>
@@ -77,7 +79,7 @@ export default function Layout({ children }) {
       </footer>
 
       {menu && (
-        <div className="fixed inset-0 z-50 bg-papier fondu md:hidden" role="dialog" aria-modal="true" aria-label="Menu">
+        <div className="fixed inset-0 z-50 bg-papier fondu lg:hidden overflow-y-auto" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="px-5 h-16 flex items-center justify-between border-b border-ligne">
             <Link to="/" aria-label="Accueil"><Logo /></Link>
             <button onClick={() => setMenu(false)} className="text-[15px] py-2">Fermer</button>

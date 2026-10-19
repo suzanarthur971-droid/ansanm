@@ -44,3 +44,11 @@ export async function voterSlogan(slogan_id) {
   const { error } = await supabase.from('votes').insert({ slogan_id })
   if (error) throw error
 }
+
+const COLONNES_BESOIN = 'id, created_at, member_id, structure, description, type, domaine, situation_actuelle, statut'
+
+export async function chargerBesoinsPros() {
+  const { data, error } = await supabase.from('besoins_pros').select(COLONNES_BESOIN).order('created_at')
+  if (error) throw error
+  return data.map(({ created_at, ...b }) => ({ ...b, date: created_at.slice(0, 10) }))
+}
