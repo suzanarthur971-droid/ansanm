@@ -31,7 +31,7 @@ const tousLesLiens = [
 // Icônes de la barre d'onglets mobile (trait, couleur héritée)
 const trait = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' }
 const ICONES = {
-  accueil: <path d="M4 11l8-6.5L20 11M6 9.5V20h12V9.5" {...trait} />,
+  annuaire: <path d="M5 4h12a2 2 0 012 2v14H7a2 2 0 01-2-2V4zM9 9h6M9 13h6M5 18a2 2 0 012-2h12" {...trait} />,
   trace: <path d="M6 20c0-4 12-4 12-8S6 8 6 4" {...trait} />,
   pros: <path d="M3 12l4-4 4 3 3-3 3 3 4-1M7 8v9a2 2 0 002 2h6a2 2 0 002-2v-6" {...trait} />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" {...trait} />,
@@ -100,14 +100,14 @@ export default function Layout({ children }) {
         </div>
       </footer>
 
-      {/* Barre d'onglets mobile : 5 onglets, le pavé à poser au centre */}
+      {/* Barre d'onglets mobile : 5 onglets, le pavé à poser au centre. L'accueil passe par le logo et le menu. */}
       <nav
         className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-papier/95 backdrop-blur border-t-2 border-beige flex items-end px-1"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
         aria-label="Navigation mobile"
       >
-        <Onglet to="/" icone="accueil" label="Accueil" end />
         <Onglet to="/trace" icone="trace" label="La Trace" />
+        <Onglet to="/annuaire" icone="annuaire" label="Annuaire" />
         <Link to="/contribuer" className="flex-1 flex flex-col items-center -mt-6 pb-2" aria-label="Poser mon pavé">
           <span
             className="w-[60px] h-[52px] bg-terre-fonce text-papier grid place-items-center shadow-lg shadow-terre/30"
