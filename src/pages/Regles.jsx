@@ -1,15 +1,31 @@
 import { Link } from 'react-router-dom'
 import { useData } from '../lib/store.jsx'
-import { Action, Aplat, Kreyol } from '../components/Nouveau.jsx'
+import { Action, Aplat, Kreyol, Pierre } from '../components/Nouveau.jsx'
 
+// Chaque règle, puis ce qu'elle veut dire concrètement
 const REGLES = [
-  ['100 % des dons vont aux projets.', 'Les adhésions font vivre l’association.'],
-  ['Pas de projet sans demande.', 'On vérifie que des gens l’attendent avant de construire.'],
-  ['Un projet, un référent.', 'Quelqu’un qui le porte et le guide.'],
-  ['Chacun contribue comme il peut.', 'Argent, matériel, temps, compétences : toute pierre compte.'],
-  ['Chaque projet crée de l’emploi ou une activité durable.', ''],
-  ['Une personne, une voix.', 'Ton vote ne dépend pas de ton don.'],
-  ['Tout est visible.', 'Chaque pavé, chaque euro, chaque avancée.'],
+  ['100 % des dons vont aux projets.', 'Les adhésions font vivre l’association.',
+    'Le site, l’assurance et le compte en banque sont payés par les adhésions, jamais par les dons. Un euro posé sur un projet va à ce projet.'],
+  ['Pas de projet sans demande.', 'On vérifie que des gens l’attendent avant de construire.',
+    'Familles inscrites, clients, écoles qui demandent des ateliers : chaque fiche projet affiche la preuve que le projet est attendu.'],
+  ['Un projet, un référent.', 'Quelqu’un qui le porte et le guide.',
+    'Le référent fait avancer le projet au quotidien, présente son avancée à chaque assemblée générale et reste le contact de ceux qui y contribuent.'],
+  ['Chacun contribue comme il peut.', 'Argent, matériel, temps, compétences : toute pierre compte.',
+    'Chaque contribution devient un pavé sur la Trace, qu’elle soit un don, un outil prêté ou quelques heures offertes.'],
+  ['Chaque projet crée de l’emploi ou une activité durable.', '',
+    'On finance des salaires, des outils de travail et des lieux, pas des achats ponctuels. Chaque fiche dit combien d’emplois le projet crée.'],
+  ['Une personne, une voix.', 'Ton vote ne dépend pas de ton don.',
+    'En assemblée générale, chaque adhérent a une voix, qu’il ait donné 5 € ou 5 000 €.'],
+  ['Tout est visible.', 'Chaque pavé, chaque euro, chaque avancée.',
+    'Chaque pavé apparaît sur la Trace, sauf si son auteur choisit l’anonymat. Et chaque trimestre, nous publions ce qui a été reçu et dépensé, projet par projet.'],
+]
+
+// Le chemin d'une idée jusqu'à la Trace : une vraie séquence
+const ETAPES = [
+  ['Quelqu’un propose une idée.', 'Avec le formulaire « Proposer un projet », même si toutes les réponses ne sont pas encore là.', '#C57B57'],
+  ['Un comité fait le tri.', 'Un petit groupe d’adhérents vérifie les trois conditions : une demande, un référent, des emplois. Et aide le porteur à compléter ce qui manque.', '#A8BFA1'],
+  ['L’assemblée générale vote.', 'Tous les six mois, les adhérents votent parmi les projets retenus. Une personne, une voix.', '#C9A46E'],
+  ['Le projet rejoint la Trace.', 'Sa fiche est publiée, et chacun peut commencer à poser ses pavés.', '#F5F0E6'],
 ]
 
 export default function Regles() {
@@ -28,16 +44,78 @@ export default function Regles() {
 
       <Aplat interieur="py-16">
         <ol className="grid md:grid-cols-2 gap-x-14 gap-y-10">
-          {REGLES.map(([titre, detail], i) => (
+          {REGLES.map(([titre, detail, concret], i) => (
             <li key={i} className="grid grid-cols-[3.5rem_1fr] gap-4">
               <span className="titre text-5xl text-terre-fonce">{i + 1}</span>
               <div>
                 <p className="text-2xl font-[700] leading-snug tracking-tight">{titre}</p>
                 {detail && <p className="mt-1 text-lg text-olive/80">{detail}</p>}
+                <p className="mt-3 leading-relaxed bg-beige rounded-xl px-4 py-3">
+                  <span className="font-[700]">Concrètement : </span>{concret}
+                </p>
               </div>
             </li>
           ))}
         </ol>
+      </Aplat>
+
+      <Aplat couleur="beige" interieur="py-16">
+        <h2 className="text-4xl sm:text-6xl">Comment un projet arrive sur la Trace</h2>
+        <ol className="mt-12 grid md:grid-cols-4 gap-8">
+          {ETAPES.map(([titre, texte, couleur], i) => (
+            <li key={titre} className="flex md:flex-col gap-5">
+              <Pierre n={i + 1} couleur={couleur} className="w-14 h-12 md:w-20 md:h-16 text-2xl md:text-4xl text-olive-nuit" />
+              <div>
+                <p className="text-xl font-[700] leading-snug">{titre}</p>
+                <p className="mt-2 leading-relaxed">{texte}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <Action to="/proposer" className="mt-10">Proposer un projet</Action>
+      </Aplat>
+
+      <Aplat interieur="py-16">
+        <h2 className="text-4xl sm:text-6xl">Les questions qu'on nous pose</h2>
+        <div className="mt-10 grid md:grid-cols-2 gap-x-14 gap-y-12">
+          <div>
+            <h3 className="text-2xl sm:text-3xl">Et si un projet n'atteint pas son objectif ?</h3>
+            <div className="mt-4 space-y-3 text-lg leading-relaxed">
+              <p>
+                Tous les six mois, l'assemblée générale fait le point sur chaque projet : où en est-il, peut-il être
+                lancé ?
+              </p>
+              <p>
+                Quand un projet est encore loin de son objectif, on demande à ceux qui y ont contribué s'ils veulent
+                basculer leur don vers un projet qui peut démarrer tout de suite. Rien ne bouge sans leur accord : ceux
+                qui préfèrent attendre gardent leur pavé là où ils l'ont posé.
+              </p>
+            </div>
+          </div>
+          <div>
+            <h3 className="text-2xl sm:text-3xl">Où va l'argent ?</h3>
+            <ul className="mt-4 space-y-3 text-lg leading-relaxed">
+              <li><span className="font-[700]">Les dons</span> vont entièrement au projet choisi.</li>
+              <li><span className="font-[700]">Les adhésions</span> paient le fonctionnement : le site, l'assurance, le compte en banque.</li>
+              <li><span className="font-[700]">La marge des t-shirts</span> rejoint la cagnotte des projets.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-2xl sm:text-3xl">Qui décide ?</h3>
+            <p className="mt-4 text-lg leading-relaxed">
+              Les adhérents, réunis en assemblée générale tous les six mois. Ils votent les nouveaux projets, font le
+              point sur ceux en cours et décident de la suite. Chaque adhérent a une voix, quel que soit le montant
+              qu'il donne.
+            </p>
+          </div>
+          <div>
+            <h3 className="text-2xl sm:text-3xl">Comment je sais ce qui est fait de l'argent ?</h3>
+            <p className="mt-4 text-lg leading-relaxed">
+              Chaque trimestre, nous publions sur le site et dans le magazine ce qui a été reçu et dépensé, projet par
+              projet. Les comptes annuels sont présentés en assemblée générale.
+            </p>
+          </div>
+        </div>
       </Aplat>
 
       <Aplat couleur="sauge" interieur="py-16 grid md:grid-cols-[1fr_1.3fr] gap-10">
