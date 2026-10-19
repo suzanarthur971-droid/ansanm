@@ -87,3 +87,25 @@ export function TraceHero({ paves }) {
     </svg>
   )
 }
+
+export const champ = 'w-full bg-white/80 border-2 border-beige rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-olive'
+
+// Une expression créole et sa traduction
+export function Kreyol({ texte, traduction, clair = false, className = '' }) {
+  return (
+    <div className={className}>
+      <p className={`text-xl font-semibold ${clair ? 'text-sauge' : 'text-terre-fonce'}`} lang="gcf">{texte}</p>
+      <p className={clair ? 'text-beige/70' : 'text-olive/70'}>{traduction}</p>
+    </div>
+  )
+}
+
+// Un choix (bouton radio) en pastille pleine
+export function Option({ name, value, checked, onChange, children }) {
+  return (
+    <label className={`flex items-baseline gap-2.5 rounded-lg px-4 py-3 cursor-pointer transition-colors ${checked ? 'bg-olive text-beige' : 'bg-beige/70 hover:bg-beige'}`}>
+      <input type="radio" name={name} value={value} checked={checked} onChange={onChange} className="accent-terre translate-y-[1px] shrink-0" />
+      <span className="text-base sm:text-lg">{children}</span>
+    </label>
+  )
+}

@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
+import { Action, Aplat } from '../components/Nouveau.jsx'
 
 export default function Introuvable() {
   return (
-    <div className="max-w-2xl mx-auto px-5 pt-24">
-      <h1 className="text-4xl">Cette trace ne mène nulle part… pour l'instant.</h1>
-      <Link to="/" className="mt-6 inline-block underline hover:text-terre-fonce">Retour à l'accueil</Link>
-    </div>
+    <Aplat couleur="olive" interieur="py-24 sm:py-32">
+      <h1 className="text-5xl sm:text-7xl max-w-[14ch]">Cette trace ne mène nulle part… pour l'instant.</h1>
+      <Action to="/" sombre className="mt-10">Retour à l'accueil</Action>
+    </Aplat>
   )
 }

@@ -180,7 +180,7 @@ export function FichePave({ pave, projet, onFermer }) {
       <div className="relative w-full sm:max-w-md bg-papier p-6 pb-10 sm:pb-6 fondu border-t sm:border border-ligne">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="font-display text-2xl leading-tight">{nom}</p>
+            <p className="titre text-3xl">{nom}</p>
             <p className="text-sm text-gris mt-1">{PROFILS[pave.profil]} · {taille.label.toLowerCase()}</p>
           </div>
           <button onClick={onFermer} className="text-sm text-gris hover:text-encre py-1">Fermer</button>
@@ -190,7 +190,7 @@ export function FichePave({ pave, projet, onFermer }) {
         </p>
         <p className="mt-1 text-sm text-gris">{TYPES[pave.type].label} : {resumeContribution(pave)}</p>
         {pave.motivation && (
-          <p className="mt-4 font-display text-xl leading-snug">« {pave.motivation} »</p>
+          <p className="mt-4 text-xl font-semibold leading-snug">« {pave.motivation} »</p>
         )}
         <p className="mt-5 text-xs text-gris">Posé le {dateLongue(pave.date)}</p>
       </div>

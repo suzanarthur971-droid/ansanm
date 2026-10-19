@@ -130,7 +130,7 @@ export default function Projet() {
       </Aplat>
 
       {nouveau && message && (
-        <div className="fixed bottom-4 inset-x-0 z-40 px-4 fondu" role="status">
+        <div className="fixed bottom-24 lg:bottom-4 inset-x-0 z-40 px-4 fondu" role="status">
           <div className="max-w-md mx-auto bg-olive-nuit text-beige rounded-2xl px-6 py-5 shadow-2xl flex gap-4 items-start">
             <div className="flex-1">
               <p className="text-2xl font-[760] tracking-tight">Ta pierre est posée.</p>
