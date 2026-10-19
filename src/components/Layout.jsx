@@ -1,32 +1,91 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 
 function Logo({ className = 'h-10' }) {
   return <img src="/logo-ansanm.png" alt="Ansanm" className={`${className} w-auto`} />
 }
 
+// Toutes les pages, rangées en 3 familles
+const FAMILLES = [
+  {
+    titre: 'Les projets',
+    liens: [
+      { to: '/trace', label: 'La Trace' },
+      { to: '/contribuer', label: 'Poser mon pavé' },
+      { to: '/proposer', label: 'Proposer un projet' },
+    ],
+  },
+  {
+    titre: 'La communauté',
+    liens: [
+      { to: '/annuaire', label: 'Annuaire' },
+      { to: '/besoins-pros', label: 'Entre pros' },
+    ],
+  },
+  {
+    titre: "L'association",
+    liens: [
+      { to: '/regles', label: 'Nos règles' },
+      { to: '/rendez-vous', label: 'Rendez-vous' },
+      { to: '/t-shirts', label: 'T-shirts' },
+      { to: '/adherer', label: 'Adhérer' },
+    ],
+  },
+]
+
+// En haut sur ordinateur : les pages principales, puis « L'association » qui déroule le reste
 const liens = [
   { to: '/trace', label: 'La Trace' },
   { to: '/annuaire', label: 'Annuaire' },
   { to: '/besoins-pros', label: 'Entre pros' },
-  { to: '/rendez-vous', label: 'Rendez-vous' },
-  { to: '/regles', label: 'Nos règles' },
-  { to: '/t-shirts', label: 'T-shirts' },
-  { to: '/adherer', label: 'Adhérer' },
 ]
+const deroule = [...FAMILLES[2].liens, { to: '/proposer', label: 'Proposer un projet' }]
 
-const tousLesLiens = [
-  { to: '/', label: 'Accueil' },
-  { to: '/trace', label: 'La Trace' },
-  { to: '/contribuer', label: 'Poser mon pavé' },
-  { to: '/annuaire', label: 'Annuaire' },
-  { to: '/besoins-pros', label: 'Besoins des pros' },
-  { to: '/adherer', label: 'Adhérer' },
-  { to: '/proposer', label: 'Proposer un projet' },
-  { to: '/rendez-vous', label: 'Rendez-vous' },
-  { to: '/regles', label: 'Nos règles' },
-  { to: '/t-shirts', label: 'T-shirts' },
-]
+function MenuAssociation() {
+  const [ouvert, setOuvert] = useState(false)
+  const ref = useRef(null)
+  const { pathname } = useLocation()
+  const actif = deroule.some((l) => pathname.startsWith(l.to))
+  useEffect(() => { setOuvert(false) }, [pathname])
+  useEffect(() => {
+    if (!ouvert) return
+    const dehors = (e) => !ref.current?.contains(e.target) && setOuvert(false)
+    const echap = (e) => e.key === 'Escape' && setOuvert(false)
+    document.addEventListener('mousedown', dehors)
+    document.addEventListener('keydown', echap)
+    return () => {
+      document.removeEventListener('mousedown', dehors)
+      document.removeEventListener('keydown', echap)
+    }
+  }, [ouvert])
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOuvert(!ouvert)}
+        aria-expanded={ouvert}
+        aria-haspopup="true"
+        className={`inline-flex items-center gap-1.5 ${actif ? 'text-terre-fonce' : 'text-olive/80 hover:text-olive'}`}
+      >
+        L'association
+        <svg viewBox="0 0 12 12" className={`w-3 h-3 transition-transform ${ouvert ? 'rotate-180' : ''}`} aria-hidden="true">
+          <path d="M2 4.5l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+      {ouvert && (
+        <ul className="absolute right-0 top-full mt-3 w-60 bg-papier rounded-2xl shadow-xl ring-2 ring-beige p-2 z-40 fondu">
+          {deroule.map((l) => (
+            <li key={l.to}>
+              <NavLink to={l.to} className={({ isActive }) => `block rounded-lg px-4 py-2.5 hover:bg-beige ${isActive ? 'text-terre-fonce' : ''}`}>
+                {l.label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
 
 // Icônes de la barre d'onglets mobile (trait, couleur héritée)
 const trait = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.9, strokeLinecap: 'round', strokeLinejoin: 'round' }
@@ -66,12 +125,13 @@ export default function Layout({ children }) {
       <header className="bg-papier">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-6">
           <Link to="/" aria-label="Accueil"><Logo /></Link>
-          <nav className="hidden lg:flex items-center gap-5 xl:gap-6 text-[15.5px] font-semibold" aria-label="Navigation principale">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-[15.5px] font-semibold" aria-label="Navigation principale">
             {liens.map((l) => (
               <NavLink key={l.to} to={l.to} className={({ isActive }) => (isActive ? 'text-terre-fonce' : 'text-olive/80 hover:text-olive')}>
                 {l.label}
               </NavLink>
             ))}
+            <MenuAssociation />
             <Link to="/contribuer" className="bg-terre-fonce text-papier px-4 py-2.5 rounded-lg hover:bg-terre-profond transition-colors">
               Poser mon pavé
             </Link>
@@ -83,7 +143,7 @@ export default function Layout({ children }) {
       <main className="flex-1">{children}</main>
 
       <footer className="bg-olive-nuit text-beige pb-24 lg:pb-0">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 grid gap-10 md:grid-cols-[1.2fr_1fr]">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 grid gap-10 md:grid-cols-[1fr_1.2fr]">
           <div>
             <p className="titre text-4xl sm:text-5xl text-beige" lang="gcf">Sé ansanm nou ké rivé.</p>
             <p className="mt-2 text-lg text-beige/75">Ensemble, on y arrivera.</p>
@@ -92,11 +152,18 @@ export default function Layout({ children }) {
               n'est demandé.
             </p>
           </div>
-          <ul className="grid grid-cols-2 gap-x-8 gap-y-3 font-semibold content-start">
-            {tousLesLiens.slice(1).map((l) => (
-              <li key={l.to}><Link to={l.to} className="text-beige/85 hover:text-beige">{l.label}</Link></li>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 content-start">
+            {FAMILLES.map((f) => (
+              <div key={f.titre}>
+                <p className="text-sm text-sauge font-semibold">{f.titre}</p>
+                <ul className="mt-3 space-y-2.5 font-semibold">
+                  {f.liens.map((l) => (
+                    <li key={l.to}><Link to={l.to} className="text-beige/85 hover:text-beige">{l.label}</Link></li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </footer>
 
@@ -130,15 +197,23 @@ export default function Layout({ children }) {
             <p className="titre text-2xl">Ansanm</p>
             <button onClick={() => setMenu(false)} className="font-semibold underline underline-offset-4">Fermer</button>
           </div>
-          <ul className="px-5 pb-10">
-            {tousLesLiens.map((l) => (
-              <li key={l.to}>
-                <NavLink to={l.to} end className={({ isActive }) => `titre block py-2.5 text-4xl ${isActive ? 'text-sauge' : ''}`}>
-                  {l.label}
-                </NavLink>
-              </li>
+          <div className="px-5 pb-12">
+            <NavLink to="/" end className={({ isActive }) => `titre block py-2 text-4xl ${isActive ? 'text-sauge' : ''}`}>Accueil</NavLink>
+            {FAMILLES.map((f) => (
+              <div key={f.titre} className="mt-7">
+                <p className="text-sauge font-semibold">{f.titre}</p>
+                <ul className="mt-1">
+                  {f.liens.map((l) => (
+                    <li key={l.to}>
+                      <NavLink to={l.to} className={({ isActive }) => `titre block py-1.5 text-[2rem] ${isActive ? 'text-sauge' : ''}`}>
+                        {l.label}
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       )}
     </div>
