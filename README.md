@@ -25,3 +25,15 @@ Le projet est déployé comme Worker avec fichiers statiques (`wrangler.jsonc`).
 - Commande de build : `npm run build`
 - Commande de déploiement : `npx wrangler deploy`
 - Les routes inconnues renvoient l'app (`not_found_handling: single-page-application`).
+
+## Tester tout le site avant une démo
+
+Teste les 15 pages (mobile et ordinateur), les liens et tous les formulaires, avec Supabase débranché
+pour ne laisser aucune donnée de test. Nécessite Python et Playwright.
+
+```bash
+VITE_SUPABASE_URL= VITE_SUPABASE_KEY= npx vite --port 5174 &
+python3 tests/test_site.py
+```
+
+Les captures sont enregistrées dans `tests/captures/`.
