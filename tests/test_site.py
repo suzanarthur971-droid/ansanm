@@ -6,7 +6,7 @@ BASE = os.environ.get('BASE', 'http://localhost:5174')
 OUT = os.path.dirname(os.path.abspath(__file__)) + '/captures'
 os.makedirs(OUT, exist_ok=True)
 
-PAGES = ['/', '/trace', '/projets/jardin-nourricier', '/projets/cuisine-collective', '/projets/atelier-upcycling',
+PAGES = ['/', '/trace', '/projets/jardin-nourricier', '/projets/cuisine-collective', '/projets/atelier-upcycling', '/projets/media-collectif',
          '/contribuer', '/annuaire', '/besoins-pros', '/besoins-pros/publier', '/adherer', '/proposer',
          '/rendez-vous', '/regles', '/t-shirts', '/idees', '/page-inconnue']
 
@@ -177,6 +177,26 @@ with sync_playwright() as p:
     page.get_by_role('link', name='Voir les besoins des pros').click()
     page.wait_for_load_state('networkidle')
     ok('Publier un besoin : visible dans la liste', page.get_by_text('Test : un besoin publié par Playwright').count() > 0)
+
+    # Donner mon avis
+    aller(page, '/trace')
+    page.get_by_role('button', name='Donner mon avis').last.click()
+    dialogue = page.get_by_role('dialog', name='Donner mon avis')
+    dialogue.get_by_role('button', name='Envoyer mon avis').click()
+    ok('Avis : au moins une réponse demandée', dialogue.get_by_role('alert').count() > 0)
+    dialogue.get_by_label('Peut-être').check()
+    dialogue.locator('#avis-manque').fill('Test : un avis')
+    dialogue.get_by_role('button', name='Envoyer mon avis').click()
+    ok('Avis : confirmation', dialogue.get_by_text('Merci ! Ton avis').count() > 0)
+    dialogue.get_by_role('button', name='Revenir au site').click()
+    ok('Avis : la fenêtre se ferme', page.get_by_role('dialog', name='Donner mon avis').count() == 0)
+
+    # Média collectif : on peut y poser un pavé
+    aller(page, '/contribuer?projet=media-collectif')
+    page.get_by_label('Nom affiché').fill('Test média')
+    page.get_by_role('button', name=re.compile('^Poser mon pavé')).last.click()
+    page.wait_for_url(re.compile(r'/projets/media-collectif\?nouveau='))
+    ok('Média collectif : pavé posé', 'media-collectif' in page.url)
 
     # Annuaire : fiche dépliée avec besoins et badge
     aller(page, '/annuaire')

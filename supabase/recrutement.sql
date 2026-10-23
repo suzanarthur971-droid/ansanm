@@ -5,7 +5,7 @@
 create table if not exists public.interets (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
-  project_id text not null check (project_id in ('jardin-nourricier', 'cuisine-collective', 'atelier-upcycling')),
+  project_id text not null check (project_id in ('jardin-nourricier', 'cuisine-collective', 'atelier-upcycling', 'media-collectif')),
   type text not null check (type in ('moi', 'proche')),
   nom text not null check (char_length(nom) between 1 and 120),
   contact text not null check (char_length(contact) between 5 and 254),

@@ -18,7 +18,10 @@
     "objectif_montant": 4000,
     "emplois_crees": "2 jardiniers à temps partiel",
     "statut": "en cours",
-    "recrute": { "poste": "2 jardiniers·ères à temps partiel", "detail": "Taille, paillage, récolte. Formation à la syntropie assurée sur place." }
+    "recrute": {
+      "poste": "2 jardiniers·ères à temps partiel",
+      "detail": "Taille, paillage, récolte. Formation à la syntropie assurée sur place."
+    }
   },
   {
     "id": "cuisine-collective",
@@ -40,7 +43,10 @@
     "objectif_montant": 6000,
     "emplois_crees": "1 cuisinier·ère référent·e",
     "statut": "en cours",
-    "recrute": { "poste": "1 cuisinier·ère référent·e", "detail": "Animer les ateliers, organiser la transformation des produits, garantir l'hygiène." }
+    "recrute": {
+      "poste": "1 cuisinier·ère référent·e",
+      "detail": "Animer les ateliers, organiser la transformation des produits, garantir l'hygiène."
+    }
   },
   {
     "id": "atelier-upcycling",
@@ -61,6 +67,34 @@
     "objectif_montant": 3000,
     "emplois_crees": "1 animateur·rice",
     "statut": "en cours",
-    "recrute": { "poste": "1 animateur·rice d'atelier", "detail": "Accueillir les groupes, animer les ateliers, gérer la collecte des matériaux." }
+    "recrute": {
+      "poste": "1 animateur·rice d'atelier",
+      "detail": "Accueillir les groupes, animer les ateliers, gérer la collecte des matériaux."
+    }
+  },
+  {
+    "id": "media-collectif",
+    "titre": "Média collectif",
+    "domaine": "Culture",
+    "accroche": "Nos histoires, racontées par celles et ceux qui les vivent.",
+    "histoire": [
+      "En Guadeloupe, des créateurs de contenu et des journalistes indépendants racontent le territoire tous les jours, chacun de son côté, souvent sans moyens. Leurs vidéos circulent quelques jours, puis disparaissent dans le flot des réseaux.",
+      "Le média collectif les réunit sur une même chaîne. On partage le matériel, le montage et la diffusion, et chacun garde sa voix. Les contenus sont repris avec l'accord écrit de leurs auteurs, et les premiers documentaires raconteront les projets financés sur la Trace."
+    ],
+    "impacts": [
+      "1 emploi de monteur·se et coordinateur·rice éditorial·e",
+      "Du matériel de tournage partagé entre créateurs",
+      "Des contenus guadeloupéens mieux diffusés, et mieux rémunérés",
+      "Des documentaires sur les projets d'Ansanm"
+    ],
+    "porteur": "Un ou une journaliste indépendant·e, qui coordonne la ligne éditoriale.",
+    "attente": "12 créateurs et journalistes indépendants déjà partants pour rejoindre la chaîne.",
+    "objectif_montant": 5000,
+    "emplois_crees": "1 monteur·se, coordinateur·rice éditorial·e",
+    "statut": "en cours",
+    "recrute": {
+      "poste": "1 monteur·se et coordinateur·rice éditorial·e",
+      "detail": "Monter les vidéos, coordonner les créateurs, organiser la publication sur la chaîne."
+    }
   }
 ]

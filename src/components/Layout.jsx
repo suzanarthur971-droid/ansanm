@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import BoutonAvis, { FormulaireAvis } from './Avis.jsx'
 
 function Logo({ className = 'h-10' }) {
   return <img src="/logo-ansanm.png" alt="Ansanm" className={`${className} w-auto`} />
@@ -113,6 +114,7 @@ function Onglet({ to, icone, label, end }) {
 
 export default function Layout({ children }) {
   const [menu, setMenu] = useState(false)
+  const [avis, setAvis] = useState(false)
   const { pathname } = useLocation()
   useEffect(() => { setMenu(false) }, [pathname])
   useEffect(() => {
@@ -122,7 +124,8 @@ export default function Layout({ children }) {
   return (
     <div className="nouveau min-h-dvh flex flex-col text-olive">
       <p className="bg-olive-nuit text-beige/90 text-center text-[13px] px-4 py-1.5">
-        Version de lancement : les dons sont des promesses en attendant l'ouverture officielle.
+        Version de lancement : les dons sont des promesses en attendant l'ouverture officielle.{' '}
+        <button onClick={() => setAvis(true)} className="font-semibold text-beige underline underline-offset-2">Donner mon avis</button>
       </p>
       <header className="bg-papier">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between gap-6">
@@ -192,6 +195,9 @@ export default function Layout({ children }) {
           Menu
         </button>
       </nav>
+
+      <BoutonAvis onOuvrir={() => setAvis(true)} />
+      {avis && <FormulaireAvis onFermer={() => setAvis(false)} />}
 
       {menu && (
         <div className="fixed inset-0 z-50 bg-olive text-beige fondu lg:hidden overflow-y-auto" role="dialog" aria-modal="true" aria-label="Menu">

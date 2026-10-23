@@ -101,6 +101,10 @@ export function DataProvider({ children }) {
         maj('reponsesEnvoyees', r)
         if (supabase) enregistrer('reponses_besoins', r).catch((e) => console.warn('Supabase : réponse non enregistrée', e))
       },
+      ajouterAvis: (a) => {
+        maj('avis', a)
+        if (supabase) enregistrer('avis', a).catch((e) => console.warn('Supabase : avis non enregistré', e))
+      },
       demanderDiagnostic: (d) => {
         maj('diagnostics', d)
         if (supabase) enregistrer('demandes_diagnostic', d).catch((e) => console.warn('Supabase : demande non enregistrée', e))

@@ -11,7 +11,7 @@
 create table if not exists public.paves (
   id uuid primary key default gen_random_uuid(),
   created_at timestamptz not null default now(),
-  project_id text not null check (project_id in ('jardin-nourricier', 'cuisine-collective', 'atelier-upcycling')),
+  project_id text not null check (project_id in ('jardin-nourricier', 'cuisine-collective', 'atelier-upcycling', 'media-collectif')),
   need_id text check (char_length(need_id) <= 40),
   type text not null check (type in ('argent', 'materiel', 'temps', 'competences')),
   montant integer check (montant between 1 and 100000),
