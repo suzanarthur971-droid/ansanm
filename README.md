@@ -33,7 +33,7 @@ pour ne laisser aucune donnée de test. Nécessite Python et Playwright.
 
 ```bash
 VITE_SUPABASE_URL= VITE_SUPABASE_KEY= npx vite --port 5174 &
-python3 tests/test_site.py
+/usr/local/bin/python3 tests/test_site.py
 ```
 
 Les captures sont enregistrées dans `tests/captures/`.

@@ -6,6 +6,7 @@ import { partager } from '../lib/partage.js'
 import Trace, { FichePave, Legende } from '../components/Trace.jsx'
 import { Action, Aplat } from '../components/Nouveau.jsx'
 import Recrutement from '../components/Recrutement.jsx'
+import StoryPave from '../components/StoryPave.jsx'
 import Introuvable from './Introuvable.jsx'
 
 export default function Projet() {
@@ -16,6 +17,7 @@ export default function Projet() {
   const [choisi, setChoisi] = useState(null)
   const [message, setMessage] = useState(!!nouveauId)
   const [etatPartage, setEtatPartage] = useState('')
+  const [story, setStory] = useState(false)
   const fermer = useCallback(() => setChoisi(null), [])
 
   if (!data) return <Introuvable />
@@ -137,10 +139,11 @@ export default function Projet() {
               <p className="mt-1 text-beige/85">
                 {etatPartage || `Merci. Grâce à toi, la trace ${projet.titre} avance d'un pas. Partage-la autour de toi : une route se construit plus vite à plusieurs.`}
               </p>
-              <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 items-center">
-                <button onClick={() => partagerProjet(true)} className="bg-beige text-olive-nuit font-semibold px-5 py-2.5 rounded-lg hover:bg-papier transition-colors">
-                  Partager
-                </button>
+              <button onClick={() => setStory(true)} className="mt-4 w-full bg-terre-fonce text-papier font-[700] px-5 py-3 rounded-lg hover:bg-terre-profond transition-colors">
+                Partager en story
+              </button>
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 items-center">
+                <button onClick={() => partagerProjet(true)} className="font-semibold underline underline-offset-4">Partager le lien</button>
                 <button onClick={voirMaPierre} className="font-semibold underline underline-offset-4">Voir ma pierre sur la Trace</button>
               </div>
             </div>
@@ -151,6 +154,7 @@ export default function Projet() {
         </div>
       )}
 
+      {story && nouveau && <StoryPave projet={projet} pave={nouveau} paves={paves} onFermer={() => setStory(false)} />}
       <FichePave pave={choisi} projet={projet} onFermer={fermer} />
     </div>
   )

@@ -76,6 +76,11 @@ with sync_playwright() as p:
     pid = page.url.split('nouveau=')[1]
     ok('Contribuer : pavé présent sur la Trace', page.locator(f'#pave-{pid}').count() == 1)
     page.screenshot(path=f'{OUT}/form-pave-pose.png')
+    page.get_by_role('button', name='Partager en story').click()
+    page.get_by_role('dialog', name='Ta story').locator('img').wait_for(timeout=10000)
+    ok('Story : l’image est créée', page.get_by_role('dialog', name='Ta story').locator('img').get_attribute('src').startswith('blob:'))
+    ok('Story : bouton pour enregistrer l’image', page.get_by_role('link', name="Enregistrer l'image").count() == 1)
+    page.get_by_role('dialog', name='Ta story').get_by_role('button', name='Fermer').click()
 
     # Contribution en matériel
     aller(page, '/contribuer?projet=atelier-upcycling')
