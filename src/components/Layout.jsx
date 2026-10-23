@@ -156,6 +156,11 @@ export default function Layout({ children }) {
               Version de lancement : les projets, personnes et montants de démonstration sont fictifs, et aucun paiement
               n'est demandé.
             </p>
+            <p className="mt-4 text-sm text-beige/60 max-w-md">
+              Cette première version a été construite avec l'aide d'une intelligence artificielle. La suite, on veut la
+              faire avec des webdesigners et graphistes d'ici.{' '}
+              <Link to="/besoins-pros" className="text-beige underline underline-offset-2">Tu en es ? Donne un coup de main</Link>.
+            </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 content-start">
             {FAMILLES.map((f) => (

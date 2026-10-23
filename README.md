@@ -1,5 +1,7 @@
 # Ansanm — démo bêta
 
+> Vous reprenez le site ? Commencez par [GUIDE-REPRISE.md](GUIDE-REPRISE.md).
+
 Démo cliquable d'Ansanm, plateforme associative guadeloupéenne : « pavé par pavé ».
 
 ## Lancer en local

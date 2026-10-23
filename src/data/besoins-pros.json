@@ -1,5 +1,38 @@
 [
   {
+    "id": "b-ansanm-design",
+    "member_id": null,
+    "structure": "Ansanm",
+    "description": "Reprendre le design du site après sa première version, faite avec une IA",
+    "type": "service",
+    "domaine": "services",
+    "situation_actuelle": "Une base qui fonctionne, construite avec l'aide d'une intelligence artificielle. Il lui manque des mains d'ici pour grandir.",
+    "statut": "ouvert",
+    "date": "2026-10-22"
+  },
+  {
+    "id": "b-ansanm-graphisme",
+    "member_id": null,
+    "structure": "Ansanm",
+    "description": "Une identité graphique : pictogrammes, affiches des marchés, visuels pour les réseaux",
+    "type": "service",
+    "domaine": "services",
+    "situation_actuelle": "Un logo fait sur Canva et une palette de couleurs. Tout le reste est à dessiner.",
+    "statut": "ouvert",
+    "date": "2026-10-22"
+  },
+  {
+    "id": "b-ansanm-dev",
+    "member_id": null,
+    "structure": "Ansanm",
+    "description": "Un regard de développeur·se sur le code du site (React, Supabase)",
+    "type": "coup_de_pouce",
+    "domaine": "services",
+    "situation_actuelle": "Le code est ouvert et documenté. Un avis sur ce qu'il faut solidifier avant l'ouverture officielle serait précieux.",
+    "statut": "ouvert",
+    "date": "2026-10-22"
+  },
+  {
     "id": "b-soley-insta",
     "member_id": "m-soley",
     "description": "Un regard extérieur sur notre communication Instagram",

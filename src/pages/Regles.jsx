@@ -115,6 +115,16 @@ export default function Regles() {
               projet. Les comptes annuels sont présentés en assemblée générale.
             </p>
           </div>
+          <div className="md:col-span-2 bg-beige rounded-[22px] p-6 sm:p-8">
+            <h3 className="text-2xl sm:text-3xl">Qui a fait ce site ?</h3>
+            <p className="mt-4 text-lg leading-relaxed max-w-3xl">
+              Cette première version a été construite avec l'aide d'une intelligence artificielle, pour avancer vite et
+              montrer l'idée. Mais Ansanm se construit à plusieurs : la suite, nous voulons la confier à des
+              webdesigners, graphistes et développeurs guadeloupéens. Nos besoins sont publiés dans « Entre pros » :
+              un coup de pouce ou une mission, chaque pierre compte.
+            </p>
+            <Link to="/besoins-pros" className="mt-5 inline-block font-semibold underline decoration-2 underline-offset-4 hover:decoration-terre">Voir ce dont le site a besoin</Link>
+          </div>
         </div>
       </Aplat>
 
