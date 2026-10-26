@@ -1,27 +1,49 @@
 [
   {
     "id": "jardin-nourricier",
-    "titre": "Jardin nourricier",
+    "titre": "Jardins nourriciers",
     "domaine": "Terre",
-    "accroche": "Des arbres chargés de fruits, et personne pour les cueillir.",
+    "accroche": "Partout en Guadeloupe, des jardins donnent. Il leur manque des bras.",
     "histoire": [
-      "Partout en Guadeloupe, des terrains dorment. Leurs propriétaires vivent loin, ou ne savent pas quoi en faire. Pourtant, les manguiers, les avocatiers et les arbres à pain continuent de donner, saison après saison, et les fruits pourrissent au sol.",
-      "Ce projet commence sur un terrain déjà planté d'arbres fruitiers. Une équipe mobile, formée à la syntropie, va l'entretenir, l'enrichir et le rendre nourricier. Les récoltes alimentent la cuisine collective, et le terrain reprend vie."
+      "Partout en Guadeloupe, des terrains plantés d'arbres fruitiers dorment. Leurs propriétaires vivent loin, ou n'ont plus la force de s'en occuper. Les manguiers, les avocatiers et les arbres à pain continuent de donner, et les fruits pourrissent au sol.",
+      "Jardins nourriciers relie ces jardins à celles et ceux qui veulent agir. Chaque jardin dit ce dont il a besoin, et on s'y retrouve pour des koudmen : une matinée de cueillette, d'élagage ou de plantation. Une équipe mobile formée à la syntropie fait le lien d'un jardin à l'autre, et les récoltes nourrissent les familles et la cuisine collective."
     ],
     "impacts": [
-      "2 emplois de jardiniers à temps partiel",
-      "Des fruits locaux en circuit court pour la cuisine",
-      "Un modèle reproductible sur d'autres terrains en friche"
+      "2 emplois de jardiniers à temps partiel dans l'équipe mobile",
+      "Des fruits locaux pour les familles et la cuisine collective",
+      "Des terrains en friche qui reprennent vie, un par un"
     ],
-    "porteur": "Un jardinier formé à la syntropie, qui transmet son savoir à l'équipe.",
-    "attente": "La cuisine collective, et les familles qui veulent des fruits locaux.",
+    "porteur": "Une équipe mobile de jardiniers formés à la syntropie, qui coordonne les koudmen d'un jardin à l'autre.",
+    "attente": "Les propriétaires de terrains qui ne peuvent plus s'en occuper, les familles qui veulent des fruits locaux, et la cuisine collective.",
     "objectif_montant": 4000,
     "emplois_crees": "2 jardiniers à temps partiel",
-    "statut": "en cours",
+    "statut": "actif",
     "recrute": {
       "poste": "2 jardiniers·ères à temps partiel",
       "detail": "Taille, paillage, récolte. Formation à la syntropie assurée sur place."
-    }
+    },
+    "activites": [
+      [
+        "Cueillette",
+        "Ramasser les fruits avant qu'ils tombent, et les partager."
+      ],
+      [
+        "Élagage",
+        "Tailler, dégager les lianes, redonner de la lumière aux arbres."
+      ],
+      [
+        "Plantation",
+        "Ajouter des arbres et des cultures, en étages, comme dans une forêt."
+      ],
+      [
+        "Paillage et compost",
+        "Nourrir la terre avec ce qu'on a : feuilles, broyat, épluchures."
+      ],
+      [
+        "Transmission",
+        "Apprendre les gestes aux enfants, aux voisins, aux nouveaux venus."
+      ]
+    ]
   },
   {
     "id": "cuisine-collective",
@@ -42,7 +64,7 @@
     "attente": "35 familles déjà intéressées.",
     "objectif_montant": 6000,
     "emplois_crees": "1 cuisinier·ère référent·e",
-    "statut": "en cours",
+    "statut": "en construction",
     "recrute": {
       "poste": "1 cuisinier·ère référent·e",
       "detail": "Animer les ateliers, organiser la transformation des produits, garantir l'hygiène."
@@ -66,7 +88,7 @@
     "attente": "Les écoles, les associations et les particuliers qui veulent apprendre.",
     "objectif_montant": 3000,
     "emplois_crees": "1 animateur·rice",
-    "statut": "en cours",
+    "statut": "en construction",
     "recrute": {
       "poste": "1 animateur·rice d'atelier",
       "detail": "Accueillir les groupes, animer les ateliers, gérer la collecte des matériaux."
@@ -91,7 +113,7 @@
     "attente": "12 créateurs et journalistes indépendants déjà partants pour rejoindre la chaîne.",
     "objectif_montant": 5000,
     "emplois_crees": "1 monteur·se, coordinateur·rice éditorial·e",
-    "statut": "en cours",
+    "statut": "en construction",
     "recrute": {
       "poste": "1 monteur·se et coordinateur·rice éditorial·e",
       "detail": "Monter les vidéos, coordonner les créateurs, organiser la publication sur la chaîne."

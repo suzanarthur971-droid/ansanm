@@ -28,6 +28,7 @@ export function Action({ to, children, sombre = false, discret = false, classNam
       : 'bg-terre-fonce text-papier hover:bg-terre-profond px-6 py-3.5 rounded-lg'
   const cls = `inline-flex items-center justify-center font-semibold text-[17px] transition-colors ${style} ${className}`
   if (to) return <Link to={to} className={cls} {...rest}>{children}</Link>
+  if (rest.href) return <a className={cls} {...rest}>{children}</a>
   return <button className={cls} {...rest}>{children}</button>
 }
 
@@ -107,5 +108,28 @@ export function Option({ name, value, checked, onChange, children }) {
       <input type="radio" name={name} value={value} checked={checked} onChange={onChange} className="accent-terre translate-y-[1px] shrink-0" />
       <span className="text-base sm:text-lg">{children}</span>
     </label>
+  )
+}
+
+// Étiquette « exemple » pour tout contenu fictif de la démo
+export function Exemple({ clair = false, children = 'Exemple', className = '' }) {
+  return (
+    <span
+      className={`inline-flex items-center text-[12.5px] font-semibold px-2 py-0.5 rounded-md border border-dashed ${clair ? 'border-beige/60 text-beige/85' : 'border-olive/40 text-olive/75'} ${className}`}
+      title="Contenu fictif, pour la démonstration"
+    >
+      {children}
+    </span>
+  )
+}
+
+// Statut d'un projet : actif (on peut venir aider) ou en construction (cagnotte de lancement)
+export function Statut({ statut, clair = false }) {
+  const actif = statut === 'actif'
+  return (
+    <span className={`inline-flex items-center gap-2 text-[15px] font-semibold ${clair ? 'text-beige' : ''}`}>
+      <span className={`w-2.5 h-2.5 rounded-full ${actif ? 'bg-sauge' : 'bg-terre'}`} aria-hidden="true" />
+      {actif ? 'Actif : viens aider' : 'En construction : cagnotte de lancement'}
+    </span>
   )
 }

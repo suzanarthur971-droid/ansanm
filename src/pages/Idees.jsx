@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useData } from '../lib/store.jsx'
-import { Action, Aplat, champ } from '../components/Nouveau.jsx'
+import { Action, Aplat, Exemple, champ } from '../components/Nouveau.jsx'
 
 const CLE_VOTES = 'ansanm-idees-votes-v1'
 
@@ -70,6 +70,7 @@ function CarteIdee({ idee, aVote, onVoter }) {
       <p className="flex items-center gap-2 font-semibold text-[15px]">
         <span className="w-3.5 h-3 rounded-[3px] bg-sauge" aria-hidden="true" />
         {idee.domaine}
+        {idee.exemple && <Exemple className="ml-auto" />}
       </p>
       <h2 className="mt-3 text-3xl sm:text-4xl">{idee.titre}</h2>
       <p className="mt-3 text-lg leading-relaxed">{idee.description}</p>

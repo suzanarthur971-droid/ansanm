@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { useData, useProjet } from '../lib/store.jsx'
 import { euros } from '../lib/paves.js'
 import Trace, { FichePave, Legende } from '../components/Trace.jsx'
-import { Action, Aplat } from '../components/Nouveau.jsx'
+import { Action, Aplat, Exemple, Statut } from '../components/Nouveau.jsx'
 
 export default function LaTrace() {
   const { projects } = useData()
@@ -30,16 +30,18 @@ export default function LaTrace() {
             est grande, plus la pierre est large. Mais chaque pierre compte : sans les petites, la route a des trous.
           </p>
         </div>
-        <div className="md:col-span-2 mt-4 flex gap-2 overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0" role="tablist" aria-label="Choisir un projet">
+        <div className="md:col-span-2 min-w-0 mt-4 flex gap-2 overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0" role="tablist" aria-label="Choisir un projet">
           {projects.map((p) => (
             <button
               key={p.id}
               role="tab"
               aria-selected={p.id === id}
               onClick={() => setParams({ projet: p.id }, { replace: true })}
-              className={`shrink-0 px-5 py-3 rounded-lg text-lg font-semibold transition-colors ${p.id === id ? 'bg-beige text-olive-nuit' : 'bg-olive-nuit text-beige hover:bg-[#344033]'}`}
+              className={`relative shrink-0 px-5 py-3 rounded-lg text-lg font-semibold transition-colors ${p.id === id ? 'bg-beige text-olive-nuit' : 'bg-olive-nuit text-beige hover:bg-[#344033]'}`}
             >
+              <span className={`inline-block w-2 h-2 rounded-full mr-2 align-middle ${p.statut === 'actif' ? 'bg-sauge' : 'bg-terre'}`} aria-hidden="true" />
               {p.titre}
+              {p.statut !== 'actif' && <span className="sr-only"> (en construction)</span>}
             </button>
           ))}
         </div>
@@ -47,7 +49,11 @@ export default function LaTrace() {
 
       <Aplat interieur="py-12 grid md:grid-cols-[1fr_420px] gap-12 items-start">
         <div className="md:sticky md:top-8 order-2 md:order-1">
-          <h2 className="text-4xl sm:text-5xl">{projet.titre}</h2>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <Statut statut={projet.statut} />
+            {projet.exemple && <Exemple>Projet d'exemple</Exemple>}
+          </div>
+          <h2 className="mt-3 text-4xl sm:text-5xl">{projet.titre}</h2>
           <p className="mt-3 text-xl leading-snug text-olive/85 max-w-md">{projet.accroche}</p>
           <p className="mt-8 text-2xl font-[650]">
             {euros(promis)} <span className="font-normal text-olive/75">sur {euros(projet.objectif_montant)}</span>

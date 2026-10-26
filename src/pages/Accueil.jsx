@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { useData, useProjet } from '../lib/store.jsx'
 import { euros, nombre } from '../lib/paves.js'
 import MiniTrace from '../components/MiniTrace.jsx'
-import { Action, Aplat, Pierre, TraceHero } from '../components/Nouveau.jsx'
+import { Action, Aplat, Exemple, Pierre, Statut, TraceHero } from '../components/Nouveau.jsx'
 
 const GESTES = [
   ['Choisis un projet qui te parle.', 'Alimentation, terre, artisanat : tu décides où va ton soutien.', '#C57B57'],
@@ -10,16 +10,31 @@ const GESTES = [
   ['Vois la route avancer.', 'Chaque contribution apparaît sur la Trace, avec ton nom et la raison de ton geste.', '#E8DCC4'],
 ]
 
+const dateCourte = (d) => new Date(d + 'T12:00:00').toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })
+
 function DalleProjet({ id }) {
   const { projet, promis, progression, paves } = useProjet(id)
+  const { koudmen } = useData()
+  const prochain = koudmen.filter((k) => k.project_id === id).sort((a, b) => a.date.localeCompare(b.date))[0]
   return (
     <Link to={`/projets/${id}`} className="group block bg-beige rounded-[22px] px-5 sm:px-8 pt-6 pb-4 hover:bg-[#E2D4B8] transition-colors">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+        <Statut statut={projet.statut} />
+        {projet.exemple && <Exemple />}
+      </div>
+      <div className="mt-3 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <h3 className="text-3xl sm:text-4xl">{projet.titre}</h3>
         <p className="text-[17px]">
-          <strong className="font-[750]">{euros(promis)}</strong> sur {euros(projet.objectif_montant)}, {paves.length} pavés
+          {projet.statut === 'actif'
+            ? <>{paves.length} pavés posés</>
+            : <><strong className="font-[750]">{euros(promis)}</strong> sur {euros(projet.objectif_montant)}, {paves.length} pavés</>}
         </p>
       </div>
+      {prochain && (
+        <p className="mt-2 font-semibold text-terre-fonce first-letter:uppercase">
+          Prochain koudmen : {dateCourte(prochain.date)}, {prochain.titre.toLowerCase()}
+        </p>
+      )}
       <p className="mt-2 text-lg text-olive/80 max-w-xl">{projet.accroche}</p>
       <div className="mt-2 -mx-2"><MiniTrace paves={paves} progression={progression} chemin={['#F5F0E6', '#D3BE96']} /></div>
     </Link>
@@ -96,13 +111,21 @@ export default function Accueil() {
       </Aplat>
 
       <Aplat interieur="py-20 sm:py-28">
-        <h2 className="text-4xl sm:text-6xl">Les traces en cours</h2>
-        <div className="mt-10 space-y-4">
-          {projects.map((p) => <DalleProjet key={p.id} id={p.id} />)}
+        <h2 className="text-4xl sm:text-6xl">Déjà actifs : viens aider</h2>
+        <p className="mt-4 text-xl leading-relaxed max-w-2xl">Ces projets existent et tournent. Ils ont besoin de bras, d'outils et de temps, dès maintenant.</p>
+        <div className="mt-8 space-y-4">
+          {projects.filter((p) => p.statut === 'actif').map((p) => <DalleProjet key={p.id} id={p.id} />)}
+        </div>
+
+        <h2 className="mt-20 text-4xl sm:text-6xl">En construction : les cagnottes</h2>
+        <p className="mt-4 text-xl leading-relaxed max-w-2xl">Ces projets n'existent pas encore. Chaque pavé les rapproche de leur lancement.</p>
+        <div className="mt-8 space-y-4">
+          {projects.filter((p) => p.statut !== 'actif').map((p) => <DalleProjet key={p.id} id={p.id} />)}
         </div>
         <p className="mt-10 text-2xl sm:text-3xl leading-snug max-w-4xl font-[600]">
           Déjà {euros(stats.totalPromis)} promis, {nombre(stats.paves)} pavés posés, {nombre(stats.projets)} projets en
           cours et {nombre(stats.membres)} membres.
+          <span className="block mt-2 text-lg font-normal text-olive/70">Chiffres d'exemple : en phase de lancement, les projets, pavés et membres affichés sont fictifs.</span>
         </p>
       </Aplat>
 

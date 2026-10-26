@@ -183,6 +183,23 @@ with sync_playwright() as p:
     page.wait_for_load_state('networkidle')
     ok('Publier un besoin : visible dans la liste', page.get_by_text('Test : un besoin publié par Playwright').count() > 0)
 
+    # Koudmen : s'inscrire à un coup de main du jardin
+    aller(page, '/projets/jardin-nourricier')
+    carte = page.locator('#koudmen li').first
+    avant = carte.inner_text()
+    carte.get_by_role('button', name='Je viens').click()
+    carte.get_by_role('button', name="Je m'inscris").click()
+    ok('Koudmen : prénom et contact demandés', carte.get_by_role('alert').count() > 0)
+    carte.get_by_label('Ton prénom').fill('Testeur')
+    carte.get_by_label('E-mail ou téléphone').fill('test@exemple.fr')
+    carte.get_by_role('button', name="Je m'inscris").click()
+    ok('Koudmen : inscription confirmée', carte.get_by_text("C'est noté").count() > 0)
+    ok('Koudmen : un inscrit de plus', carte.get_by_text(re.compile(r'\d+ inscrits? sur')).inner_text() != re.search(r'\d+ inscrits? sur \d+', avant).group(0))
+    ok('Projet actif : lieux affichés', page.get_by_text('jardins du réseau').count() > 0)
+    ok('Mentions « exemple » présentes', page.get_by_text('Exemple', exact=True).count() > 0)
+    aller(page, '/projets/cuisine-collective')
+    ok('Projet en construction : expliqué', page.get_by_text('Ce projet est en construction.').count() > 0)
+
     # Donner mon avis
     aller(page, '/trace')
     page.get_by_role('button', name='Donner mon avis').last.click()

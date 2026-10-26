@@ -1,20 +1,32 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import projects from '../data/projects.json'
+import projetsBruts from '../data/projects.json'
 import needs from '../data/needs.json'
-import demoContributions from '../data/contributions.json'
-import members from '../data/members.json'
-import events from '../data/events.json'
+import pavesExemple from '../data/contributions.json'
+import membresExemple from '../data/members.json'
+import rdvExemple from '../data/events.json'
 import site from '../data/site.json'
-import demoBesoinsPros from '../data/besoins-pros.json'
+import besoinsExemple from '../data/besoins-pros.json'
 import reponsesPros from '../data/reponses-pros.json'
 import partenaires from '../data/partenaires.json'
-import demoIdees from '../data/idees.json'
+import ideesExemple from '../data/idees.json'
+import lieux from '../data/lieux.json'
+import koudmenExemple from '../data/koudmen.json'
 
-import { chargerBesoinsPros, chargerIdees, chargerPaves, enregistrer, enregistrerPave, lierIdee, supabase, voterIdee } from './supabase.js'
+import { chargerBesoinsPros, chargerIdees, chargerInscritsKoudmen, chargerPaves, enregistrer, enregistrerPave, lierIdee, supabase, voterIdee } from './supabase.js'
 
 // Avec Supabase configuré, les promesses, adhésions et propositions y sont enregistrées
 // et la Trace affiche les pavés de tout le monde. Sinon, tout reste dans le navigateur.
 const CLE = 'ansanm-beta-v1'
+
+// Tout ce qui vient des fichiers de démonstration est marqué « exemple » pour l'affichage.
+// Seuls les besoins publiés au nom d'Ansanm (b-ansanm-…) sont réels.
+const exemple = (liste) => liste.map((x) => ({ ...x, exemple: true }))
+const projects = exemple(projetsBruts)
+const demoContributions = exemple(pavesExemple)
+const members = exemple(membresExemple)
+const events = exemple(rdvExemple)
+const demoBesoinsPros = besoinsExemple.map((b) => (b.id.startsWith('b-ansanm') ? b : { ...b, exemple: true }))
+const demoIdees = exemple(ideesExemple)
 
 function lire() {
   try {
@@ -41,6 +53,8 @@ export function DataProvider({ children }) {
   const [distants, setDistants] = useState([])
   const [besoinsDistants, setBesoinsDistants] = useState([])
   const [ideesDistantes, setIdeesDistantes] = useState([])
+  const [inscritsDistants, setInscritsDistants] = useState({})
+  const [inscritsAjouts, setInscritsAjouts] = useState({})
   // Ajouts de cette visite sur les idées (votes et rapprochements), pour un affichage immédiat
   const [ideesAjouts, setIdeesAjouts] = useState({ votes: {}, liens: [] })
 
@@ -55,6 +69,9 @@ export function DataProvider({ children }) {
     chargerIdees()
       .then(setIdeesDistantes)
       .catch((e) => console.warn('Supabase : lecture des idées impossible', e))
+    chargerInscritsKoudmen()
+      .then(setInscritsDistants)
+      .catch((e) => console.warn('Supabase : lecture des koudmen impossible', e))
   }, [])
 
   const maj = (champ, item) =>
@@ -80,8 +97,16 @@ export function DataProvider({ children }) {
       votes: i.votes + (ideesAjouts.votes[i.id] || 0),
       rapprochements: [...i.rapprochements, ...ideesAjouts.liens.filter((l) => l.proposition_id === i.id)],
     }))
+    const koudmen = koudmenExemple.map(({ inscrits_depart, ...k }) => ({
+      ...k,
+      exemple: true,
+      lieu: lieux.find((l) => l.id === k.lieu_id),
+      inscrits: inscrits_depart + (inscritsDistants[k.id] || 0) + (inscritsAjouts[k.id] || 0),
+    }))
     return {
       projects,
+      lieux: exemple(lieux),
+      koudmen,
       needs,
       members,
       events,
@@ -100,6 +125,10 @@ export function DataProvider({ children }) {
       ajouterReponsePro: (r) => {
         maj('reponsesEnvoyees', r)
         if (supabase) enregistrer('reponses_besoins', r).catch((e) => console.warn('Supabase : réponse non enregistrée', e))
+      },
+      inscrireKoudmen: ({ koudmen, prenom, contact, afficher }) => {
+        setInscritsAjouts((a) => ({ ...a, [koudmen.id]: (a[koudmen.id] || 0) + 1 }))
+        if (supabase) enregistrer('koudmen_inscriptions', { koudmen_id: koudmen.id, prenom, contact }).catch((e) => console.warn('Supabase : inscription non enregistrée', e))
       },
       ajouterAvis: (a) => {
         maj('avis', a)
@@ -146,7 +175,7 @@ export function DataProvider({ children }) {
         membres: site.membres_particuliers + members.length + local.adhesions.length,
       },
     }
-  }, [local, distants, besoinsDistants, ideesDistantes, ideesAjouts])
+  }, [local, distants, besoinsDistants, ideesDistantes, ideesAjouts, inscritsDistants, inscritsAjouts])
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>
 }

@@ -1,10 +1,11 @@
 import { useCallback, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { useProjet } from '../lib/store.jsx'
+import { useData, useProjet } from '../lib/store.jsx'
 import { TYPES, euros } from '../lib/paves.js'
 import { partager } from '../lib/partage.js'
 import Trace, { FichePave, Legende } from '../components/Trace.jsx'
-import { Action, Aplat } from '../components/Nouveau.jsx'
+import { Action, Aplat, Exemple, Statut } from '../components/Nouveau.jsx'
+import { CarteKoudmen, CarteLieu } from '../components/Koudmen.jsx'
 import Recrutement from '../components/Recrutement.jsx'
 import StoryPave from '../components/StoryPave.jsx'
 import Introuvable from './Introuvable.jsx'
@@ -12,6 +13,7 @@ import Introuvable from './Introuvable.jsx'
 export default function Projet() {
   const { id } = useParams()
   const data = useProjet(id)
+  const { lieux, koudmen } = useData()
   const [params, setParams] = useSearchParams()
   const nouveauId = params.get('nouveau')
   const [choisi, setChoisi] = useState(null)
@@ -35,13 +37,21 @@ export default function Projet() {
     setEtatPartage(r === 'copie' ? 'Lien copié, colle-le où tu veux !' : r === 'echec' ? 'Copie impossible, partage l’adresse de la page.' : '')
   }
 
+  const actif = projet.statut === 'actif'
+  const sesLieux = lieux.filter((l) => l.project_id === projet.id)
+  const sesKoudmen = koudmen.filter((k) => k.project_id === projet.id).sort((a, b) => a.date.localeCompare(b.date))
+
   const voirMaPierre = () => document.getElementById('pave-' + nouveauId)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
   return (
     <div className="nouveau">
       <Aplat couleur="olive" interieur="pt-10 sm:pt-14 pb-12 sm:pb-16">
         <Link to="/trace" className="text-beige/75 hover:text-beige underline underline-offset-4">Toutes les traces</Link>
-        <p className="mt-10 text-lg text-sauge font-semibold">{projet.domaine}</p>
+        <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-2">
+          <span className="text-lg text-sauge font-semibold">{projet.domaine}</span>
+          <Statut statut={projet.statut} clair />
+          {projet.exemple && <Exemple clair>Projet d'exemple</Exemple>}
+        </div>
         <h1 className="mt-1 text-6xl sm:text-8xl">{projet.titre}</h1>
         <p className="mt-6 text-2xl sm:text-3xl leading-snug max-w-3xl text-beige/90">{projet.accroche}</p>
         <div className="mt-10 max-w-xl">
@@ -51,10 +61,15 @@ export default function Projet() {
           <div className="mt-3 h-3 rounded-full bg-olive-nuit overflow-hidden" role="progressbar" aria-valuenow={Math.round(progression * 100)} aria-valuemin={0} aria-valuemax={100}>
             <div className="h-full rounded-full bg-terre" style={{ width: `${Math.max(2, progression * 100)}%` }} />
           </div>
-          <p className="mt-2 text-beige/75">Il reste {euros(reste)} à réunir, et {paves.length} pavés sont déjà posés.</p>
+          <p className="mt-2 text-beige/75">
+            {actif
+              ? `${paves.length} pavés posés : des dons pour l'équipe mobile, et chaque koudmen donné.`
+              : `Il reste ${euros(reste)} à réunir pour lancer le projet, et ${paves.length} pavés sont déjà posés.`}
+          </p>
         </div>
         <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
-          <Action to={`/contribuer?projet=${projet.id}`} sombre>Contribuer à ce projet</Action>
+          {actif && sesKoudmen.length > 0 && <Action href="#koudmen" sombre onClick={(e) => { e.preventDefault(); document.getElementById('koudmen')?.scrollIntoView({ behavior: 'smooth' }) }}>Voir les koudmen</Action>}
+          <Action to={`/contribuer?projet=${projet.id}`} sombre={!actif} discret={actif}>{actif ? 'Soutenir autrement' : 'Contribuer à la cagnotte'}</Action>
           <Action onClick={() => partagerProjet(false)} discret>Partager ce projet</Action>
         </div>
         {etatPartage && !message && <p className="mt-3 text-beige/80" role="status">{etatPartage}</p>}
@@ -62,10 +77,59 @@ export default function Projet() {
 
       <Aplat interieur="py-16 sm:py-20 grid md:grid-cols-[1fr_420px] gap-14 items-start">
         <div>
-          <h2 className="text-4xl sm:text-5xl">L'histoire</h2>
+          {!actif && (
+            <p className="mb-12 bg-beige rounded-[22px] p-6 text-lg leading-relaxed">
+              <span className="font-[700]">Ce projet est en construction.</span> Il n'existe pas encore : la cagnotte et
+              les pavés servent à le lancer. Son lieu, son équipe et ses besoins se précisent au fil des contributions.
+            </p>
+          )}
+          <h2 className="text-4xl sm:text-5xl">C'est quoi, ce projet ?</h2>
           <div className="mt-6 space-y-5 text-xl leading-relaxed max-w-[62ch]">
             {projet.histoire.map((t, i) => <p key={i}>{t}</p>)}
           </div>
+
+          {projet.activites && (
+            <>
+              <h2 className="mt-16 text-4xl sm:text-5xl">Ce qu'on y fait</h2>
+              <dl className="mt-6 grid sm:grid-cols-2 gap-x-8 gap-y-5">
+                {projet.activites.map(([nom, texte], i) => (
+                  <div key={nom} className="flex gap-4">
+                    <span className="w-4 h-3.5 shrink-0 rounded-[3px] translate-y-[7px]" style={{ background: ['#A8BFA1', '#C57B57', '#C9A46E', '#4E5C4B'][i % 4] }} aria-hidden="true" />
+                    <div>
+                      <dt className="text-xl font-[700]">{nom}</dt>
+                      <dd className="mt-1 text-lg text-olive/85 leading-relaxed">{texte}</dd>
+                    </div>
+                  </div>
+                ))}
+              </dl>
+            </>
+          )}
+
+          {sesKoudmen.length > 0 && (
+            <section id="koudmen" className="scroll-mt-6">
+              <h2 className="mt-16 text-4xl sm:text-5xl">Les prochains koudmen</h2>
+              <p className="mt-4 text-lg leading-relaxed max-w-[62ch] text-olive/85">
+                Un koudmen, c'est une matinée de coup de main dans un jardin. Inscris-toi, viens avec tes bras : chaque
+                koudmen donné devient un pavé de temps sur la Trace.
+              </p>
+              <ul className="mt-8 space-y-4">
+                {sesKoudmen.map((k) => <CarteKoudmen key={k.id} koudmen={k} />)}
+              </ul>
+            </section>
+          )}
+
+          {sesLieux.length > 0 && (
+            <>
+              <h2 className="mt-16 text-4xl sm:text-5xl">Les {sesLieux.length} jardins du réseau</h2>
+              <p className="mt-4 text-lg leading-relaxed max-w-[62ch] text-olive/85">
+                Chaque jardin dit ce dont il a besoin. Tu as un terrain qui pourrait en faire partie ?{' '}
+                <Link to="/proposer" className="font-semibold underline underline-offset-4">Dis-le-nous</Link>.
+              </p>
+              <ul className="mt-8 grid sm:grid-cols-2 gap-4">
+                {sesLieux.map((l) => <CarteLieu key={l.id} lieu={l} nbKoudmen={sesKoudmen.filter((k) => k.lieu_id === l.id).length} />)}
+              </ul>
+            </>
+          )}
 
           <h2 className="mt-16 text-4xl sm:text-5xl">Ce que ça change</h2>
           <ul className="mt-6 space-y-3 text-xl">
@@ -79,7 +143,7 @@ export default function Projet() {
 
           <div className="mt-16 grid sm:grid-cols-2 gap-4">
             <div className="bg-beige rounded-[22px] p-6">
-              <h3 className="text-2xl">Qui le porte</h3>
+              <h3 className="text-2xl">Porté par</h3>
               <p className="mt-3 text-lg leading-relaxed">{projet.porteur}</p>
             </div>
             <div className="bg-sauge rounded-[22px] p-6 text-olive-nuit">

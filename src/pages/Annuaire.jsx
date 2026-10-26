@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useData } from '../lib/store.jsx'
-import { Action, Aplat, Kreyol } from '../components/Nouveau.jsx'
+import { Action, Aplat, Exemple, Kreyol } from '../components/Nouveau.jsx'
 
 function Marque({ couleur, children, titre }) {
   return (
@@ -69,6 +69,7 @@ export default function Annuaire() {
                   <span className="flex items-start justify-between gap-4">
                     <span>
                       <span className="titre block text-2xl sm:text-3xl">{m.nom}</span>
+                      {m.exemple && <Exemple className="mt-2" />}
                       <span className="block mt-2 text-olive/80">{m.activite}, {m.commune}</span>
                     </span>
                     <span className="shrink-0 text-2xl leading-none text-olive/60" aria-hidden="true">{deplie ? '−' : '+'}</span>

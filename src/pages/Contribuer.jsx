@@ -86,7 +86,7 @@ export default function Contribuer() {
   return (
     <div className="nouveau">
       <Aplat couleur="olive" interieur="pt-14 sm:pt-20 pb-12">
-        <p className="text-xl font-semibold text-sauge" lang="gcf">Chak moun ni on bagay a pòté</p>
+        <p className="text-xl font-semibold text-sauge" lang="gcf">Chak moun ni on biten a pòté</p>
         <p className="text-beige/70">Chaque personne a quelque chose à apporter</p>
         <h1 className="mt-6 text-6xl sm:text-8xl">Poser mon pavé</h1>
         <p className="mt-6 text-2xl leading-snug max-w-2xl text-beige/90">

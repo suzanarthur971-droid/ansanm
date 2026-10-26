@@ -21,7 +21,7 @@ select t, tr from (values
   ('Sé on min ka lavé lòt', 'Une main lave l''autre'),
   ('Ansanm nou pli fò', 'Ensemble, nous sommes plus forts'),
   ('Yonn pou lòt', 'L''un pour l''autre'),
-  ('Chak moun ni on bagay a pòté', 'Chaque personne a quelque chose à apporter'),
+  ('Chak moun ni on biten a pòté', 'Chaque personne a quelque chose à apporter'),
   ('Sé ansanm nou ka vansé', 'C''est ensemble que nous avançons'),
   ('On sèl dwèt pa ka manjé kalalou', 'Un seul doigt ne peut pas manger le calalou')
 ) as d(t, tr)

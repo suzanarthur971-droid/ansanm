@@ -81,7 +81,9 @@ export default function Proposer() {
                   </label>
                 ))}
               </div>
-              <p className="mt-6 leading-relaxed">Si tu n'as pas encore toutes les réponses, ce n'est pas grave : propose quand même, on t'aidera à les trouver.</p>
+              <p className="mt-6 text-lg font-[700] leading-snug">Si tu n'as pas toutes les réponses, ton projet est encore une idée. Et Ansanm peut t'aider à en faire un projet.</p>
+              <p className="mt-2 leading-relaxed">Propose-la quand même : dans les idées en germe, chacun pourra dire qu'il la rechercherait, ou la rapprocher d'un projet existant.</p>
+              <Link to="/idees" className="mt-3 inline-block font-semibold underline decoration-2 underline-offset-4">Voir les idées en germe</Link>
             </fieldset>
 
             <div className="bg-beige rounded-[22px] p-6 sm:p-8">

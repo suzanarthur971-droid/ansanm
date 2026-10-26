@@ -1,0 +1,42 @@
+[
+  {
+    "id": "l-montebello",
+    "project_id": "jardin-nourricier",
+    "nom": "Verger de Montebello",
+    "commune": "Petit-Bourg",
+    "description": "Une quarantaine d'avocatiers, de manguiers et d'orangers sur un terrain familial. Les propriétaires vivent en Hexagone : sans bras, les fruits tombent au sol.",
+    "besoins": ["Cueillette", "Élagage"]
+  },
+  {
+    "id": "l-cacao",
+    "project_id": "jardin-nourricier",
+    "nom": "Jardin créole de Cacao",
+    "commune": "Capesterre-Belle-Eau",
+    "description": "Un ancien jardin créole à remettre en syntropie : bananiers, ignames, arbres à pain, plantés en étages comme dans une forêt.",
+    "besoins": ["Plantation", "Paillage"]
+  },
+  {
+    "id": "l-sergent",
+    "project_id": "jardin-nourricier",
+    "nom": "Jardin de l'école de Sergent",
+    "commune": "Le Moule",
+    "description": "Un jardin pédagogique cultivé avec les élèves de CM1 et CM2. Les enfants plantent, les parents passent aider le samedi.",
+    "besoins": ["Plantation", "Transmission"]
+  },
+  {
+    "id": "l-cafeiere",
+    "project_id": "jardin-nourricier",
+    "nom": "Caféière de Vieux-Habitants",
+    "commune": "Vieux-Habitants",
+    "description": "Des caféiers centenaires étouffés par les lianes. Une fois dégagés, ils peuvent produire à nouveau un café de la Côte-sous-le-Vent.",
+    "besoins": ["Élagage", "Désherbage"]
+  },
+  {
+    "id": "l-boissard",
+    "project_id": "jardin-nourricier",
+    "nom": "Jardin partagé de Boissard",
+    "commune": "Les Abymes",
+    "description": "Un terrain prêté aux habitants du quartier. Chacun y a sa parcelle, et le compost est collectif.",
+    "besoins": ["Compost", "Arrosage"]
+  }
+]

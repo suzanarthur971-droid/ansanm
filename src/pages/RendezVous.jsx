@@ -1,5 +1,5 @@
 import { useData } from '../lib/store.jsx'
-import { Aplat } from '../components/Nouveau.jsx'
+import { Aplat, Exemple } from '../components/Nouveau.jsx'
 
 const TYPES = { marche: 'Rendez-vous Ansanm', ag: 'Assemblée générale', magazine: 'Magazine' }
 
@@ -53,7 +53,7 @@ export default function RendezVous() {
                   <p className="text-olive/70">{d.getFullYear()}</p>
                 </div>
                 <div>
-                  <p className="font-semibold text-terre-fonce">{TYPES[e.type]}</p>
+                  <p className="flex flex-wrap items-center gap-3 font-semibold text-terre-fonce">{TYPES[e.type]}{e.exemple && <Exemple />}</p>
                   <h3 className="mt-1 text-2xl sm:text-3xl">{e.titre}</h3>
                   <p className="mt-2 font-semibold">{e.lieu}{e.heure ? `, ${e.heure}` : ''}</p>
                   <p className="mt-2 text-lg leading-relaxed">{e.description}</p>

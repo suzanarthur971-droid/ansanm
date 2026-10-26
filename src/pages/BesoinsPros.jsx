@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useData } from '../lib/store.jsx'
-import { Action, Aplat } from '../components/Nouveau.jsx'
+import { Action, Aplat, Exemple } from '../components/Nouveau.jsx'
 
 export const TYPES_BESOIN = {
   service: { label: 'Service à trouver', couleur: '#C57B57' },
@@ -102,6 +102,7 @@ function CarteBesoin({ besoin }) {
           {type.label}
         </span>
         <span className="text-olive/70 capitalize">{besoin.domaine}</span>
+        {besoin.exemple && <Exemple />}
         {besoin.statut !== 'ouvert' && (
           <span className={`ml-auto font-semibold ${pourvu ? 'text-olive' : 'text-terre-fonce'}`}>{pourvu ? 'Pourvu' : 'En cours'}</span>
         )}

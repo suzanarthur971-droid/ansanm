@@ -78,3 +78,10 @@ export async function lierIdee(lien) {
   const { error } = await supabase.from('idees_liens').insert(lien)
   if (error) throw error
 }
+
+// Koudmen : nombre d'inscrits par koudmen (les contacts restent privés)
+export async function chargerInscritsKoudmen() {
+  const { data, error } = await supabase.from('koudmen_inscriptions').select('koudmen_id')
+  if (error) throw error
+  return data.reduce((compte, i) => ({ ...compte, [i.koudmen_id]: (compte[i.koudmen_id] || 0) + 1 }), {})
+}

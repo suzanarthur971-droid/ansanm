@@ -1,0 +1,62 @@
+[
+  {
+    "id": "k-montebello-cueillette",
+    "project_id": "jardin-nourricier",
+    "lieu_id": "l-montebello",
+    "activite": "Cueillette",
+    "titre": "Cueillette des avocats et des oranges",
+    "date": "2026-11-07",
+    "heure": "8 h – 12 h",
+    "places": 8,
+    "inscrits_depart": 5,
+    "description": "Paniers et échelles fournis. Une partie des fruits part à la cuisine collective, le reste est partagé entre les bras."
+  },
+  {
+    "id": "k-cafeiere-elagage",
+    "project_id": "jardin-nourricier",
+    "lieu_id": "l-cafeiere",
+    "activite": "Élagage",
+    "titre": "Dégager les caféiers des lianes",
+    "date": "2026-11-14",
+    "heure": "7 h 30 – 11 h",
+    "places": 6,
+    "inscrits_depart": 2,
+    "description": "Prévoir des gants et des manches longues. Les sécateurs et les coutelas sont prêtés sur place."
+  },
+  {
+    "id": "k-sergent-plantation",
+    "project_id": "jardin-nourricier",
+    "lieu_id": "l-sergent",
+    "activite": "Plantation",
+    "titre": "Planter avec les élèves",
+    "date": "2026-11-21",
+    "heure": "9 h – 12 h",
+    "places": 10,
+    "inscrits_depart": 7,
+    "description": "Une matinée avec les enfants pour planter les jeunes arbres fruitiers de la Pépinière des Mamelles."
+  },
+  {
+    "id": "k-cacao-paillage",
+    "project_id": "jardin-nourricier",
+    "lieu_id": "l-cacao",
+    "activite": "Paillage",
+    "titre": "Pailler les bananiers et planter les ignames",
+    "date": "2026-11-28",
+    "heure": "8 h – 11 h",
+    "places": 6,
+    "inscrits_depart": 1,
+    "description": "Le broyat est déjà sur place. Il manque des bras pour l'étaler et préparer les buttes."
+  },
+  {
+    "id": "k-boissard-compost",
+    "project_id": "jardin-nourricier",
+    "lieu_id": "l-boissard",
+    "activite": "Compost",
+    "titre": "Atelier compost avec les habitants",
+    "date": "2026-12-05",
+    "heure": "9 h – 11 h",
+    "places": 12,
+    "inscrits_depart": 4,
+    "description": "Apprendre à faire un bon compost, et retourner ensemble celui du quartier. Ouvert aux familles."
+  }
+]

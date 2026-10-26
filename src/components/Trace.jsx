@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react'
+import { Exemple } from './Nouveau.jsx'
 import { useNavigate } from 'react-router-dom'
 import { TAILLES, TYPES, euros, hash, tailleDe, teinteDe, PROFILS, resumeContribution, dateLongue } from '../lib/paves.js'
 
@@ -182,6 +183,7 @@ export function FichePave({ pave, projet, onFermer }) {
           <div>
             <p className="titre text-3xl">{nom}</p>
             <p className="text-sm text-gris mt-1">{PROFILS[pave.profil]} · {taille.label.toLowerCase()}</p>
+            {pave.exemple && <p className="mt-2"><Exemple>Pavé d'exemple, fictif</Exemple></p>}
           </div>
           <button onClick={onFermer} className="text-sm text-gris hover:text-encre py-1">Fermer</button>
         </div>
